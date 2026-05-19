@@ -46,7 +46,6 @@ camoufox>=0.1.0
 
 # Subtitles
 openai-whisper>=20250625
-whisperx>=3.1.0
 
 # Utilities
 python-dateutil>=2.8.0
