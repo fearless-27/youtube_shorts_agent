@@ -1,0 +1,1 @@
+"""GhostPipe pipeline package."""

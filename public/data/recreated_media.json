@@ -1,0 +1,395 @@
+[
+  {
+    "title": "\ud83d\udd25 Drake - High Fives",
+    "content_type": "short",
+    "video_path": "outputs\\short__tlMz8sTFMs_1779195883.mp4",
+    "public_url": "/outputs/short__tlMz8sTFMs_1779195883.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 52.3,
+      "predicted_avd": 72.97,
+      "predicted_virality": 50.68,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.5,
+      "hook_score": 0.74,
+      "pacing_score": 0.65,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-19T18:38:54.302746"
+  },
+  {
+    "title": "\ud83d\udd25 Character Trailer - \"Nicole: An Epic Adventure Story\" | Genshin Impac...",
+    "content_type": "short",
+    "video_path": "outputs\\short_xDdrmoSh3W4_1779195371.mp4",
+    "public_url": "/outputs/short_xDdrmoSh3W4_1779195371.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 57.03,
+      "predicted_avd": 62.68,
+      "predicted_virality": 57.43,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.5,
+      "hook_score": 0.85,
+      "pacing_score": 0.53,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-19T18:32:10.056070",
+    "upload_result": {
+      "video_id": "9ijpiTZHKJo",
+      "url": "https://youtube.com/shorts/9ijpiTZHKJo",
+      "status": "uploaded",
+      "scheduled": false
+    }
+  },
+  {
+    "title": "\ud83d\udd25 HOPE - Official Teaser - In Theaters Fall 2026",
+    "content_type": "short",
+    "video_path": "outputs\\short_Vt7860xZFXk_1779195054.mp4",
+    "public_url": "/outputs/short_Vt7860xZFXk_1779195054.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 54.91,
+      "predicted_avd": 62.07,
+      "predicted_virality": 58.97,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.67,
+      "pacing_score": 0.55,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-19T18:25:00.535548",
+    "upload_result": {
+      "video_id": "Dw4fnXx6tDI",
+      "url": "https://youtube.com/shorts/Dw4fnXx6tDI",
+      "status": "uploaded",
+      "scheduled": false
+    }
+  },
+  {
+    "title": "\ud83d\udd25 Lanterns | Official Teaser 2 | HBO Max",
+    "content_type": "short",
+    "video_path": "outputs\\short_XmcIjxwLJcY_1779194736.mp4",
+    "public_url": "/outputs/short_XmcIjxwLJcY_1779194736.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 68.45,
+      "predicted_avd": 81.18,
+      "predicted_virality": 63.59,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.79,
+      "pacing_score": 0.76,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-19T18:20:02.012935",
+    "upload_result": {
+      "video_id": "Ko_6T2sSSGM",
+      "url": "https://youtube.com/shorts/Ko_6T2sSSGM",
+      "status": "uploaded",
+      "scheduled": false
+    }
+  },
+  {
+    "title": "\ud83d\udd25 ITZY \u201cMotto\u201d M/V",
+    "content_type": "short",
+    "video_path": "outputs\\short_1jKnI_ib8c8_1779194483.mp4",
+    "public_url": "/outputs/short_1jKnI_ib8c8_1779194483.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 47.18,
+      "predicted_avd": 72.53,
+      "predicted_virality": 49.41,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.5,
+      "hook_score": 0.67,
+      "pacing_score": 0.78,
+      "recommendation": "refine"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-19T18:15:06.472150"
+  },
+  {
+    "title": "\ud83d\udd25 Peddi Official Trailer (Telugu) | Ram Charan | Janhvi Kapoor | A R Ra...",
+    "content_type": "short",
+    "video_path": "outputs\\short_sF2dj7ycZvA_1779118729.mp4",
+    "public_url": "/outputs/short_sF2dj7ycZvA_1779118729.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 55.1,
+      "predicted_avd": 80.77,
+      "predicted_virality": 58.89,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.5,
+      "hook_score": 0.73,
+      "pacing_score": 0.89,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-18T21:15:23.018141"
+  },
+  {
+    "title": "\ud83d\udd25 HOPE - Official Teaser - In Theaters Fall 2026",
+    "content_type": "short",
+    "video_path": "outputs\\short_Vt7860xZFXk_1779095806.mp4",
+    "public_url": "/outputs/short_Vt7860xZFXk_1779095806.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 59.13,
+      "predicted_avd": 69.61,
+      "predicted_virality": 68.36,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.64,
+      "pacing_score": 0.63,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-18T14:53:24.287943"
+  },
+  {
+    "title": "\ud83d\udd25 Paul McCartney - Band on the Run (Saturday Night Live/2026)",
+    "content_type": "short",
+    "video_path": "outputs\\short_z3IhXxeMy4Y_1779084202.mp4",
+    "public_url": "/outputs/short_z3IhXxeMy4Y_1779084202.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 62.45,
+      "predicted_avd": 80.2,
+      "predicted_virality": 68.92,
+      "ml_outcome_prediction": null,
+      "title_score": 0.6,
+      "hook_score": 0.93,
+      "pacing_score": 0.77,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-18T11:38:39.742410"
+  },
+  {
+    "title": "\ud83d\udd25 The Boys Season 5 Episode 8 Series Finale Trailer",
+    "content_type": "short",
+    "video_path": "outputs\\short_Ks_VD4xy8ow_1779083274.mp4",
+    "public_url": "/outputs/short_Ks_VD4xy8ow_1779083274.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 58.88,
+      "predicted_avd": 59.59,
+      "predicted_virality": 64.81,
+      "title_score": 0.75,
+      "hook_score": 0.71,
+      "pacing_score": 0.5,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-18T11:22:15.220719",
+    "upload_result": {
+      "video_id": "vBviGwq_2E4",
+      "url": "https://youtube.com/shorts/vBviGwq_2E4",
+      "status": "uploaded",
+      "scheduled": false
+    }
+  },
+  {
+    "title": "\ud83d\udd25 ZEROBASEONE (\uc81c\ub85c\ubca0\uc774\uc2a4\uc6d0) 'TOP 5' MV",
+    "content_type": "short",
+    "video_path": "outputs\\short_7QGRDC7ngpE_1779078210.mp4",
+    "public_url": "/outputs/short_7QGRDC7ngpE_1779078210.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 63.22,
+      "predicted_avd": 63.63,
+      "predicted_virality": 58.02,
+      "title_score": 0.75,
+      "hook_score": 0.75,
+      "pacing_score": 0.61,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-18T09:59:19.955088",
+    "upload_result": {
+      "video_id": "OxhY0O4T5qA",
+      "url": "https://youtube.com/shorts/OxhY0O4T5qA",
+      "status": "uploaded",
+      "scheduled": false
+    }
+  },
+  {
+    "title": "\ud83d\udd25 Yungeen Ace - Honest (Future Freestyle)",
+    "content_type": "short",
+    "video_path": "outputs\\short_LLmHHIER7ic_1779016365.mp4",
+    "public_url": "/outputs/short_LLmHHIER7ic_1779016365.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 52.97,
+      "predicted_avd": 73.48,
+      "predicted_virality": 67.81,
+      "title_score": 0.65,
+      "hook_score": 0.69,
+      "pacing_score": 0.85,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-17T16:50:34.416745"
+  },
+  {
+    "title": "\ud83d\udd25 Yungeen Ace - Honest (Future Freestyle)",
+    "content_type": "short",
+    "video_path": "outputs\\short_LLmHHIER7ic_1779010143.mp4",
+    "public_url": "/outputs/short_LLmHHIER7ic_1779010143.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 59.84,
+      "predicted_avd": 78.7,
+      "predicted_virality": 62.83,
+      "title_score": 0.65,
+      "hook_score": 0.76,
+      "pacing_score": 0.81,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-17T15:04:18.584897"
+  },
+  {
+    "title": "The Truth About The New Kid | Doritos Commercial",
+    "content_type": "short",
+    "video_path": "outputs\\short_fvyBCesuxMM_1778227381.mp4",
+    "public_url": "/outputs/short_fvyBCesuxMM_1778227381.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 57.69,
+      "predicted_avd": 81.13,
+      "predicted_virality": 66.5,
+      "title_score": 0.8,
+      "hook_score": 0.65,
+      "pacing_score": 0.85,
+      "recommendation": "upload"
+    },
+    "schedule_time": "2026-05-08T17:30:00",
+    "approved": null
+  },
+  {
+    "title": "Nobody is talking about We Ask (Part 1)",
+    "content_type": "short",
+    "video_path": "outputs\\short_XYviM5xevC8_1778227390.mp4",
+    "public_url": "/outputs/short_XYviM5xevC8_1778227390.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 63.02,
+      "predicted_avd": 73.82,
+      "predicted_virality": 55.85,
+      "title_score": 0.75,
+      "hook_score": 0.81,
+      "pacing_score": 0.69,
+      "recommendation": "upload"
+    },
+    "schedule_time": "2026-05-08T17:30:00",
+    "approved": null
+  },
+  {
+    "title": "Nobody is talking about A Jour (Part 1)",
+    "content_type": "video",
+    "video_path": "outputs\\video_3pjkQcQBTtc_1778227399.mp4",
+    "public_url": "/outputs/video_3pjkQcQBTtc_1778227399.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 69.3,
+      "predicted_avd": 63.01,
+      "predicted_virality": 67.69,
+      "title_score": 0.75,
+      "hook_score": 0.83,
+      "pacing_score": 0.54,
+      "recommendation": "upload"
+    },
+    "schedule_time": "2026-05-08T18:30:00",
+    "approved": null
+  },
+  {
+    "title": "How The Odyssey went from zero - Here's Why",
+    "content_type": "short",
+    "video_path": "outputs\\short_f_bKjZeJBBI_1778227416.mp4",
+    "public_url": "/outputs/short_f_bKjZeJBBI_1778227416.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 64.1,
+      "predicted_avd": 76.8,
+      "predicted_virality": 65.22,
+      "title_score": 0.65,
+      "hook_score": 0.94,
+      "pacing_score": 0.6,
+      "recommendation": "upload"
+    },
+    "schedule_time": "2026-05-08T17:30:00",
+    "approved": null
+  },
+  {
+    "title": "I Found Out The untold story behind Famous",
+    "content_type": "short",
+    "video_path": "outputs\\short_1ng2vBvb7Dg_1778227439.mp4",
+    "public_url": "/outputs/short_1ng2vBvb7Dg_1778227439.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 55.65,
+      "predicted_avd": 77.01,
+      "predicted_virality": 69.26,
+      "title_score": 0.65,
+      "hook_score": 0.64,
+      "pacing_score": 0.83,
+      "recommendation": "upload"
+    },
+    "schedule_time": "2026-05-08T17:30:00",
+    "approved": null
+  },
+  {
+    "title": "Short Audio Recreate Test",
+    "content_type": "short",
+    "video_path": "outputs\\short_audio_recreate_test.mp4",
+    "public_url": "/outputs/short_audio_recreate_test.mp4",
+    "exists": true,
+    "prediction": {},
+    "schedule_time": null,
+    "approved": null
+  },
+  {
+    "title": "Short Source Recreate Test 1778233866",
+    "content_type": "short",
+    "video_path": "outputs\\short_source_recreate_test_1778233866.mp4",
+    "public_url": "/outputs/short_source_recreate_test_1778233866.mp4",
+    "exists": true,
+    "prediction": {},
+    "schedule_time": null,
+    "approved": null
+  },
+  {
+    "title": "Short Dashboardpreview 1778233485",
+    "content_type": "short",
+    "video_path": "outputs\\short_dashboardpreview_1778233485.mp4",
+    "public_url": "/outputs/short_dashboardpreview_1778233485.mp4",
+    "exists": true,
+    "prediction": {},
+    "schedule_time": null,
+    "approved": null
+  }
+]

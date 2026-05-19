@@ -1,0 +1,14 @@
+.env
+client_secrets.json
+youtube_credentials.json
+ghostpipe.lock
+ghostpipe.log
+dist/
+pipeline/upload_history.sqlite3
+pipeline/upload_history.sqlite3-*
+downloads/
+outputs/
+venv/
+node_modules/
+__pycache__/
+*.pyc

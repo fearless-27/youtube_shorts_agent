@@ -1,0 +1,55 @@
+services:
+  ghostpipe:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    container_name: ghostpipe_pipeline
+    restart: unless-stopped
+
+    environment:
+      - GHOSTPIPE_MODE=dry_run
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+      - YOUTUBE_REFRESH_TOKEN=${YOUTUBE_REFRESH_TOKEN}
+
+    volumes:
+      - ../../downloads:/app/downloads
+      - ../../outputs:/app/outputs
+      - ../../logs:/app/logs
+      - ../../config/ghostpipe.json:/app/config/ghostpipe.json:ro
+
+    networks:
+      - ghostpipe_net
+
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  # Optional: Redis for queue management
+  redis:
+    image: redis:7-alpine
+    container_name: ghostpipe_redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - ghostpipe_net
+
+volumes:
+  redis_data:
+
+networks:
+  ghostpipe_net:
+    driver: bridge

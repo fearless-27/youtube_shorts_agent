@@ -1,0 +1,42 @@
+[Unit]
+Description=GhostPipe v5.1 - Autonomous Shorts Pipeline
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ghostpipe
+Group=ghostpipe
+WorkingDirectory=/opt/ghostpipe
+Environment=PYTHONPATH=/opt/ghostpipe/pipeline
+Environment=GHOSTPIPE_MODE=dry_run
+Environment=GHOSTPIPE_CONFIG=/opt/ghostpipe/config/ghostpipe.json
+ExecStart=/opt/ghostpipe/venv/bin/python /opt/ghostpipe/pipeline/ghostpipe_v5_1_pipeline.py
+ExecStop=/bin/kill -TERM $MAINPID
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=60
+Restart=always
+RestartSec=10
+StartLimitInterval=60s
+StartLimitBurst=3
+
+# Resource limits
+MemoryMax=4G
+CPUQuota=200%
+TasksMax=50
+
+# Security
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ghostpipe/downloads /opt/ghostpipe/outputs /opt/ghostpipe/logs /opt/ghostpipe/dry_run_analysis
+
+# Logging
+StandardOutput=append:/var/log/ghostpipe/pipeline.log
+StandardError=append:/var/log/ghostpipe/error.log
+SyslogIdentifier=ghostpipe
+
+[Install]
+WantedBy=multi-user.target
