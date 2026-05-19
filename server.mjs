@@ -14,6 +14,7 @@ const configPath = resolve(root, "config", "ghostpipe.json");
 const logPath = resolve(root, "ghostpipe.log");
 const lockPath = resolve(root, "ghostpipe.lock");
 const port = Number(process.env.PORT || 4173);
+const host = process.env.HOST || "0.0.0.0";
 const sessions = new Map();
 let managedPipeline = null;
 
@@ -421,6 +422,6 @@ createServer((request, response) => {
     console.error(error);
     sendError(response, 500, "internal server error");
   });
-}).listen(port, "127.0.0.1", () => {
-  console.log(`GhostPipe frontend/backend listening at http://127.0.0.1:${port}`);
+}).listen(port, host, () => {
+  console.log(`GhostPipe frontend/backend listening at http://${host}:${port}`);
 });
