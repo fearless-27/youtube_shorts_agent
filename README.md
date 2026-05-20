@@ -1,7 +1,5 @@
 # 🤖 GhostPipe — AI YouTube Shorts Automation
 
-![GhostPipe Logo](docs/images/ghostpipe-logo.png)
-
 > **Automate your YouTube Shorts workflow.** GhostPipe scans viral trends, generates AI-powered vertical videos, scores performance, and uploads to YouTube—fully autonomous. From trend signal to live upload, zero manual work.
 
 ---
