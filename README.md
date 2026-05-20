@@ -1,10 +1,10 @@
-# 🤖 GhostPipe — AI YouTube Shorts Automation
+# 🚀 GhostPipe — AI YouTube Shorts Automation
 
 > **Automate your YouTube Shorts workflow.** GhostPipe scans viral trends, generates AI-powered vertical videos, scores performance, and uploads to YouTube—fully autonomous. From trend signal to live upload, zero manual work.
 
 ---
 
-## 🎯 What is GhostPipe?
+## 🧭 What is GhostPipe?
 
 GhostPipe is an **end-to-end Shorts production system** combining:
 
@@ -18,7 +18,7 @@ Perfect for content teams, growth operators, and creators who want a repeatable 
 
 ---
 
-## 📋 Quick Start
+## ⚙️ Quick Start
 
 ### Prerequisites
 
@@ -49,32 +49,32 @@ Login to the dashboard at `http://127.0.0.1:5173` with:
 
 ---
 
-## 📂 Project Structure
+## 🗂️ Project Structure
 
 ```text
 .
-├── 📁 config/              Configuration files and environment templates
-├── 📁 deploy/              Docker and systemd deployment assets
+├── 🗄️ config/              Configuration files and environment templates
+├── 🗄️ deploy/              Docker and systemd deployment assets
 │   ├── docker/             Dockerfile and docker-compose.yml
 │   └── systemd/            Linux service unit
-├── 📁 docs/                Architecture diagrams and docs
-├── 📁 downloads/           Downloaded source videos
-├── 📁 outputs/             Generated media and shorts
-├── 📁 pipeline/            Python pipeline modules
-├── 📁 public/              Dashboard static data
-├── 📁 scripts/             Setup and utility scripts
-├── 📁 src/                 React dashboard source
+├── 🗄️ docs/                Architecture diagrams and docs
+├── 🗄️ downloads/           Downloaded source videos
+├── 🗄️ outputs/             Generated media and shorts
+├── 🗄️ pipeline/            Python pipeline modules
+├── 🗄️ public/              Dashboard static data
+├── 🗄️ scripts/             Setup and utility scripts
+├── 🗄️ src/                 React dashboard source
 │   ├── pages/              Dashboard views
 │   ├── components/         UI components
 │   └── data/               State management
-├── 📁 tests/               End-to-end tests
+├── 🗄️ tests/               End-to-end tests
 ├── package.json            Frontend dependencies
 └── vite.config.ts          Vite configuration
 ```
 
 ---
 
-## 🏗️ Architecture
+## 🧩 Architecture
 
 ### System Overview
 
@@ -124,9 +124,9 @@ Login to the dashboard at `http://127.0.0.1:5173` with:
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-### 🎯 Core Features
+### ⭐ Core Features
 
 - ✅ **Trend Scanning** — Real-time detection of viral content across multiple sources
 - ✅ **AI Video Generation** — Automated shorts creation with smart cuts and captions
@@ -139,7 +139,7 @@ Login to the dashboard at `http://127.0.0.1:5173` with:
 
 ---
 
-## 🎬 Dashboard Guide
+## 🖥️ Dashboard Guide
 
 ### Development
 
@@ -157,7 +157,7 @@ Set `VITE_API_BASE_URL` to your API server, then deploy the built `dist/` folder
 
 ---
 
-## 🐍 Python Pipeline
+## 🐧 Python Pipeline
 
 The pipeline handles trend scanning, video generation, scoring, and YouTube uploads.
 
