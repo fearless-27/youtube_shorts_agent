@@ -27,6 +27,7 @@ from concurrent.futures import ThreadPoolExecutor
 import re
 import sqlite3
 from zoneinfo import ZoneInfo
+from datetime import timezone as datetime_timezone, timedelta as datetime_timedelta
 import msvcrt
 import ctypes
 
@@ -99,6 +100,7 @@ class TrendingVideo:
     engagement_rate: float
     velocity_score: float  # Views per hour
     niche_relevance: float
+    description: str = ""
     already_processed: bool = False
     download_path: Optional[str] = None
     local_path: Optional[str] = None
@@ -981,7 +983,8 @@ class TrendingVideoScanner:
             url=f"https://youtube.com/watch?v={video_id}",
             engagement_rate=engagement_rate,
             velocity_score=views / hours_since,
-            niche_relevance=random.uniform(0.6, 1.0)
+            niche_relevance=random.uniform(0.6, 1.0),
+            description=snippet.get("description", "")
         )
 
     def _parse_iso8601_duration(self, value: str) -> int:
@@ -1053,7 +1056,8 @@ class TrendingVideoScanner:
                         url=f"https://youtube.com/watch?v={entry.get('id', '')}",
                         engagement_rate=self._estimate_engagement(entry),
                         velocity_score=self._calculate_velocity(entry),
-                        niche_relevance=random.uniform(0.6, 1.0)
+                        niche_relevance=random.uniform(0.6, 1.0),
+                        description=entry.get('description', '')
                     )
                     videos.append(video)
 
@@ -1104,24 +1108,65 @@ class TrendingVideoScanner:
             from googleapiclient.discovery import build
 
             youtube = build("youtube", "v3", developerKey=api_key, cache_discovery=False)
-            max_per_term = int(self.config.get("growth_search_results_per_term", 5) or 5)
             video_ids = []
+            max_per_term = int(self.config.get("growth_search_results_per_term", 5) or 5)
+            discovery_groups = self.config.get("growth_discovery_groups") or []
 
-            for term in terms[:12]:
-                response = youtube.search().list(
-                    part="snippet",
-                    q=term,
-                    type="video",
-                    order="relevance",
-                    publishedAfter=(datetime.utcnow() - timedelta(hours=self.max_age_hours)).isoformat("T") + "Z",
-                    maxResults=max_per_term,
-                    regionCode=self.config.get("youtube_region_code", "US"),
-                    safeSearch="none",
-                ).execute()
-                for item in response.get("items", []):
-                    video_id = item.get("id", {}).get("videoId")
-                    if video_id:
-                        video_ids.append(video_id)
+            if discovery_groups:
+                for group in discovery_groups[:12]:
+                    group_terms = [
+                        str(term).strip()
+                        for term in group.get("terms", [])
+                        if str(term).strip()
+                    ]
+                    if not group_terms:
+                        continue
+                    group_limit = int(group.get("max_results", max_per_term) or max_per_term)
+                    group_ids = []
+
+                    for term in group_terms:
+                        params = {
+                            "part": "snippet",
+                            "q": term,
+                            "type": "video",
+                            "order": "relevance",
+                            "publishedAfter": (datetime.utcnow() - timedelta(hours=self.max_age_hours)).isoformat("T") + "Z",
+                            "maxResults": max(min(max_per_term, group_limit), 1),
+                            "regionCode": self.config.get("youtube_region_code", "US"),
+                            "safeSearch": "none",
+                        }
+                        if self.config.get("content_language"):
+                            params["relevanceLanguage"] = self.config.get("content_language")
+                        response = youtube.search().list(**params).execute()
+                        for item in response.get("items", []):
+                            video_id = item.get("id", {}).get("videoId")
+                            if video_id and video_id not in group_ids:
+                                group_ids.append(video_id)
+                            if len(group_ids) >= group_limit:
+                                break
+                        if len(group_ids) >= group_limit:
+                            break
+
+                    video_ids.extend(group_ids[:group_limit])
+            else:
+                for term in terms[:12]:
+                    params = {
+                        "part": "snippet",
+                        "q": term,
+                        "type": "video",
+                        "order": "relevance",
+                        "publishedAfter": (datetime.utcnow() - timedelta(hours=self.max_age_hours)).isoformat("T") + "Z",
+                        "maxResults": max_per_term,
+                        "regionCode": self.config.get("youtube_region_code", "US"),
+                        "safeSearch": "none",
+                    }
+                    if self.config.get("content_language"):
+                        params["relevanceLanguage"] = self.config.get("content_language")
+                    response = youtube.search().list(**params).execute()
+                    for item in response.get("items", []):
+                        video_id = item.get("id", {}).get("videoId")
+                        if video_id:
+                            video_ids.append(video_id)
 
             unique_ids = list(dict.fromkeys(video_ids))
             videos = []
@@ -1238,8 +1283,8 @@ class VideoDownloader:
             'format': 'bv*[height<=720][ext=mp4]+ba[ext=m4a]/b[height<=720][ext=mp4]/best[height<=720]',
             'outtmpl': str(self.download_dir / f"{video.video_id}.%(ext)s"),
             'writeinfojson': True,
-            'writesubtitles': True,
-            'writeautomaticsub': True,
+            'writesubtitles': bool(self.config.get("yt_dlp_write_subtitles", False)),
+            'writeautomaticsub': bool(self.config.get("yt_dlp_write_subtitles", False)),
             'subtitleslangs': ['en'],
             'quiet': True,
             'no_warnings': True,
@@ -1313,7 +1358,7 @@ class VideoDownloader:
                 'duration': float(probe['format']['duration']),
                 'width': int(video_stream['width']),
                 'height': int(video_stream['height']),
-                'fps': eval(video_stream.get('r_frame_rate', '30/1')),
+                'fps': self._safe_parse_frame_rate(video_stream.get('r_frame_rate', '30/1')),
                 'bitrate': int(probe['format']['bit_rate']),
                 'audio_codec': audio_stream['codec_name'],
                 'video_codec': video_stream['codec_name'],
@@ -1321,6 +1366,18 @@ class VideoDownloader:
         except Exception as e:
             logger.error(f"Metadata extraction error: {e}")
             return {}
+
+    @staticmethod
+    def _safe_parse_frame_rate(value: str) -> float:
+        """Safely parse ffprobe frame rate strings like '30/1' without eval()."""
+        try:
+            if '/' in str(value):
+                num, den = str(value).split('/', 1)
+                denominator = float(den)
+                return float(num) / denominator if denominator != 0 else 30.0
+            return float(value)
+        except (ValueError, TypeError, ZeroDivisionError):
+            return 30.0
 
 
 class AdaptiveContentRecreator:
@@ -1333,15 +1390,53 @@ class AdaptiveContentRecreator:
 
     def _format_upload_title(self, title: str, max_length: int) -> str:
         """Apply the configured title emoji while preserving title length limits."""
-        emoji = str(self.config.get("upload_title_emoji", "")).strip()
+        emoji_options = self.config.get("upload_title_emojis") or [self.config.get("upload_title_emoji", "")]
+        emoji_options = [str(emoji).strip() for emoji in emoji_options if str(emoji).strip()]
+        emoji = random.choice(emoji_options) if emoji_options else ""
         title = title.strip()
-        if not emoji or title.startswith(emoji):
+        if not emoji or any(title.startswith(option) for option in emoji_options):
             return title
 
         titled = f"{emoji} {title}"
         if len(titled) > max_length:
             titled = titled[: max_length - 3].rstrip() + "..."
         return titled
+
+    def _attractive_title_variant(self, title: str, topic: str, max_length: int) -> tuple[str, str]:
+        """Add a compact curiosity word/phrase while keeping Shorts title limits."""
+        clean = re.sub(r"\s+", " ", title).strip()
+        topic = re.sub(r"\s+", " ", topic).strip() or clean
+        lower = clean.lower()
+        if self._is_french_content():
+            variants = {
+                "pourquoi_cartonne": f"Pourquoi {topic} cartonne",
+                "a_voir": f"A voir: {topic}",
+                "moment_fou": f"Moment fou: {topic}",
+                "explique_vite": f"{topic} explique vite",
+            }
+            attractive_words = ["pourquoi", "cartonne", "fou", "incroyable", "secret", "verite", "explique"]
+        else:
+            variants = {
+                "why_trending": f"Why {topic} Is Trending",
+                "must_watch": f"Must Watch: {topic}",
+                "wild_moment": f"Wild Moment: {topic}",
+                "explained_fast": f"{topic} Explained Fast",
+            }
+            attractive_words = ["why", "must watch", "wild", "shocking", "secret", "truth", "explained", "trending"]
+
+        if any(word in lower for word in attractive_words):
+            return self._format_upload_title(clean[:max_length].rstrip(), max_length), "already_attractive"
+
+        template_key = self.learning_memory.choose(
+            "title_template",
+            list(variants.keys()),
+            topic,
+            exploration_rate=float(self.config.get("learning_exploration_rate", 0.18))
+        )
+        candidate = variants.get(template_key, clean)
+        if len(candidate) > max_length - 4:
+            candidate = candidate[: max_length - 7].rstrip() + "..."
+        return self._format_upload_title(candidate, max_length), template_key
 
     def _growth_goal_enabled(self) -> bool:
         return bool(self.config.get("subscriber_growth_goal_enabled", False))
@@ -1359,6 +1454,12 @@ class AdaptiveContentRecreator:
             if str(keyword).strip()
         ]
 
+    def _content_language(self) -> str:
+        return str(self.config.get("content_language", "en")).lower()
+
+    def _is_french_content(self) -> bool:
+        return self._content_language().startswith("fr")
+
     def _audience_growth_score(self, metadata: dict) -> float:
         text = " ".join([
             str(metadata.get("title", "")),
@@ -1374,11 +1475,11 @@ class AdaptiveContentRecreator:
     def _subscriber_conversion_score(self, metadata: dict) -> float:
         text = f"{metadata.get('title', '')} {metadata.get('description', '')}".lower()
         score = 0.25
-        if "subscribe" in text:
+        if "subscribe" in text or "abonne" in text:
             score += 0.3
-        if "daily" in text or "next" in text:
+        if "daily" in text or "next" in text or "chaque jour" in text or "prochaine" in text:
             score += 0.15
-        if "explained" in text or "why" in text or "how" in text:
+        if "explained" in text or "why" in text or "how" in text or "explique" in text or "pourquoi" in text or "comment" in text:
             score += 0.15
         score += self._audience_growth_score(metadata) * 0.15
         return min(score, 1.0)
@@ -1390,28 +1491,44 @@ class AdaptiveContentRecreator:
         cta = str(self.config.get("subscriber_cta", "")).strip()
         promise = str(self.config.get("subscriber_value_promise", "")).strip()
         daily_target = self._growth_daily_target()
-        growth_tags = [
-            "subscribe",
-            "daily shorts",
-            "viral explained",
-            "trending explained",
-            "must watch",
-            "creator growth",
-        ]
+        if self._is_french_content():
+            growth_tags = [
+                "abonne toi",
+                "shorts quotidien",
+                "viral explique",
+                "tendance france",
+                "a voir",
+                "actualite virale",
+            ]
+        else:
+            growth_tags = [
+                "subscribe",
+                "daily shorts",
+                "viral explained",
+                "trending explained",
+                "must watch",
+                "creator growth",
+            ]
 
         description_parts = [metadata.get("description", "").rstrip()]
         if cta:
             description_parts.extend(["", cta])
         if promise:
-            description_parts.append(f"On this channel: {promise}.")
+            prefix = "Sur cette chaine" if self._is_french_content() else "On this channel"
+            description_parts.append(f"{prefix}: {promise}.")
         if daily_target:
-            description_parts.append(f"15-day sprint pace: {daily_target} new subscribers per day.")
+            if self._is_french_content():
+                description_parts.append(f"Objectif sprint 15 jours: {daily_target} nouveaux abonnes par jour.")
+            else:
+                description_parts.append(f"15-day sprint pace: {daily_target} new subscribers per day.")
 
         tags = list(dict.fromkeys([*metadata.get("tags", []), *growth_tags]))
+        growth_title = self._growth_title_variant(metadata.get("title", ""), video)
         metadata.update({
-            "title": self._growth_title_variant(metadata.get("title", ""), video),
+            "title": growth_title,
             "description": "\n".join(part for part in description_parts if part is not None),
             "tags": tags[:20],
+            "title_features": self._title_features(growth_title),
             "subscriber_growth_goal": {
                 "enabled": True,
                 "target": int(self.config.get("subscriber_growth_target", 10000) or 10000),
@@ -1427,7 +1544,10 @@ class AdaptiveContentRecreator:
         """Add a broad-audience curiosity angle when the source title is plain."""
         clean = re.sub(r"\s+", " ", title).strip()
         lower = clean.lower()
-        if any(marker in lower for marker in ["why", "how", "explained", "truth", "what happened"]):
+        markers = ["why", "how", "explained", "truth", "what happened"]
+        if self._is_french_content():
+            markers.extend(["pourquoi", "comment", "explique", "verite", "ce qui s'est passe"])
+        if any(marker in lower for marker in markers):
             return clean[:74].rstrip()
 
         topic = re.sub(r"^[^\w]+", "", video.title).split("|")[0].split("-")[0].strip()
@@ -1435,7 +1555,7 @@ class AdaptiveContentRecreator:
         if not topic:
             return clean[:74].rstrip()
 
-        candidate = f"Why {topic} Is Trending"
+        candidate = f"Pourquoi {topic} cartonne" if self._is_french_content() else f"Why {topic} Is Trending"
         if len(candidate) <= 74:
             return self._format_upload_title(candidate, 74)
         return clean[:71].rstrip() + "..."
@@ -1503,6 +1623,7 @@ class AdaptiveContentRecreator:
 
         # Step 5: Generate metadata
         metadata = await self._generate_metadata(video, new_script)
+        metadata["thumbnail_path"] = await self._generate_custom_thumbnail(final_video, metadata, video)
 
         # Step 6: Predict performance
         prediction = await self._predict_performance(final_video, metadata)
@@ -1563,6 +1684,7 @@ class AdaptiveContentRecreator:
             target_duration=int(self.config.get("source_clip_short_duration", 60))
         )
         metadata = await self._generate_source_clip_metadata(video)
+        metadata["thumbnail_path"] = await self._generate_custom_thumbnail(final_video, metadata, video)
         prediction = await self._predict_performance(final_video, metadata)
 
         result = {
@@ -1773,21 +1895,39 @@ class AdaptiveContentRecreator:
             body = self._generate_informational_body(topic, deconstruction)
 
         # Generate CTA
-        ctas = [
-            f"Follow for more {category} insights",
-            "Save this for later - you'll need it",
-            "Comment your thoughts below",
-            "Share with someone who needs to see this",
-            "Part 2? Let me know in the comments"
-        ]
-        if self._growth_goal_enabled():
+        if self._is_french_content():
             ctas = [
-                self.config.get("subscriber_cta", "Subscribe for the next viral breakdown."),
-                "Subscribe and comment the next trend I should break down.",
-                "If you want tomorrow's viral story early, subscribe now.",
-                "Subscribe for daily viral trends explained fast.",
-                "Follow the series - the next trend drops today.",
+                f"Abonne-toi pour plus de decryptages {category}",
+                "Garde ca pour plus tard",
+                "Dis-moi ce que tu en penses en commentaire",
+                "Partage a quelqu'un qui doit voir ca",
+                "Partie 2 ? Dis-le en commentaire",
             ]
+        else:
+            ctas = [
+                f"Follow for more {category} insights",
+                "Save this for later - you'll need it",
+                "Comment your thoughts below",
+                "Share with someone who needs to see this",
+                "Part 2? Let me know in the comments"
+            ]
+        if self._growth_goal_enabled():
+            if self._is_french_content():
+                ctas = [
+                    self.config.get("subscriber_cta", "Abonne-toi pour le prochain decryptage viral."),
+                    "Abonne-toi et commente la prochaine tendance a decrypter.",
+                    "Pour voir l'histoire virale de demain avant les autres, abonne-toi.",
+                    "Abonne-toi pour des tendances virales expliquees vite.",
+                    "Suis la serie - la prochaine tendance arrive aujourd'hui.",
+                ]
+            else:
+                ctas = [
+                    self.config.get("subscriber_cta", "Subscribe for the next viral breakdown."),
+                    "Subscribe and comment the next trend I should break down.",
+                    "If you want tomorrow's viral story early, subscribe now.",
+                    "Subscribe for daily viral trends explained fast.",
+                    "Follow the series - the next trend drops today.",
+                ]
 
         script = {
             'hook': hook,
@@ -1998,17 +2138,117 @@ class AdaptiveContentRecreator:
 
         return image
 
+    async def _generate_custom_thumbnail(self, video_path: str, metadata: dict, video: TrendingVideo) -> Optional[str]:
+        """Create a custom YouTube thumbnail from the rendered Short."""
+        if not self.config.get("custom_thumbnails_enabled", True):
+            return None
+
+        path = Path(video_path)
+        if not path.exists():
+            return None
+
+        try:
+            import cv2
+            from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
+            cap = cv2.VideoCapture(str(path))
+            total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+            frame_index = max(int(total_frames * float(self.config.get("custom_thumbnail_frame_ratio", 0.2))), 0)
+            if frame_index:
+                cap.set(cv2.CAP_PROP_POS_FRAMES, frame_index)
+            ok, frame = cap.read()
+            cap.release()
+            if not ok or frame is None:
+                return None
+
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            image = Image.fromarray(frame_rgb)
+            target_w, target_h = 1280, 720
+            cover = image.resize((target_w, int(image.height * target_w / image.width)))
+            if cover.height < target_h:
+                cover = image.resize((int(image.width * target_h / image.height), target_h))
+            left = max((cover.width - target_w) // 2, 0)
+            top = max((cover.height - target_h) // 2, 0)
+            base = cover.crop((left, top, left + target_w, top + target_h)).filter(ImageFilter.SHARPEN)
+
+            draw = ImageDraw.Draw(base, "RGBA")
+            draw.rectangle((0, 0, target_w, target_h), fill=(0, 0, 0, 72))
+            draw.rectangle((0, target_h - 250, target_w, target_h), fill=(0, 0, 0, 176))
+            accent = str(self.config.get("custom_thumbnail_accent", "#00F0FF")).strip() or "#00F0FF"
+            draw.rectangle((0, target_h - 250, 22, target_h), fill=accent)
+
+            try:
+                title_font = ImageFont.truetype("arialbd.ttf", 76)
+                label_font = ImageFont.truetype("arialbd.ttf", 34)
+            except Exception:
+                title_font = ImageFont.load_default()
+                label_font = ImageFont.load_default()
+
+            label = str(self.config.get("custom_thumbnail_label", "SHORTS")).upper()[:18]
+            title = re.sub(r"\s+", " ", metadata.get("title") or video.title).strip()
+            title = re.sub(r"^[^\w]+", "", title)
+            lines = self._wrap_thumbnail_text(draw, title, title_font, target_w - 120, max_lines=2)
+
+            draw.rounded_rectangle((54, 54, 250, 112), radius=16, fill=accent)
+            draw.text((78, 66), label, font=label_font, fill=(5, 8, 12, 255))
+
+            y = target_h - 210
+            for line in lines:
+                draw.text((66, y), line, font=title_font, fill=(0, 0, 0, 230), stroke_width=7, stroke_fill=(0, 0, 0, 230))
+                draw.text((66, y), line, font=title_font, fill=(255, 255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0, 255))
+                y += 86
+
+            output_dir = Path(self.config.get("output_dir", "outputs"))
+            output_dir.mkdir(exist_ok=True)
+            thumbnail_path = output_dir / f"thumbnail_{video.video_id}_{int(time.time())}.jpg"
+            base.convert("RGB").save(thumbnail_path, "JPEG", quality=88, optimize=True)
+            logger.info(f"Generated custom thumbnail: {thumbnail_path.name}")
+            return str(thumbnail_path)
+        except Exception as e:
+            logger.warning(f"Custom thumbnail generation failed: {e}")
+            return None
+
+    def _wrap_thumbnail_text(self, draw, text: str, font, max_width: int, max_lines: int = 2) -> List[str]:
+        words = text.split()
+        lines = []
+        current = ""
+        for word in words:
+            candidate = f"{current} {word}".strip()
+            bbox = draw.textbbox((0, 0), candidate, font=font)
+            if bbox[2] - bbox[0] <= max_width:
+                current = candidate
+                continue
+            if current:
+                lines.append(current)
+            current = word
+            if len(lines) >= max_lines:
+                break
+        if current and len(lines) < max_lines:
+            lines.append(current)
+        if lines and len(lines) == max_lines and len(" ".join(words)) > len(" ".join(lines)):
+            lines[-1] = lines[-1].rstrip(".")[:26].rstrip() + "..."
+        return lines or [text[:26]]
+
     async def _generate_metadata(self, video: TrendingVideo, script: dict) -> dict:
         """Generate SEO-optimized metadata"""
 
         # Title optimization
-        title_templates = {
-            "part_one": "{hook} (Part 1)",
-            "heres_why": "{hook} - Here's Why",
-            "found_out": "I Found Out {hook}",
-            "truth_about": "The Truth About {topic}",
-            "sixty_seconds": "{hook} Explained in 60 Seconds",
-        }
+        if self._is_french_content():
+            title_templates = {
+                "part_one": "{hook} (Partie 1)",
+                "heres_why": "{hook} - Voici pourquoi",
+                "found_out": "J'ai compris {hook}",
+                "truth_about": "La verite sur {topic}",
+                "sixty_seconds": "{hook} explique en 60 secondes",
+            }
+        else:
+            title_templates = {
+                "part_one": "{hook} (Part 1)",
+                "heres_why": "{hook} - Here's Why",
+                "found_out": "I Found Out {hook}",
+                "truth_about": "The Truth About {topic}",
+                "sixty_seconds": "{hook} Explained in 60 Seconds",
+            }
         title_template_key = self.learning_memory.choose(
             "title_template",
             list(title_templates.keys()),
@@ -2022,26 +2262,42 @@ class AdaptiveContentRecreator:
         # Ensure under 60 chars for Shorts
         if len(title) > 58:
             title = title[:55] + "..."
-        title = self._format_upload_title(title, 60)
+        title, attractive_template = self._attractive_title_variant(title, topic, 60)
+        title_template_key = attractive_template if attractive_template != "already_attractive" else title_template_key
 
         # Tags
-        tags = [
-            video.category.lower(),
-            "shorts",
-            "viral",
-            "trending",
-            script['style'],
-            "fyp",
-            "foryou",
-            "explained",
-            "story",
-            "facts"
-        ]
+        if self._is_french_content():
+            tags = [
+                video.category.lower(),
+                "shorts",
+                "viral",
+                "tendance",
+                script['style'],
+                "fyp",
+                "pourtoi",
+                "explique",
+                "histoire",
+                "faits"
+            ]
+        else:
+            tags = [
+                video.category.lower(),
+                "shorts",
+                "viral",
+                "trending",
+                script['style'],
+                "fyp",
+                "foryou",
+                "explained",
+                "story",
+                "facts"
+            ]
 
         # Description
         description = f"\"{script['hook']}\"\n\n"
         description += f"{script['body'][:200]}...\n\n"
-        description += "#shorts #viral #trending " + " ".join([f"#{t}" for t in tags[:5]])
+        base_hashtags = "#shorts #viral #tendance" if self._is_french_content() else "#shorts #viral #trending"
+        description += base_hashtags + " " + " ".join([f"#{t}" for t in tags[:5]])
 
         metadata = {
             'title': title,
@@ -2051,6 +2307,7 @@ class AdaptiveContentRecreator:
             'title_template': title_template_key,
             'hook_style': script.get('style'),
             'structure': script.get('structure'),
+            'title_features': self._title_features(title),
             'privacy': 'public',
             'made_for_kids': False
         }
@@ -2059,26 +2316,33 @@ class AdaptiveContentRecreator:
     async def _generate_source_clip_metadata(self, video: TrendingVideo) -> dict:
         """Generate upload metadata for a direct source clip Short."""
         clean_title = re.sub(r"\s+", " ", video.title).strip()
-        title = clean_title
-        if len(title) > 74:
-            title = title[:71].rstrip() + "..."
-        title = self._format_upload_title(title, 74)
+        title, title_template_key = self._attractive_title_variant(clean_title, clean_title[:42], 74)
 
-        tags = [
-            video.category.lower(),
-            "shorts",
-            "viral",
-            "trending",
-            "clip",
-            "youtube shorts",
-        ]
+        if self._is_french_content():
+            tags = [
+                video.category.lower(),
+                "shorts",
+                "viral",
+                "tendance",
+                "clip",
+                "youtube shorts",
+            ]
+        else:
+            tags = [
+                video.category.lower(),
+                "shorts",
+                "viral",
+                "trending",
+                "clip",
+                "youtube shorts",
+            ]
 
         description_parts = [
             clean_title,
             "",
-            "Source clip trimmed and formatted as a Short.",
+            "Clip source coupe et formate en Short." if self._is_french_content() else "Source clip trimmed and formatted as a Short.",
             "",
-            "#shorts #viral #trending"
+            "#shorts #viral #tendance" if self._is_french_content() else "#shorts #viral #trending"
         ]
 
         metadata = {
@@ -2086,9 +2350,10 @@ class AdaptiveContentRecreator:
             'description': "\n".join(description_parts),
             'tags': tags,
             'category': video.category,
-            'title_template': 'source_title',
+            'title_template': title_template_key,
             'hook_style': 'source_clip',
             'structure': 'cut_and_crop',
+            'title_features': self._title_features(title),
             'privacy': self.config.get('upload_privacy', 'public'),
             'made_for_kids': False
         }
@@ -2150,7 +2415,9 @@ class AdaptiveContentRecreator:
         # Emotional words
         emotional_words = [
             'shocking', 'unbelievable', 'secret', 'truth', 'hidden', 'revealed',
-            'trending', 'explained', 'why', 'how', 'new', 'breaking', 'official'
+            'trending', 'explained', 'why', 'how', 'new', 'breaking', 'official',
+            'must watch', 'wild', 'viral', 'cartonne', 'incroyable', 'pourquoi',
+            'explique', 'verite', 'fou'
         ]
         if any(w in title.lower() for w in emotional_words):
             score += 0.15
@@ -2169,7 +2436,24 @@ class AdaptiveContentRecreator:
         if '?' in title:
             score += 0.1
 
+        if self.learning_memory._has_emoji(title):
+            score += 0.08
+
         return min(score, 1.0)
+
+    def _title_features(self, title: str) -> dict:
+        lower = title.lower()
+        attractive_words = [
+            "why", "must watch", "wild", "shocking", "secret", "truth", "explained",
+            "trending", "viral", "pourquoi", "cartonne", "incroyable", "explique", "fou"
+        ]
+        return {
+            "length": len(title),
+            "has_emoji": self.learning_memory._has_emoji(title),
+            "has_number": any(char.isdigit() for char in title),
+            "has_question": "?" in title,
+            "attractive_words": [word for word in attractive_words if word in lower],
+        }
 
     def _log_dry_run(self, result: dict):
         """Log dry-run report for tuning"""
@@ -2400,6 +2684,8 @@ class ContinuousPipeline:
             self.history.mark_source(video, "processing_failed")
             self.metrics.errors_count += 1
             self.state = PipelineState.ERROR
+            # Clean up orphaned downloads to prevent disk bloat
+            self._cleanup_failed_download(video)
 
     def _handle_dry_run(self, result: dict):
         """Handle dry-run mode - log and tune only"""
@@ -2437,12 +2723,16 @@ class ContinuousPipeline:
             self.history.mark_result(result, "skipped_no_uploader")
             return
 
-        await self._wait_for_upload_slot()
+        schedule_time = self._next_peak_schedule_time() if self.config.get("schedule_uploads_ahead", False) else None
+        if not schedule_time:
+            await self._wait_for_upload_slot()
 
         self.state = PipelineState.UPLOADING
         self.metrics.uploads_attempted += 1
 
         try:
+            if schedule_time:
+                logger.info(f"Uploading to channel and scheduling for peak slot: {schedule_time.isoformat()}")
             logger.info(f"Uploading: {result['metadata']['title']}")
             upload_result = await self.youtube_publisher.upload_short(
                 video_path=result['final_video_path'],
@@ -2451,11 +2741,15 @@ class ContinuousPipeline:
                 tags=result['metadata']['tags'],
                 category_id=str(result['metadata'].get('category_id', '22')),
                 privacy=result['metadata'].get('privacy', self.config.get('upload_privacy', 'private')),
-                made_for_kids=bool(result['metadata'].get('made_for_kids', False))
+                made_for_kids=bool(result['metadata'].get('made_for_kids', False)),
+                public_stats_viewable=bool(self.config.get('upload_public_stats_viewable', True)),
+                schedule_time=schedule_time
             )
             result['upload_result'] = upload_result
+            await self._upload_custom_thumbnail(result, upload_result)
             self.metrics.uploads_successful += 1
-            await self._post_growth_first_comment(upload_result)
+            if not upload_result.get("scheduled"):
+                await self._post_growth_first_comment(upload_result)
             self._record_upload_success(upload_result)
             self.history.mark_result(result, "uploaded", upload_result)
             self.learning_memory.record_upload(result, upload_result)
@@ -2466,6 +2760,33 @@ class ContinuousPipeline:
         except Exception as e:
             logger.error(f"Upload error: {e}")
             self.history.mark_result(result, "upload_failed")
+
+    async def _upload_custom_thumbnail(self, result: dict, upload_result: dict):
+        """Best-effort custom thumbnail upload after the video exists on YouTube."""
+        if not self.config.get("custom_thumbnails_enabled", True):
+            return
+        if not self.youtube_publisher or not hasattr(self.youtube_publisher, "update_thumbnail"):
+            return
+
+        video_id = upload_result.get("video_id")
+        thumbnail_path = result.get("metadata", {}).get("thumbnail_path") or result.get("thumbnail_path")
+        if not video_id or not thumbnail_path:
+            return
+
+        path = Path(thumbnail_path)
+        if not path.is_absolute():
+            path = PROJECT_ROOT / path
+        if not path.exists():
+            logger.warning(f"Custom thumbnail missing, skipping upload: {path}")
+            return
+
+        try:
+            thumbnail_result = await self.youtube_publisher.update_thumbnail(video_id, str(path))
+            upload_result["thumbnail"] = thumbnail_result
+            logger.info(f"Custom thumbnail uploaded for {video_id}: {path.name}")
+        except Exception as e:
+            upload_result["thumbnail"] = {"status": "thumbnail_failed", "error": str(e), "thumbnail_path": str(path)}
+            logger.warning(f"Custom thumbnail upload failed for {video_id}: {e}")
 
     async def _post_growth_first_comment(self, upload_result: dict):
         """Post a growth-focused first comment when the uploader supports it."""
@@ -2488,7 +2809,22 @@ class ContinuousPipeline:
 
     def _upload_timezone(self) -> ZoneInfo:
         """Timezone used for US audience upload windows."""
-        return ZoneInfo(self.config.get("upload_timezone", "America/New_York"))
+        timezone_name = str(self.config.get("upload_timezone", "America/New_York")).strip()
+        if not timezone_name:
+            return ZoneInfo("America/New_York")
+
+        try:
+            if timezone_name.upper().startswith("UTC") and len(timezone_name) > 3:
+                offset_text = timezone_name[3:]
+                sign = 1 if offset_text.startswith("+") else -1
+                hours_text = offset_text[1:] if offset_text[:1] in "+-" else offset_text
+                hours = float(hours_text)
+                offset = datetime_timedelta(hours=sign * hours)
+                return datetime_timezone(offset)
+            return ZoneInfo(timezone_name)
+        except Exception:
+            logger.warning(f"Invalid upload timezone '{timezone_name}', falling back to America/New_York")
+            return ZoneInfo("America/New_York")
 
     def _quota_state_path(self) -> Path:
         path = Path(self.config.get("daily_quota_state_path", "public/data/daily_quota_state.json"))
@@ -2566,8 +2902,13 @@ class ContinuousPipeline:
             "content_type": self._content_type_for_result(result),
             "video_path": rel_path,
             "public_url": self._public_media_url(final_path),
+            "thumbnail_path": result.get("metadata", {}).get("thumbnail_path"),
+            "thumbnail_url": self._public_media_url(result.get("metadata", {}).get("thumbnail_path")),
             "exists": Path(final_path).exists(),
             "prediction": result.get("prediction", {}),
+            "title_features": result.get("metadata", {}).get("title_features", {}),
+            "learning": result.get("learning", {}),
+            "metadata": result.get("metadata", {}),
             "schedule_time": result.get("schedule_time"),
             "approved": approved,
             "timestamp": result.get("timestamp", datetime.now().isoformat()),
@@ -2595,6 +2936,100 @@ class ContinuousPipeline:
             self._save_quota_state(state)
         return max(int(self.config.get("max_daily_uploads", 3)) - int(state.get("uploads", 0)), 0)
 
+    def _scheduled_upload_count_for_date(self, publish_date) -> int:
+        state = self._load_quota_state()
+        publish_key = publish_date.strftime("%Y-%m-%d")
+        count = 0
+        for item in state.get("history", []):
+            timestamp = item.get("scheduled_publish_at") or item.get("publish_at") or item.get("timestamp")
+            if str(timestamp).startswith(publish_key):
+                count += 1
+        if state.get("date") == publish_key:
+            count = max(count, int(state.get("uploads", 0) or 0))
+        return count
+
+    def _parse_upload_datetime(self, timestamp: Optional[str]) -> Optional[datetime]:
+        if not timestamp:
+            return None
+        try:
+            parsed = datetime.fromisoformat(str(timestamp).replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=self._upload_timezone())
+            return parsed.astimezone(self._upload_timezone())
+        except Exception:
+            return None
+
+    def _peak_datetime(self, publish_date, slot: str) -> datetime:
+        tz = self._upload_timezone()
+        hour, minute = [int(part) for part in slot.split(":", 1)]
+        return datetime.combine(publish_date, datetime.min.time(), tzinfo=tz).replace(hour=hour, minute=minute)
+
+    def _upload_window_for_peak(self, peak: datetime) -> Tuple[datetime, datetime]:
+        upload_window_minutes = int(self.config.get("upload_window_minutes", 60))
+        upload_window_position = str(self.config.get("upload_window_position", "after")).lower()
+        if upload_window_position == "before":
+            return peak - timedelta(minutes=upload_window_minutes), peak
+        return peak, peak + timedelta(minutes=upload_window_minutes)
+
+    def _upload_window_key(self, peak: datetime) -> str:
+        return peak.astimezone(self._upload_timezone()).strftime("%Y-%m-%dT%H:%M")
+
+    def _window_key_for_upload_time(self, upload_time: datetime) -> Optional[str]:
+        tz = self._upload_timezone()
+        upload_time = upload_time.astimezone(tz)
+        peak_times = self.config.get("upload_peak_times", ["07:30", "12:00", "18:00"])
+        for day_offset in range(-1, 2):
+            day = (upload_time + timedelta(days=day_offset)).date()
+            for slot in peak_times:
+                peak = self._peak_datetime(day, slot)
+                start, end = self._upload_window_for_peak(peak)
+                if start <= upload_time <= end:
+                    return self._upload_window_key(peak)
+        return None
+
+    def _used_upload_window_keys_for_date(self, publish_date) -> set:
+        state = self._load_quota_state()
+        publish_key = publish_date.strftime("%Y-%m-%d")
+        used = set()
+        for item in state.get("history", []):
+            timestamp = item.get("scheduled_publish_at") or item.get("publish_at") or item.get("timestamp")
+            upload_time = self._parse_upload_datetime(timestamp)
+            if not upload_time or upload_time.strftime("%Y-%m-%d") != publish_key:
+                continue
+            window_key = item.get("upload_window_key") or self._window_key_for_upload_time(upload_time)
+            if window_key:
+                used.add(window_key)
+        return used
+
+    def _current_upload_window_is_used(self) -> bool:
+        window_key = self._window_key_for_upload_time(datetime.now(self._upload_timezone()))
+        if not window_key:
+            return False
+        return window_key in self._used_upload_window_keys_for_date(datetime.now(self._upload_timezone()).date())
+
+    def _next_peak_schedule_time(self) -> Optional[datetime]:
+        tz = self._upload_timezone()
+        now = datetime.now(tz)
+        peak_times = self.config.get("upload_peak_times", ["07:30", "12:00", "18:00"])
+        days_ahead = max(int(self.config.get("schedule_upload_days_ahead", 1) or 1), 0)
+        max_daily_uploads = int(self.config.get("max_daily_uploads", 5) or 5)
+
+        for day_offset in range(days_ahead, days_ahead + 14):
+            publish_date = (now + timedelta(days=day_offset)).date()
+            used = self._scheduled_upload_count_for_date(publish_date)
+            if used >= max_daily_uploads:
+                continue
+
+            used_windows = self._used_upload_window_keys_for_date(publish_date)
+            slots = [self._peak_datetime(publish_date, slot) for slot in peak_times]
+
+            future_slots = [slot for slot in sorted(slots) if slot > now + timedelta(minutes=15)]
+            for slot in future_slots:
+                if self._upload_window_key(slot) not in used_windows:
+                    return slot
+
+        return None
+
     async def _wait_for_upload_slot(self):
         """Wait until a configured upload slot is available and daily quota remains."""
         while self.running:
@@ -2608,7 +3043,9 @@ class ContinuousPipeline:
 
             seconds = self._seconds_until_next_peak_slot()
             if seconds <= 0:
-                return
+                if not self._current_upload_window_is_used():
+                    return
+                seconds = self._seconds_until_next_peak_slot(skip_used=True)
 
             logger.info(f"Waiting {seconds // 60:.1f} minutes for next upload slot")
             self.state = PipelineState.COOLDOWN
@@ -2621,29 +3058,30 @@ class ContinuousPipeline:
         reset = datetime.combine(tomorrow, datetime.min.time(), tzinfo=tz)
         return max(int((reset - now).total_seconds()), 60)
 
-    def _seconds_until_next_peak_slot(self) -> int:
+    def _seconds_until_next_peak_slot(self, skip_used: bool = False) -> int:
         tz = self._upload_timezone()
         now = datetime.now(tz)
         peak_times = self.config.get("upload_peak_times", ["07:30", "12:00", "18:00"])
-        upload_window_minutes = int(self.config.get("upload_window_minutes", 60))
         windows = []
 
         for day_offset in range(2):
             day = (now + timedelta(days=day_offset)).date()
+            used_windows = self._used_upload_window_keys_for_date(day) if skip_used else set()
             for slot in peak_times:
-                hour, minute = [int(part) for part in slot.split(":", 1)]
-                windows.append(
-                    datetime.combine(day, datetime.min.time(), tzinfo=tz).replace(hour=hour, minute=minute)
-                )
+                peak = self._peak_datetime(day, slot)
+                if self._upload_window_key(peak) in used_windows:
+                    continue
+                start, end = self._upload_window_for_peak(peak)
+                windows.append((start, end))
 
-        future = sorted(window for window in windows if window >= now - timedelta(minutes=upload_window_minutes))
+        future = sorted(window for window in windows if window[1] >= now)
         if not future:
             return 60
 
-        next_slot = future[0]
-        if now - timedelta(minutes=upload_window_minutes) <= next_slot <= now + timedelta(minutes=upload_window_minutes):
+        next_start, next_end = future[0]
+        if next_start <= now <= next_end:
             return 0
-        return max(int((next_slot - now).total_seconds()), 0)
+        return max(int((next_start - now).total_seconds()), 0)
 
     def _record_upload_success(self, upload_result: dict):
         state = self._load_quota_state()
@@ -2653,12 +3091,21 @@ class ContinuousPipeline:
 
         state["uploads"] = int(state.get("uploads", 0)) + 1
         history = state.setdefault("history", [])
+        scheduled_publish_at = upload_result.get("scheduled_publish_at")
+        publish_timestamp = scheduled_publish_at or datetime.now(self._upload_timezone()).isoformat()
+        publish_time = self._parse_upload_datetime(publish_timestamp) or datetime.now(self._upload_timezone())
+        publish_date = publish_time.strftime("%Y-%m-%d")
+        upload_window_key = self._window_key_for_upload_time(publish_time)
         history.append({
             "timestamp": datetime.now(self._upload_timezone()).isoformat(),
+            "scheduled_publish_at": scheduled_publish_at,
+            "upload_window_key": upload_window_key,
             "video_id": upload_result.get("video_id"),
             "url": upload_result.get("url")
         })
         state["history"] = history[-100:]
+        state["date"] = publish_date
+        state["uploads"] = self._scheduled_upload_count_for_date(publish_time.date()) + 1
         self._save_quota_state(state)
 
     def _cleanup_uploaded_assets(self, result: dict):
@@ -2679,9 +3126,12 @@ class ContinuousPipeline:
     def _uploaded_asset_cleanup_paths(self, result: dict) -> set[Path]:
         """Collect generated/downloaded files tied to a successfully uploaded video."""
         original = result.get("original_video", {})
+        metadata = result.get("metadata", {})
         video_id = str(original.get("video_id") or "").strip()
         raw_paths = {
             result.get("final_video_path"),
+            metadata.get("thumbnail_path"),
+            result.get("thumbnail_path"),
             original.get("download_path"),
             original.get("local_path"),
         }
@@ -2702,6 +3152,7 @@ class ContinuousPipeline:
             patterns = [
                 f"{video_id}.*",
                 f"short_{video_id}_*.*",
+                f"thumbnail_{video_id}_*.*",
                 f"short_{video_id}_*TEMP_MPY_*.*",
             ]
             for root in safe_roots:
@@ -2733,6 +3184,8 @@ class ContinuousPipeline:
             'timestamp': datetime.now().isoformat(),
             'video_path': self._relative_project_path(result['final_video_path']),
             'content_type': self._content_type_for_result(result),
+            'thumbnail_path': result['metadata'].get('thumbnail_path'),
+            'thumbnail_url': self._public_media_url(result['metadata'].get('thumbnail_path')),
             'metadata': result['metadata'],
             'prediction': result['prediction'],
             'schedule_time': None,
@@ -2790,7 +3243,9 @@ class ContinuousPipeline:
                 changed = True
                 continue
 
-            await self._wait_for_upload_slot()
+            schedule_time = self._next_peak_schedule_time() if self.config.get("schedule_uploads_ahead", False) else None
+            if not schedule_time:
+                await self._wait_for_upload_slot()
             item["upload_status"] = "uploading"
             self._write_json(approval_queue_file, queue_data)
 
@@ -2805,13 +3260,20 @@ class ContinuousPipeline:
                     tags=metadata.get("tags", []),
                     category_id=str(metadata.get("category_id", "22")),
                     privacy=metadata.get("privacy", self.config.get("upload_privacy", "private")),
-                    made_for_kids=bool(metadata.get("made_for_kids", False))
+                    made_for_kids=bool(metadata.get("made_for_kids", False)),
+                    public_stats_viewable=bool(self.config.get("upload_public_stats_viewable", True)),
+                    schedule_time=schedule_time
                 )
+                await self._upload_custom_thumbnail({
+                    "final_video_path": str(video_path),
+                    "metadata": metadata,
+                }, upload_result)
                 item["upload_status"] = "uploaded"
                 item["upload_result"] = upload_result
                 item["uploaded_at"] = datetime.now().isoformat()
                 self.metrics.uploads_successful += 1
-                await self._post_growth_first_comment(upload_result)
+                if not upload_result.get("scheduled"):
+                    await self._post_growth_first_comment(upload_result)
                 self._record_upload_success(upload_result)
                 self.learning_memory.record_upload({
                     "original_video": {"video_id": metadata.get("source_video_id", item.get("video_path")), "category": metadata.get("category")},
@@ -2910,6 +3372,29 @@ class ContinuousPipeline:
             logger.info(f"Current state: {self.state.value}")
             logger.info("=" * 60)
 
+    def _cleanup_failed_download(self, video: TrendingVideo):
+        """Remove orphaned download files when processing fails."""
+        for raw_path in (video.download_path, video.local_path):
+            if not raw_path:
+                continue
+            try:
+                path = Path(raw_path)
+                if path.exists() and path.is_file():
+                    path.unlink()
+                    logger.info(f"Cleaned up failed download: {path.name}")
+            except Exception as e:
+                logger.warning(f"Could not clean up {raw_path}: {e}")
+        # Also remove any related sidecar files (info json, subtitles)
+        if video.video_id:
+            download_dir = Path(self.config.get("download_dir", "downloads"))
+            if download_dir.exists():
+                for sidecar in download_dir.glob(f"{video.video_id}.*"):
+                    try:
+                        sidecar.unlink()
+                        logger.info(f"Cleaned up sidecar: {sidecar.name}")
+                    except Exception:
+                        pass
+
     async def _health_monitor(self):
         """Monitor system health and recover from failures"""
         while self.running:
@@ -2919,12 +3404,24 @@ class ContinuousPipeline:
             if (datetime.now() - self.last_heartbeat).total_seconds() > 120:
                 logger.error("Heartbeat failed - initiating recovery")
                 self.state = PipelineState.ERROR
-                # Recovery logic here
+                # Reset heartbeat and attempt recovery by clearing error state
+                self.last_heartbeat = datetime.now()
+                self.state = PipelineState.IDLE
+                logger.info("Heartbeat recovery: reset state to IDLE")
 
             # Check queue health
             if self.video_queue.qsize() > 90:
-                logger.warning("Queue near capacity - throttling scanner")
-                # Reduce scan frequency
+                logger.warning("Queue near capacity - draining oldest entries")
+                drained = 0
+                while self.video_queue.qsize() > 70:
+                    try:
+                        self.video_queue.get_nowait()
+                        self.video_queue.task_done()
+                        drained += 1
+                    except asyncio.QueueEmpty:
+                        break
+                if drained:
+                    logger.info(f"Drained {drained} oldest queue entries")
 
             # Check error rate
             if self.metrics.errors_count > 10:
@@ -2932,6 +3429,8 @@ class ContinuousPipeline:
                 self.state = PipelineState.COOLDOWN
                 await asyncio.sleep(600)
                 self.metrics.errors_count = 0
+                self.state = PipelineState.IDLE
+                logger.info("Cooldown complete - resuming normal operation")
 
     def _save_dry_run_analysis(self, result: dict):
         """Save dry-run results for weekly analysis"""
@@ -3086,10 +3585,11 @@ def load_config() -> dict:
 
         # Scanning
         "scan_interval_minutes": 30,
-        "min_views": 50000,
-        "max_video_age_hours": 48,
-        "categories": ["Entertainment", "Education", "Science", "Technology", "Gaming"],
-        "youtube_region_code": "US",
+        "min_views": 1000000,
+        "max_video_age_hours": 168,
+        "categories": ["Entertainment", "Film & Animation", "Comedy"],
+        "content_language": "fr",
+        "youtube_region_code": "FR",
         "youtube_api_max_results": 50,
         "youtube_video_category_id": "",
         "youtube_api_default_engagement_rate": 0.05,
@@ -3101,44 +3601,59 @@ def load_config() -> dict:
         "max_video_duration": 600,  # 10 minutes
         "yt_dlp_cookie_file": "",
         "yt_dlp_cookies_from_browser": "",
+        "yt_dlp_write_subtitles": False,
 
         # Content
         "short_creation_mode": "source_clip",
         "source_clip_short_duration": 60,
         "upload_title_emoji": "🔥",
+        "upload_title_emojis": ["🔥", "⚡", "🎬", "🚀", "👀", "✨", "💥", "📌"],
         "subscriber_growth_goal_enabled": True,
         "subscriber_growth_target": 10000,
         "subscriber_growth_days": 15,
         "subscriber_growth_current": 0,
         "subscriber_growth_strategy": "broad_audience",
-        "subscriber_cta": "Subscribe if you want the next viral thing explained fast.",
-        "subscriber_value_promise": "daily viral trends, simple explanations, and must-watch Shorts",
+        "subscriber_cta": "Abonne-toi pour comprendre les tendances virales avant tout le monde.",
+        "subscriber_value_promise": "des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer",
         "growth_first_comment_enabled": True,
-        "growth_first_comment": "Subscribe for daily viral trends explained fast. Comment the next trend I should break down.",
+        "growth_first_comment": "Abonne-toi pour des tendances virales expliquees chaque jour. Commente la prochaine tendance a decrypter.",
         "growth_audience_keywords": [
-            "trailer", "official", "music", "game", "gaming", "movie",
-            "technology", "ai", "science", "sports", "celebrity", "viral",
-            "breaking", "explained", "how", "why",
+            "bande annonce", "officiel", "musique", "jeu", "gaming", "film",
+            "technologie", "ai", "science", "sports", "celebrite", "viral",
+            "actualite", "explique", "comment", "pourquoi",
         ],
         "growth_discovery_terms": [
-            "viral shorts today",
-            "trending shorts today",
-            "new trailer reaction",
-            "ai tools trending",
-            "technology news explained",
-            "gaming update today",
-            "movie trailer today",
-            "celebrity news today",
-            "sports viral moment",
-            "science discovery explained",
-            "why is this trending",
-            "breaking news explained",
+            "shorts tendance france millions de vues",
+            "shorts anime tendance millions de vues",
+            "shorts humour france viral",
         ],
-        "growth_min_views": 10000,
+        "growth_discovery_groups": [
+            {
+                "name": "trending",
+                "max_results": 2,
+                "terms": ["shorts tendance france millions de vues", "video virale france aujourd'hui shorts"],
+            },
+            {
+                "name": "anime",
+                "max_results": 2,
+                "terms": ["shorts anime tendance millions de vues", "edit anime viral shorts france"],
+            },
+            {
+                "name": "comedy",
+                "max_results": 2,
+                "terms": ["shorts humour france viral", "video drole virale shorts france"],
+            },
+        ],
+        "growth_min_views": 1000000,
         "growth_min_engagement_rate": 0.015,
-        "growth_search_results_per_term": 5,
+        "growth_search_results_per_term": 2,
         "min_virality_threshold": 45,  # Growth sprint uploads more promising candidates.
         "max_daily_uploads": 5,
+        "upload_public_stats_viewable": False,
+        "custom_thumbnails_enabled": True,
+        "custom_thumbnail_frame_ratio": 0.2,
+        "custom_thumbnail_label": "TENDANCE",
+        "custom_thumbnail_accent": "#00F0FF",
         "auto_learning_enabled": True,
         "learning_memory_db_path": "pipeline/learning_memory.sqlite3",
         "learning_exploration_rate": 0.18,
@@ -3161,8 +3676,11 @@ def load_config() -> dict:
         "youtube_credentials_path": "youtube_credentials.json",
         "youtube_client_secrets_path": "client_secrets.json",
         "upload_privacy": "private",
-        "upload_timezone": "America/New_York",
+        "upload_timezone": "Europe/Paris",
         "upload_peak_times": ["07:30", "11:30", "15:30", "18:30", "21:30"],
+        "schedule_uploads_ahead": True,
+        "schedule_upload_days_ahead": 1,
+        "upload_window_minutes": 30,
         "delete_local_files_after_upload": True
     }
 
@@ -3177,6 +3695,8 @@ def load_config() -> dict:
         "copyright_safety_level": os.getenv("COPYRIGHT_SAFETY_LEVEL"),
         "youtube_credentials_path": os.getenv("YOUTUBE_CREDENTIALS_PATH"),
         "youtube_client_secrets_path": os.getenv("YOUTUBE_CLIENT_SECRETS_PATH"),
+        "yt_dlp_cookie_file": os.getenv("YT_DLP_COOKIE_FILE"),
+        "yt_dlp_cookies_from_browser": os.getenv("YT_DLP_COOKIES_FROM_BROWSER"),
         "upload_privacy": os.getenv("YOUTUBE_UPLOAD_PRIVACY"),
         "upload_timezone": os.getenv("UPLOAD_TIMEZONE"),
     }

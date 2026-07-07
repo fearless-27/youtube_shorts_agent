@@ -51,18 +51,27 @@ export default function CreatedVideos() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filtered.map(video => (
             <div key={video.id} className="group" style={{ background: '#0A0A0C', border: '1px solid #121212' }}>
-              {/* Thumbnail Placeholder */}
               <div className="relative aspect-video flex items-center justify-center overflow-hidden"
                 style={{ background: '#121212' }}>
+                {video.thumbnail && (
+                  <img
+                    src={video.thumbnail}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                )}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                   style={{ background: 'rgba(0,0,0,0.5)' }}>
                   <div className="w-10 h-10 flex items-center justify-center" style={{ background: '#00F0FF' }}>
                     <Play size={18} style={{ color: '#050505' }} />
                   </div>
                 </div>
-                <span className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.15)' }}>
-                  {video.id}
-                </span>
+                {!video.thumbnail && (
+                  <span className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.15)' }}>
+                    {video.id}
+                  </span>
+                )}
               </div>
 
               {/* Info */}

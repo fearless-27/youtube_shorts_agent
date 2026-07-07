@@ -155,7 +155,7 @@ class VisualFingerprintEngine:
         cap = cv2.VideoCapture(video_path)
         fps = cap.get(cv2.CAP_PROP_FPS)
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        frame_interval = int(fps * self.frame_sample_rate)
+        frame_interval = int(fps * self.frame_sample_rate) if fps > 0 else 60
 
         fingerprints = {"phash": [], "dhash": [], "whash": [], "ahash": [], "frame_timestamps": []}
         frame_count = 0
@@ -164,13 +164,16 @@ class VisualFingerprintEngine:
             ret, frame = cap.read()
             if not ret: break
             if frame_count % frame_interval == 0:
-                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                pil_image = Image.fromarray(frame_rgb)
-                fingerprints["phash"].append(str(imagehash.phash(pil_image)))
-                fingerprints["dhash"].append(str(imagehash.dhash(pil_image)))
-                fingerprints["whash"].append(str(imagehash.whash(pil_image)))
-                fingerprints["ahash"].append(str(imagehash.average_hash(pil_image)))
-                fingerprints["frame_timestamps"].append(frame_count / fps)
+                try:
+                    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    pil_image = Image.fromarray(frame_rgb)
+                    fingerprints["phash"].append(str(imagehash.phash(pil_image)))
+                    fingerprints["dhash"].append(str(imagehash.dhash(pil_image)))
+                    fingerprints["whash"].append(str(imagehash.whash(pil_image)))
+                    fingerprints["ahash"].append(str(imagehash.average_hash(pil_image)))
+                    fingerprints["frame_timestamps"].append(frame_count / fps if fps > 0 else 0)
+                except Exception:
+                    pass  # Skip frames that fail hashing
             frame_count += 1
         cap.release()
         return fingerprints
@@ -221,9 +224,13 @@ class VisualFingerprintEngine:
 class ScriptOriginalityEngine:
     """Ensures script content is transformative and original"""
 
+    _encoder = None  # Class-level cache for the SentenceTransformer model
+
     def __init__(self):
-        from sentence_transformers import SentenceTransformer
-        self.encoder = SentenceTransformer('all-MiniLM-L6-v2')
+        if ScriptOriginalityEngine._encoder is None:
+            from sentence_transformers import SentenceTransformer
+            ScriptOriginalityEngine._encoder = SentenceTransformer('all-MiniLM-L6-v2')
+        self.encoder = ScriptOriginalityEngine._encoder
         self.similarity_threshold = 0.75
 
     def analyze_script(self, script_text: str, original_transcript: str = None) -> CopyrightReport:

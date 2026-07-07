@@ -14,13 +14,6 @@ export default function Observation() {
   });
 
   useEffect(() => {
-    setCoords({
-      lat: observationConfig.initialLat,
-      lon: observationConfig.initialLon,
-    });
-  }, [observationConfig.initialLat, observationConfig.initialLon]);
-
-  useEffect(() => {
     const interval = setInterval(() => {
       setCoords((prev) => ({
         lat: parseFloat((prev.lat + (Math.random() - 0.5) * 0.02).toFixed(2)),

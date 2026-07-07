@@ -12,8 +12,9 @@ from typing import Optional, Dict, Any, List
 from dataclasses import dataclass
 from enum import Enum
 import base64
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+import mimetypes
 
 try:
     from dotenv import load_dotenv
@@ -351,6 +352,7 @@ class YouTubePublisher:
                           category_id: str = "22",  # People & Blogs
                           privacy: str = "public",
                           made_for_kids: bool = False,
+                          public_stats_viewable: bool = True,
                           schedule_time: Optional[datetime] = None) -> dict:
         """
         Upload video to YouTube as Short
@@ -372,12 +374,15 @@ class YouTubePublisher:
             "status": {
                 "privacyStatus": "private" if schedule_time else privacy,
                 "madeForKids": made_for_kids,
-                "selfDeclaredMadeForKids": made_for_kids
+                "selfDeclaredMadeForKids": made_for_kids,
+                "publicStatsViewable": public_stats_viewable
             }
         }
 
         if schedule_time:
-            body["status"]["publishAt"] = schedule_time.isoformat() + "Z"
+            if schedule_time.tzinfo is None:
+                schedule_time = schedule_time.replace(tzinfo=timezone.utc)
+            body["status"]["publishAt"] = schedule_time.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
         media = MediaFileUpload(video_path, 
                                chunksize=-1, 
@@ -396,7 +401,8 @@ class YouTubePublisher:
             "video_id": response["id"],
             "url": f"https://youtube.com/shorts/{response['id']}",
             "status": "uploaded",
-            "scheduled": schedule_time is not None
+            "scheduled": schedule_time is not None,
+            "scheduled_publish_at": schedule_time.isoformat() if schedule_time else None
         }
 
     async def update_thumbnail(self, video_id: str, thumbnail_path: str):
@@ -406,8 +412,12 @@ class YouTubePublisher:
         creds = self._load_credentials()
         youtube = build("youtube", "v3", credentials=creds)
 
-        media = MediaFileUpload(thumbnail_path, mimetype="image/png")
-        youtube.thumbnails().set(videoId=video_id, media_body=media).execute()
+        mimetype = mimetypes.guess_type(thumbnail_path)[0] or "image/png"
+        response = youtube.thumbnails().set(
+            videoId=video_id,
+            media_body=MediaFileUpload(thumbnail_path, mimetype=mimetype)
+        ).execute()
+        return {"status": "thumbnail_uploaded", "thumbnail_path": thumbnail_path, "response": response}
 
     async def add_to_playlist(self, video_id: str, playlist_id: str):
         """Add video to playlist"""

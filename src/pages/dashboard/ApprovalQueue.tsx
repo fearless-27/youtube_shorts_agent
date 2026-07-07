@@ -126,6 +126,15 @@ export default function ApprovalQueue() {
               <span className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>{video.id}</span>
               <div className="pr-4">
                 <span className="text-xs truncate block">{video.title}</span>
+                {video.thumbnail && (
+                  <img
+                    className="mt-2 w-40 max-w-full aspect-video object-cover"
+                    style={{ border: '1px solid #121212', background: '#050505' }}
+                    src={video.thumbnail}
+                    alt=""
+                    loading="lazy"
+                  />
+                )}
                 {video.previewUrl && (
                   <video className="mt-2 w-40 max-w-full" style={{ border: '1px solid #121212', background: '#050505' }} src={video.previewUrl} controls preload="metadata" />
                 )}

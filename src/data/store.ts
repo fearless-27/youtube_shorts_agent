@@ -35,8 +35,9 @@ export interface PipelineSettings {
   maxDailyUploads: number;
   privacy: 'Public' | 'Unlisted' | 'Private';
   timezone: string;
-  peakHoursStart: string;
-  peakHoursEnd: string;
+  peakUploadTimes: string[];
+  uploadWindowMinutes: number;
+  uploadWindowPosition: 'before' | 'after';
   autoDelete: boolean;
 }
 
@@ -85,9 +86,10 @@ export const defaultSettings: PipelineSettings = {
   mode: 'semi-live',
   maxDailyUploads: 5,
   privacy: 'Public',
-  timezone: 'Asia/Kolkata',
-  peakHoursStart: '07:30',
-  peakHoursEnd: '21:30',
+  timezone: 'America/New_York',
+  peakUploadTimes: ['07:30', '11:30', '15:30', '18:30', '21:30'],
+  uploadWindowMinutes: 30,
+  uploadWindowPosition: 'before',
   autoDelete: true,
 };
 export const pipelineStats: PipelineStats = {
@@ -191,6 +193,7 @@ export async function updateApproval(id: string, approved: boolean) {
 }
 
 export async function saveSettings(settings: PipelineSettings) {
+  const peakUploadTimes = normalizePeakTimes(settings.peakUploadTimes);
   const response = await fetch(apiPath('/api/config'), {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
@@ -199,12 +202,22 @@ export async function saveSettings(settings: PipelineSettings) {
       max_daily_uploads: settings.maxDailyUploads,
       upload_privacy: settings.privacy.toLowerCase(),
       upload_timezone: settings.timezone,
-      upload_peak_times: [settings.peakHoursStart, settings.peakHoursEnd],
+      upload_peak_times: peakUploadTimes,
+      upload_window_minutes: settings.uploadWindowMinutes,
+      upload_window_position: settings.uploadWindowPosition,
       delete_local_files_after_upload: settings.autoDelete,
     }),
   });
   if (!response.ok) {
     throw new Error(`Settings save failed: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function resetPipelineQueue() {
+  const response = await fetch(apiPath('/api/pipeline/reset'), { method: 'POST' });
+  if (!response.ok) {
+    throw new Error(`Pipeline reset failed: ${response.status}`);
   }
   return response.json();
 }
@@ -267,7 +280,7 @@ function mapApprovalVideo(item: Record<string, unknown>): Video {
     viralityScore: numberValue(prediction.predicted_virality, 0),
     fileStatus: 'LOCAL',
     youtubeUrl: stringValue(uploadResult.url),
-    thumbnail: '',
+    thumbnail: stringValue(item.thumbnail_url) || publicUrlFromPath(item.thumbnail_path) || '',
     previewUrl: stringValue(item.public_url) || publicUrlFromPath(item.video_path),
     createdAt: String(item.timestamp ?? new Date().toISOString()),
     status: uploadStatus === 'uploaded'
@@ -294,7 +307,7 @@ function mapMediaVideo(item: Record<string, unknown>): Video {
     viralityScore: numberValue(prediction.predicted_virality, 0),
     fileStatus: item.exists === false ? 'DELETED' : 'LOCAL',
     youtubeUrl: stringValue(uploadResult.url),
-    thumbnail: '',
+    thumbnail: stringValue(item.thumbnail_url) || publicUrlFromPath(item.thumbnail_path) || '',
     previewUrl: stringValue(item.public_url) || publicUrlFromPath(item.video_path),
     createdAt: String(item.timestamp ?? new Date().toISOString()),
     status: uploaded ? 'UPLOADED' : item.approved === true ? 'APPROVED' : 'PENDING_REVIEW',
@@ -328,15 +341,24 @@ function parseLogLine(line: string): LogEntry {
 function mapSettings(config: Record<string, unknown>, dailyCap: number): PipelineSettings {
   const mode = String(config.mode ?? 'semi_live');
   const peakTimes = Array.isArray(config.upload_peak_times) ? config.upload_peak_times.map(String) : [];
+  const uploadWindowPosition = String(config.upload_window_position ?? 'before') === 'after' ? 'after' : 'before';
   return {
     mode: mode === 'dry_run' ? 'dry-run' : mode === 'semi_live' ? 'semi-live' : 'live',
     maxDailyUploads: numberValue(config.max_daily_uploads, dailyCap),
     privacy: privacyLabel(config.upload_privacy),
-    timezone: String(config.upload_timezone ?? 'Asia/Kolkata'),
-    peakHoursStart: peakTimes[0] ?? '07:30',
-    peakHoursEnd: peakTimes[peakTimes.length - 1] ?? '21:30',
+    timezone: String(config.upload_timezone ?? 'America/New_York'),
+    peakUploadTimes: normalizePeakTimes(peakTimes),
+    uploadWindowMinutes: numberValue(config.upload_window_minutes, 30),
+    uploadWindowPosition,
     autoDelete: config.delete_local_files_after_upload !== false,
   };
+}
+
+function normalizePeakTimes(values: string[]) {
+  const times = values
+    .map((value) => value.trim())
+    .filter((value) => /^\d{2}:\d{2}$/.test(value));
+  return times.length ? Array.from(new Set(times)).sort() : ['07:30', '11:30', '15:30', '18:30', '21:30'];
 }
 
 function dedupeVideos(items: Video[]) {

@@ -10,10 +10,6 @@ export default function Manifesto() {
   const textRef = useRef<HTMLParagraphElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
 
-  if (!manifestoConfig.text && !manifestoConfig.videoPath) {
-    return null;
-  }
-
   useEffect(() => {
     if (!sectionRef.current || !textRef.current || !videoRef.current) return;
 
@@ -55,6 +51,10 @@ export default function Manifesto() {
 
     return () => ctx.revert();
   }, []);
+
+  if (!manifestoConfig.text && !manifestoConfig.videoPath) {
+    return null;
+  }
 
   return (
     <section

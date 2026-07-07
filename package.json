@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
+    "dev": "npm run build && node scripts/serve-dev.mjs",
+    "dev:frontend": "vite --host 127.0.0.1",
     "backend": "node server.mjs",
     "start": "npm run build && node server.mjs",
     "build": "tsc -b && vite build",

@@ -1,5 +1,2039 @@
 [
   {
+    "title": "\ud83c\udfac Pourquoi i cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_FFjDEkZg-54_1783353110.mp4",
+    "public_url": "/outputs/short_FFjDEkZg-54_1783353110.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_FFjDEkZg-54_1783353183.jpg",
+    "thumbnail_url": "/outputs/thumbnail_FFjDEkZg-54_1783353183.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 74.68,
+      "predicted_avd": 85.79,
+      "predicted_virality": 65.54,
+      "ml_outcome_prediction": 55.44,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.73,
+      "hook_score": 0.95,
+      "pacing_score": 0.76,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 21,
+      "has_emoji": true,
+      "has_number": false,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "a_voir"
+    },
+    "metadata": {
+      "title": "\ud83c\udfac Pourquoi i cartonne",
+      "description": "i-dle (\uc544\uc774\ub4e4) 'Gimme Dat Love' Official Music Video\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "10",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "10",
+      "title_template": "a_voir",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 21,
+        "has_emoji": true,
+        "has_number": false,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "FFjDEkZg-54"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_FFjDEkZg-54_1783353183.jpg"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-07-06T21:23:03.839285"
+  },
+  {
+    "title": "\u2728 Pourquoi Beyonc\u00e9 - MORNING DEW (DONK) cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_Mv5f9Q2LJYM_1783352833.mp4",
+    "public_url": "/outputs/short_Mv5f9Q2LJYM_1783352833.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_Mv5f9Q2LJYM_1783352910.jpg",
+    "thumbnail_url": "/outputs/thumbnail_Mv5f9Q2LJYM_1783352910.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 68.08,
+      "predicted_avd": 74.28,
+      "predicted_virality": 63.93,
+      "ml_outcome_prediction": 53.33,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.88,
+      "hook_score": 0.71,
+      "pacing_score": 0.77,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 48,
+      "has_emoji": true,
+      "has_number": false,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "pourquoi_cartonne"
+    },
+    "metadata": {
+      "title": "\u2728 Pourquoi Beyonc\u00e9 - MORNING DEW (DONK) cartonne",
+      "description": "Beyonc\u00e9 - MORNING DEW (DONK)\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "10",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "10",
+      "title_template": "pourquoi_cartonne",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 48,
+        "has_emoji": true,
+        "has_number": false,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "Mv5f9Q2LJYM"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_Mv5f9Q2LJYM_1783352910.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-07-06T21:18:30.615121",
+    "upload_result": {
+      "video_id": "dkcREbWL5LI",
+      "url": "https://youtube.com/shorts/dkcREbWL5LI",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-07-08T07:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_Mv5f9Q2LJYM_1783352910.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "dMT3dsJYwA9r861OwETgYcEOl2g",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/dkcREbWL5LI/default.jpg?sqp=CKidr9IG&rs=AOn4CLA8DGnooPxsgMXwYhjS_GQjC9BOGQ",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/dkcREbWL5LI/mqdefault.jpg?sqp=CKidr9IG&rs=AOn4CLB3ku_aj6QLmHSbZ9BB1NuQTyJYNA",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/dkcREbWL5LI/hqdefault.jpg?sqp=CKidr9IG&rs=AOn4CLBPMuvlQtK92a1KzHkAeM6E7TfORA",
+                "width": 480,
+                "height": 360
+              },
+              "standard": {
+                "url": "https://i9.ytimg.com/vi/dkcREbWL5LI/sddefault.jpg?sqp=CKidr9IG&rs=AOn4CLAKZoMX5YjhmxYd682iEDiWOYPVSA",
+                "width": 640,
+                "height": 480
+              },
+              "maxres": {
+                "url": "https://i9.ytimg.com/vi/dkcREbWL5LI/maxresdefault.jpg?sqp=CKidr9IG&rs=AOn4CLBJrVagOxX3cSgc8nmKOpwJ2EpheA",
+                "width": 1280,
+                "height": 720
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "title": "\u26a1 Pourquoi Ariana Grande cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_v1t4MTqdfyI_1780076786.mp4",
+    "public_url": "/outputs/short_v1t4MTqdfyI_1780076786.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_v1t4MTqdfyI_1780076882.jpg",
+    "thumbnail_url": "/outputs/thumbnail_v1t4MTqdfyI_1780076882.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 58.85,
+      "predicted_avd": 78.87,
+      "predicted_virality": 64.74,
+      "ml_outcome_prediction": 57.09,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.8,
+      "hook_score": 0.64,
+      "pacing_score": 0.81,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 33,
+      "has_emoji": false,
+      "has_number": false,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "moment_fou"
+    },
+    "metadata": {
+      "title": "\u26a1 Pourquoi Ariana Grande cartonne",
+      "description": "Ariana Grande - hate that i made you love me (official lyric video)\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "10",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "10",
+      "title_template": "moment_fou",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 33,
+        "has_emoji": false,
+        "has_number": false,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "v1t4MTqdfyI"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_v1t4MTqdfyI_1780076882.jpg"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-29T23:18:02.350048"
+  },
+  {
+    "title": "\ud83d\ude80 Pourquoi Call of Duty: Modern Warfare 4 | Reveal Tr cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_jLbst85USN8_1780076402.mp4",
+    "public_url": "/outputs/short_jLbst85USN8_1780076402.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_jLbst85USN8_1780076511.jpg",
+    "thumbnail_url": "/outputs/thumbnail_jLbst85USN8_1780076511.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 61.64,
+      "predicted_avd": 73.72,
+      "predicted_virality": 64.38,
+      "ml_outcome_prediction": 61.39,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.83,
+      "hook_score": 0.71,
+      "pacing_score": 0.85,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 62,
+      "has_emoji": true,
+      "has_number": true,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "pourquoi_cartonne"
+    },
+    "metadata": {
+      "title": "\ud83d\ude80 Pourquoi Call of Duty: Modern Warfare 4 | Reveal Tr cartonne",
+      "description": "Call of Duty: Modern Warfare 4 | Reveal Trailer\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "20",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "20",
+      "title_template": "pourquoi_cartonne",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 62,
+        "has_emoji": true,
+        "has_number": true,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "jLbst85USN8"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_jLbst85USN8_1780076511.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-29T23:11:51.295733",
+    "upload_result": {
+      "video_id": "WeiPJLH9E_k",
+      "url": "https://youtube.com/shorts/WeiPJLH9E_k",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-31T07:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_jLbst85USN8_1780076511.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "tyZigMmbZFIEDYWxtuWzpv6p6lU",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/WeiPJLH9E_k/default.jpg?sqp=CPCe59AG&rs=AOn4CLAQ2Yd_frQwR6IxNBtez9I9WqYc8Q",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/WeiPJLH9E_k/mqdefault.jpg?sqp=CPCe59AG&rs=AOn4CLDwNpcQXfa-aLXQjnN5Ci18a-vvjQ",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/WeiPJLH9E_k/hqdefault.jpg?sqp=CPCe59AG&rs=AOn4CLD9nlVAe18ynsvVFCF4bS-OoM855g",
+                "width": 480,
+                "height": 360
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "title": "\ud83d\udd25 Pourquoi aespa \uc5d0\uc2a4\ud30c 'LEMONADE' MV cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_83C3TZ4Zm_o_1780075664.mp4",
+    "public_url": "/outputs/short_83C3TZ4Zm_o_1780075664.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_83C3TZ4Zm_o_1780075776.jpg",
+    "thumbnail_url": "/outputs/thumbnail_83C3TZ4Zm_o_1780075776.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 63.88,
+      "predicted_avd": 71.13,
+      "predicted_virality": 69.66,
+      "ml_outcome_prediction": 59.49,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.88,
+      "hook_score": 0.61,
+      "pacing_score": 0.85,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 43,
+      "has_emoji": true,
+      "has_number": false,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "moment_fou"
+    },
+    "metadata": {
+      "title": "\ud83d\udd25 Pourquoi aespa \uc5d0\uc2a4\ud30c 'LEMONADE' MV cartonne",
+      "description": "aespa \uc5d0\uc2a4\ud30c 'LEMONADE' MV\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "10",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "10",
+      "title_template": "moment_fou",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 43,
+        "has_emoji": true,
+        "has_number": false,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "83C3TZ4Zm_o"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_83C3TZ4Zm_o_1780075776.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-29T22:59:36.947041",
+    "upload_result": {
+      "video_id": "TObfgpT6JvA",
+      "url": "https://youtube.com/shorts/TObfgpT6JvA",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-30T07:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_83C3TZ4Zm_o_1780075776.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "ju9wTit7Bo-z92oAGaNe3ceObaU",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/TObfgpT6JvA/default.jpg?sqp=CMSc59AG&rs=AOn4CLBQnsQ2R-TaB8MQQ6XopwmbbBtXYw",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/TObfgpT6JvA/mqdefault.jpg?sqp=CMSc59AG&rs=AOn4CLBHhw5W-q0bt3h3JkreYp_1VtgDXw",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/TObfgpT6JvA/hqdefault.jpg?sqp=CMSc59AG&rs=AOn4CLCckRgBPUyiEAnRhobQegVE7_HQGQ",
+                "width": 480,
+                "height": 360
+              },
+              "standard": {
+                "url": "https://i9.ytimg.com/vi/TObfgpT6JvA/sddefault.jpg?sqp=CMSc59AG&rs=AOn4CLC34SfgXM1sTcUTPdWn6zpbP_umKg",
+                "width": 640,
+                "height": 480
+              },
+              "maxres": {
+                "url": "https://i9.ytimg.com/vi/TObfgpT6JvA/maxresdefault.jpg?sqp=CMSc59AG&rs=AOn4CLCe3D2RG1nsrjSTkjDlzYszvc_dgQ",
+                "width": 1280,
+                "height": 720
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "title": "\u2728 Pourquoi Enola Holmes 3 cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_g1fq327snPU_1779957386.mp4",
+    "public_url": "/outputs/short_g1fq327snPU_1779957386.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_g1fq327snPU_1779957490.jpg",
+    "thumbnail_url": "/outputs/thumbnail_g1fq327snPU_1779957490.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 78.01,
+      "predicted_avd": 68.86,
+      "predicted_virality": 63.68,
+      "ml_outcome_prediction": 39.22,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.98,
+      "hook_score": 0.89,
+      "pacing_score": 0.56,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 34,
+      "has_emoji": true,
+      "has_number": true,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "moment_fou"
+    },
+    "metadata": {
+      "title": "\u2728 Pourquoi Enola Holmes 3 cartonne",
+      "description": "Enola Holmes 3 | Official Teaser | Netflix\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "24",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "24",
+      "title_template": "moment_fou",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 34,
+        "has_emoji": true,
+        "has_number": true,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "g1fq327snPU"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_g1fq327snPU_1779957490.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-28T14:08:10.423710",
+    "upload_result": {
+      "video_id": "OsegAet3V8k",
+      "url": "https://youtube.com/shorts/OsegAet3V8k",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-29T11:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_g1fq327snPU_1779957490.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "imKZGUPURTAF2U5vHxrMiEUs-6k",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/OsegAet3V8k/default.jpg?sqp=CLT839AG&rs=AOn4CLBpI-SC5YOioaIxxYmVQFgA9cq_eg",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/OsegAet3V8k/mqdefault.jpg?sqp=CLT839AG&rs=AOn4CLCne_hPJHBupLOf36n0XOQnXmqaKQ",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/OsegAet3V8k/hqdefault.jpg?sqp=CLT839AG&rs=AOn4CLB37zaGXePathbVt5ZXCKTlMCCxvg",
+                "width": 480,
+                "height": 360
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "title": "\ud83d\udd25 Marvel Animation\u2019s X-Men \u201897 Season 2 | Of explique vite",
+    "content_type": "short",
+    "video_path": "outputs\\short_mfUtseK27pc_1779952635.mp4",
+    "public_url": "/outputs/short_mfUtseK27pc_1779952635.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_mfUtseK27pc_1779952712.jpg",
+    "thumbnail_url": "/outputs/thumbnail_mfUtseK27pc_1779952712.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 73.0,
+      "predicted_avd": 84.74,
+      "predicted_virality": 71.74,
+      "ml_outcome_prediction": 48.43,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.98,
+      "hook_score": 0.85,
+      "pacing_score": 0.84,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 58,
+      "has_emoji": true,
+      "has_number": true,
+      "has_question": false,
+      "attractive_words": [
+        "explique"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "explique_vite"
+    },
+    "metadata": {
+      "title": "\ud83d\udd25 Marvel Animation\u2019s X-Men \u201897 Season 2 | Of explique vite",
+      "description": "Marvel Animation\u2019s X-Men \u201897 Season 2 | Official Trailer\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "24",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "24",
+      "title_template": "explique_vite",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 58,
+        "has_emoji": true,
+        "has_number": true,
+        "has_question": false,
+        "attractive_words": [
+          "explique"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "mfUtseK27pc"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_mfUtseK27pc_1779952712.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-28T12:48:33.006465",
+    "upload_result": {
+      "video_id": "TOW8KHdsUKI",
+      "url": "https://youtube.com/shorts/TOW8KHdsUKI",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-29T07:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_mfUtseK27pc_1779952712.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "72qMi-GxalcxnSONKpCibuHJ39I",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/TOW8KHdsUKI/default.jpg?sqp=CKDZ39AG&rs=AOn4CLBWdFGZb3pwhgBnhPqte68benD4TQ",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/TOW8KHdsUKI/mqdefault.jpg?sqp=CKDZ39AG&rs=AOn4CLAZabiSWCc6Nq2G_7zyGGzTJPHhfQ",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/TOW8KHdsUKI/hqdefault.jpg?sqp=CKDZ39AG&rs=AOn4CLCs8uGXSHQ18or3iI-3RPjzly77Lw",
+                "width": 480,
+                "height": 360
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "title": "\ud83d\ude80 Pourquoi LE SSERAFIM (\ub974\uc138\ub77c\ud54c) \u2018BOOMPALA' OFFICIAL PERFORM cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_6IFeGqSqrKs_1779886433.mp4",
+    "public_url": "/outputs/short_6IFeGqSqrKs_1779886433.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_6IFeGqSqrKs_1779886508.jpg",
+    "thumbnail_url": "/outputs/thumbnail_6IFeGqSqrKs_1779886508.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 70.22,
+      "predicted_avd": 88.26,
+      "predicted_virality": 69.25,
+      "ml_outcome_prediction": 47.11,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.65,
+      "hook_score": 0.86,
+      "pacing_score": 0.88,
+      "subscriber_conversion_score": 85.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-27T18:25:08.311754"
+  },
+  {
+    "title": "\ud83d\ude80 Pourquoi TREASURE cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_DgpA8_aeJMQ_1779886387.mp4",
+    "public_url": "/outputs/short_DgpA8_aeJMQ_1779886387.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_DgpA8_aeJMQ_1779886431.jpg",
+    "thumbnail_url": "/outputs/thumbnail_DgpA8_aeJMQ_1779886431.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 67.54,
+      "predicted_avd": 77.21,
+      "predicted_virality": 58.74,
+      "ml_outcome_prediction": 46.07,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.5,
+      "hook_score": 0.93,
+      "pacing_score": 0.64,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-27T18:23:51.704260"
+  },
+  {
+    "title": "\ud83d\udccc Pourquoi KATSEYE cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_k3VwwLeorsU_1779861990.mp4",
+    "public_url": "/outputs/short_k3VwwLeorsU_1779861990.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_k3VwwLeorsU_1779862133.jpg",
+    "thumbnail_url": "/outputs/thumbnail_k3VwwLeorsU_1779862133.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 57.74,
+      "predicted_avd": 71.12,
+      "predicted_virality": 58.82,
+      "ml_outcome_prediction": 46.75,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.5,
+      "hook_score": 0.85,
+      "pacing_score": 0.61,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-27T11:38:53.340408"
+  },
+  {
+    "title": "\ud83d\udccc Pourquoi ALPHA DRIVE ONE 'OMG!' MV cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_cBfYIb1w1iw_1779861715.mp4",
+    "public_url": "/outputs/short_cBfYIb1w1iw_1779861715.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_cBfYIb1w1iw_1779861794.jpg",
+    "thumbnail_url": "/outputs/thumbnail_cBfYIb1w1iw_1779861794.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 59.18,
+      "predicted_avd": 73.75,
+      "predicted_virality": 60.29,
+      "ml_outcome_prediction": 46.63,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.65,
+      "hook_score": 0.64,
+      "pacing_score": 0.71,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-27T11:33:14.756045"
+  },
+  {
+    "title": "\ud83d\udc40 Pourquoi Fouad Jned x Bessan Ismail cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_t9Ayd0TgxFw_1779861554.mp4",
+    "public_url": "/outputs/short_t9Ayd0TgxFw_1779861554.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_t9Ayd0TgxFw_1779861651.jpg",
+    "thumbnail_url": "/outputs/thumbnail_t9Ayd0TgxFw_1779861651.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 63.46,
+      "predicted_avd": 78.81,
+      "predicted_virality": 65.4,
+      "ml_outcome_prediction": 47.5,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.65,
+      "hook_score": 0.69,
+      "pacing_score": 0.84,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-27T11:30:51.225866"
+  },
+  {
+    "title": "\ud83c\udfac Pourquoi TEKKEN 8 \u2013 Yujiro Hanma Teaser cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_bvXW2ArNz7Q_1779717948.mp4",
+    "public_url": "/outputs/short_bvXW2ArNz7Q_1779717948.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_bvXW2ArNz7Q_1779721231.jpg",
+    "thumbnail_url": "/outputs/thumbnail_bvXW2ArNz7Q_1779721231.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 61.55,
+      "predicted_avd": 78.76,
+      "predicted_virality": 66.62,
+      "ml_outcome_prediction": 51.95,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.71,
+      "pacing_score": 0.89,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-25T20:30:31.555543"
+  },
+  {
+    "title": "\ud83d\udccc Pourquoi Dead by Daylight cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_YebqRYaTVNg_1779703095.mp4",
+    "public_url": "/outputs/short_YebqRYaTVNg_1779703095.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_YebqRYaTVNg_1779703439.jpg",
+    "thumbnail_url": "/outputs/thumbnail_YebqRYaTVNg_1779703439.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 62.48,
+      "predicted_avd": 80.96,
+      "predicted_virality": 56.25,
+      "ml_outcome_prediction": 36.47,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.65,
+      "hook_score": 0.64,
+      "pacing_score": 0.88,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-25T15:34:00.574321"
+  },
+  {
+    "title": "\u26a1 Why Vought Rising Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_2RydunKJrBU_1779619259.mp4",
+    "public_url": "/outputs/short_2RydunKJrBU_1779619259.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 71.6,
+      "predicted_avd": 72.95,
+      "predicted_virality": 69.56,
+      "ml_outcome_prediction": 51.48,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.82,
+      "pacing_score": 0.57,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-24T16:18:22.601419",
+    "upload_result": {
+      "video_id": "HqPuSC0L3CE",
+      "url": "https://youtube.com/shorts/HqPuSC0L3CE",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-26T07:30:00-04:00"
+    }
+  },
+  {
+    "title": "\ud83d\udca5 Why Shakira, Burna Boy Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_fcnDmrtj6Sk_1779618676.mp4",
+    "public_url": "/outputs/short_fcnDmrtj6Sk_1779618676.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 74.82,
+      "predicted_avd": 68.24,
+      "predicted_virality": 61.57,
+      "ml_outcome_prediction": 40.09,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.84,
+      "pacing_score": 0.59,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-24T16:08:29.073439",
+    "upload_result": {
+      "video_id": "aMrHCIPsz34",
+      "url": "https://youtube.com/shorts/aMrHCIPsz34",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-25T11:30:00-04:00"
+    }
+  },
+  {
+    "title": "\u2728 Why Hellallallo Promo (TELUGU) Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_4v31nFdfUS8_1779453683.mp4",
+    "public_url": "/outputs/short_4v31nFdfUS8_1779453683.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 63.69,
+      "predicted_avd": 65.71,
+      "predicted_virality": 61.86,
+      "ml_outcome_prediction": 51.24,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.65,
+      "pacing_score": 0.55,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-22T18:15:19.194855"
+  },
+  {
+    "title": "\ud83d\udd25 Why LE SSERAFIM (\ub974\uc138\ub77c\ud54c) 'BOOMPALA' OFFICIAL MV Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_V1Lr-_AxeR8_1779453224.mp4",
+    "public_url": "/outputs/short_V1Lr-_AxeR8_1779453224.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 74.32,
+      "predicted_avd": 72.23,
+      "predicted_virality": 72.18,
+      "ml_outcome_prediction": 53.77,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.87,
+      "pacing_score": 0.63,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-22T18:11:21.848196"
+  },
+  {
+    "title": "\ud83d\udca5 Why Olivia Rodrigo Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_B402rKl4bUg_1779452038.mp4",
+    "public_url": "/outputs/short_B402rKl4bUg_1779452038.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 64.96,
+      "predicted_avd": 71.17,
+      "predicted_virality": 60.65,
+      "ml_outcome_prediction": 48.56,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.64,
+      "pacing_score": 0.83,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-22T17:51:22.937495",
+    "upload_result": {
+      "video_id": "o4WfAqJW2CY",
+      "url": "https://youtube.com/shorts/o4WfAqJW2CY",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-25T07:30:00-04:00"
+    }
+  },
+  {
+    "title": "\ud83d\udca5 Why PRESIDENT Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_O_yO9c7zSIw_1779428603.mp4",
+    "public_url": "/outputs/short_O_yO9c7zSIw_1779428603.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 72.36,
+      "predicted_avd": 66.64,
+      "predicted_virality": 68.17,
+      "ml_outcome_prediction": 48.47,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.84,
+      "pacing_score": 0.56,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-22T11:21:42.660574"
+  },
+  {
+    "title": "\ud83d\udd25 Why mixtape is a CANCER.. Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_EBYpnRw5ly4_1779427800.mp4",
+    "public_url": "/outputs/short_EBYpnRw5ly4_1779427800.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 75.71,
+      "predicted_avd": 82.12,
+      "predicted_virality": 63.06,
+      "ml_outcome_prediction": 49.27,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.8,
+      "pacing_score": 0.9,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-22T11:11:02.684001"
+  },
+  {
+    "title": "\u2728 Why Warhammer 40,000: Darktide Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_38mXmzdJF9Q_1779426945.mp4",
+    "public_url": "/outputs/short_38mXmzdJF9Q_1779426945.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 75.53,
+      "predicted_avd": 78.49,
+      "predicted_virality": 71.79,
+      "ml_outcome_prediction": 55.48,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 1.0,
+      "hook_score": 0.84,
+      "pacing_score": 0.85,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-22T10:54:02.402096"
+  },
+  {
+    "title": "\ud83d\udccc Why HELLDIVERS\u2122 2 x WARHAMMER 40,000 Partnership A Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_xRQi00kCST8_1779426526.mp4",
+    "public_url": "/outputs/short_xRQi00kCST8_1779426526.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 72.4,
+      "predicted_avd": 80.81,
+      "predicted_virality": 65.68,
+      "ml_outcome_prediction": 54.12,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.85,
+      "hook_score": 0.83,
+      "pacing_score": 0.74,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-22T10:45:13.991263"
+  },
+  {
+    "title": "\u2728 Why TV Royale Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_NyvItRTjM1Q_1779425925.mp4",
+    "public_url": "/outputs/short_NyvItRTjM1Q_1779425925.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 75.06,
+      "predicted_avd": 79.43,
+      "predicted_virality": 71.32,
+      "ml_outcome_prediction": 53.9,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.92,
+      "pacing_score": 0.83,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-22T10:35:10.071920",
+    "upload_result": {
+      "video_id": "BQ5swbBNz5c",
+      "url": "https://youtube.com/shorts/BQ5swbBNz5c",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-25T07:30:00+05:30"
+    }
+  },
+  {
+    "title": "\u26a1 Why My husband turned into a zombie Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_YvtjsHtgSig_1779378958.mp4",
+    "public_url": "/outputs/short_YvtjsHtgSig_1779378958.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 77.21,
+      "predicted_avd": 66.04,
+      "predicted_virality": 71.64,
+      "ml_outcome_prediction": 69.33,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.85,
+      "pacing_score": 0.54,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T21:29:16.803080",
+    "upload_result": {
+      "video_id": "_WYE7PrjxkY",
+      "url": "https://youtube.com/shorts/_WYE7PrjxkY",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-24T15:30:00+05:30"
+    }
+  },
+  {
+    "title": "\ud83d\udc40 Why Wife humiliates husband in front of son public Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_ELrhX6SSq8o_1779378833.mp4",
+    "public_url": "/outputs/short_ELrhX6SSq8o_1779378833.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 70.01,
+      "predicted_avd": 59.93,
+      "predicted_virality": 77.01,
+      "ml_outcome_prediction": 72.78,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.73,
+      "pacing_score": 0.53,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T21:25:16.665876",
+    "upload_result": {
+      "video_id": "Xdd4RlNc2p8",
+      "url": "https://youtube.com/shorts/Xdd4RlNc2p8",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-24T11:30:00+05:30"
+    }
+  },
+  {
+    "title": "\u2728 Why Raq baby Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_QasS12PmC6g_1779378378.mp4",
+    "public_url": "/outputs/short_QasS12PmC6g_1779378378.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 67.71,
+      "predicted_avd": 66.97,
+      "predicted_virality": 75.88,
+      "ml_outcome_prediction": 76.06,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.67,
+      "pacing_score": 0.6,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T21:22:57.066551",
+    "upload_result": {
+      "video_id": "XUU7-yX75-w",
+      "url": "https://youtube.com/shorts/XUU7-yX75-w",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-24T07:30:00+05:30"
+    }
+  },
+  {
+    "title": "\u26a1 Why DRISHYAM 3 Review Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_4cjyZgrnULY_1779377799.mp4",
+    "public_url": "/outputs/short_4cjyZgrnULY_1779377799.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 85.89,
+      "predicted_avd": 64.87,
+      "predicted_virality": 82.63,
+      "ml_outcome_prediction": 75.37,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 1.0,
+      "hook_score": 0.93,
+      "pacing_score": 0.53,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T21:14:27.103253",
+    "upload_result": {
+      "video_id": "XfC7qqLi-aY",
+      "url": "https://youtube.com/shorts/XfC7qqLi-aY",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-23T15:30:00+05:30"
+    }
+  },
+  {
+    "title": "\ud83d\udc40 Why BabyChiefDoit Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_gIZMpwhxlmM_1779377214.mp4",
+    "public_url": "/outputs/short_gIZMpwhxlmM_1779377214.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 76.08,
+      "predicted_avd": 82.74,
+      "predicted_virality": 80.37,
+      "ml_outcome_prediction": 74.98,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.82,
+      "pacing_score": 0.76,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T21:03:19.614758",
+    "upload_result": {
+      "video_id": "kkye46wrIWw",
+      "url": "https://youtube.com/shorts/kkye46wrIWw",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-23T11:30:00+05:30"
+    }
+  },
+  {
+    "title": "\u2728 Why Lawrence: Trump says he's too busy to explain Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_mBPO0AupDfY_1779376651.mp4",
+    "public_url": "/outputs/short_mBPO0AupDfY_1779376651.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 66.81,
+      "predicted_avd": 81.32,
+      "predicted_virality": 74.28,
+      "ml_outcome_prediction": 61.95,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.86,
+      "pacing_score": 0.73,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T20:53:40.999384",
+    "upload_result": {
+      "video_id": "XWCW7sA4104",
+      "url": "https://youtube.com/shorts/XWCW7sA4104",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-23T07:30:00+05:30"
+    }
+  },
+  {
+    "title": "\ud83c\udfac Why Vince Staples Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_uYU1J7QszpU_1779376029.mp4",
+    "public_url": "/outputs/short_uYU1J7QszpU_1779376029.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 81.35,
+      "predicted_avd": 73.07,
+      "predicted_virality": 71.5,
+      "ml_outcome_prediction": 63.75,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.95,
+      "pacing_score": 0.56,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T20:41:35.138954",
+    "upload_result": {
+      "video_id": "zhofzc783Gw",
+      "url": "https://youtube.com/shorts/zhofzc783Gw",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-22T15:30:00+05:30"
+    }
+  },
+  {
+    "title": "\ud83d\ude80 Why Little Brother Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_bWtrFcerKE0_1779375230.mp4",
+    "public_url": "/outputs/short_bWtrFcerKE0_1779375230.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 63.47,
+      "predicted_avd": 77.98,
+      "predicted_virality": 70.49,
+      "ml_outcome_prediction": 56.75,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.64,
+      "pacing_score": 0.81,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T20:29:01.829776",
+    "upload_result": {
+      "video_id": "zL4rTD7wyfU",
+      "url": "https://youtube.com/shorts/zL4rTD7wyfU",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-22T11:30:00+05:30"
+    }
+  },
+  {
+    "title": "\ud83d\udca5 Why Cartel (Official Music Video) Cheema Y Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_i0RJTOFwcgk_1779374824.mp4",
+    "public_url": "/outputs/short_i0RJTOFwcgk_1779374824.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 72.83,
+      "predicted_avd": 77.08,
+      "predicted_virality": 71.19,
+      "ml_outcome_prediction": 63.37,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.75,
+      "pacing_score": 0.71,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T20:22:15.490645",
+    "upload_result": {
+      "video_id": "6HBslgGdlSc",
+      "url": "https://youtube.com/shorts/6HBslgGdlSc",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-05-22T07:30:00+05:30"
+    }
+  },
+  {
+    "title": "\ud83c\udfac Why Cartel (Official Music Video) Cheema Y Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_i0RJTOFwcgk_1779371373.mp4",
+    "public_url": "/outputs/short_i0RJTOFwcgk_1779371373.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 71.28,
+      "predicted_avd": 72.52,
+      "predicted_virality": 68.49,
+      "ml_outcome_prediction": 60.31,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.88,
+      "pacing_score": 0.53,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-21T19:25:23.813925"
+  },
+  {
+    "title": "\ud83d\udca5 Why Little Brother Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_bWtrFcerKE0_1779369835.mp4",
+    "public_url": "/outputs/short_bWtrFcerKE0_1779369835.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 62.76,
+      "predicted_avd": 67.18,
+      "predicted_virality": 67.75,
+      "ml_outcome_prediction": 57.97,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.66,
+      "pacing_score": 0.74,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-21T19:00:02.723224"
+  },
+  {
+    "title": "\u2728 Why Michael Jackson: The Verdict Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_rcp-j0StBR0_1779369371.mp4",
+    "public_url": "/outputs/short_rcp-j0StBR0_1779369371.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 77.99,
+      "predicted_avd": 77.76,
+      "predicted_virality": 66.62,
+      "ml_outcome_prediction": 57.77,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.89,
+      "pacing_score": 0.81,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T18:52:40.939750",
+    "upload_result": {
+      "video_id": "cUOVuGrl2l8",
+      "url": "https://youtube.com/shorts/cUOVuGrl2l8",
+      "status": "uploaded",
+      "scheduled": false,
+      "first_comment": {
+        "status": "commented",
+        "comment_id": "UgyOfE32C3xw_lX9XEZ4AaABAg"
+      }
+    }
+  },
+  {
+    "title": "\ud83d\udd25 Why Inpatient (Ren x Chris Webby) Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_Hd19DLlHA7w_1779368967.mp4",
+    "public_url": "/outputs/short_Hd19DLlHA7w_1779368967.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 66.75,
+      "predicted_avd": 71.65,
+      "predicted_virality": 64.65,
+      "ml_outcome_prediction": 63.24,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.7,
+      "pacing_score": 0.81,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T18:44:33.476630",
+    "upload_result": {
+      "video_id": "1YGEJ0OZlgU",
+      "url": "https://youtube.com/shorts/1YGEJ0OZlgU",
+      "status": "uploaded",
+      "scheduled": false,
+      "first_comment": {
+        "status": "commented",
+        "comment_id": "Ugwccm9MoPHv_siUG5p4AaABAg"
+      }
+    }
+  },
+  {
+    "title": "\u2728 Why mgk, Wiz Khalifa Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_b7cFUJyndz4_1779368568.mp4",
+    "public_url": "/outputs/short_b7cFUJyndz4_1779368568.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 73.07,
+      "predicted_avd": 70.3,
+      "predicted_virality": 76.93,
+      "ml_outcome_prediction": 64.58,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.85,
+      "pacing_score": 0.66,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-21T18:37:40.800122",
+    "upload_result": {
+      "video_id": "pbUA3pUTz8o",
+      "url": "https://youtube.com/shorts/pbUA3pUTz8o",
+      "status": "uploaded",
+      "scheduled": false,
+      "first_comment": {
+        "status": "commented",
+        "comment_id": "Ugxd8CGwkvgSlgM8bEB4AaABAg"
+      }
+    }
+  },
+  {
+    "title": "\u26a1 Why OsamaSon Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_8Zuh44rji24_1779334304.mp4",
+    "public_url": "/outputs/short_8Zuh44rji24_1779334304.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 67.34,
+      "predicted_avd": 64.36,
+      "predicted_virality": 64.26,
+      "ml_outcome_prediction": 61.41,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.75,
+      "pacing_score": 0.59,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-21T09:07:04.699146"
+  },
+  {
+    "title": "\ud83d\ude80 Why Knew Better Part Two Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_cLJ9EBzi1Nw_1779334031.mp4",
+    "public_url": "/outputs/short_cLJ9EBzi1Nw_1779334031.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 69.55,
+      "predicted_avd": 82.08,
+      "predicted_virality": 73.67,
+      "ml_outcome_prediction": 57.75,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.66,
+      "pacing_score": 0.87,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-21T09:01:42.619261"
+  },
+  {
+    "title": "\ud83d\udc40 Why MILGRAM Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_RHw5NsPjJSs_1779333686.mp4",
+    "public_url": "/outputs/short_RHw5NsPjJSs_1779333686.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 59.33,
+      "predicted_avd": 69.31,
+      "predicted_virality": 60.73,
+      "ml_outcome_prediction": 43.34,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.69,
+      "pacing_score": 0.58,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-21T08:57:10.484789"
+  },
+  {
+    "title": "\u26a1 Why Masters of The Universe \u2013 Official Final Trail Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_rJSmz-zhDxE_1779333340.mp4",
+    "public_url": "/outputs/short_rJSmz-zhDxE_1779333340.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 70.3,
+      "predicted_avd": 74.81,
+      "predicted_virality": 72.94,
+      "ml_outcome_prediction": 56.56,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.85,
+      "pacing_score": 0.62,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-21T08:51:25.434639"
+  },
+  {
+    "title": "\ud83d\udd25 Why MILGRAM Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_RHw5NsPjJSs_1779293517.mp4",
+    "public_url": "/outputs/short_RHw5NsPjJSs_1779293517.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 69.11,
+      "predicted_avd": 66.78,
+      "predicted_virality": 67.05,
+      "ml_outcome_prediction": 48.34,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.82,
+      "pacing_score": 0.54,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-20T21:49:45.170423"
+  },
+  {
+    "title": "\ud83d\udd25 Why Voicemails for Isabelle Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_9mi3YVYm3ZU_1779284116.mp4",
+    "public_url": "/outputs/short_9mi3YVYm3ZU_1779284116.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 72.14,
+      "predicted_avd": 72.69,
+      "predicted_virality": 60.39,
+      "ml_outcome_prediction": 41.28,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.77,
+      "pacing_score": 0.73,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-20T19:09:55.797075"
+  },
+  {
+    "title": "\ud83d\udd25 Why CROCODILE FUN CHALLENGE! Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_6DmaRUxXIUY_1779268488.mp4",
+    "public_url": "/outputs/short_6DmaRUxXIUY_1779268488.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 72.05,
+      "predicted_avd": 80.26,
+      "predicted_virality": 65.54,
+      "ml_outcome_prediction": 34.89,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.73,
+      "pacing_score": 0.89,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-20T14:48:59.686783"
+  },
+  {
+    "title": "\ud83d\udd25 Why \uc544\uc774\uc624\uc544\uc774 (I.O.I) Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_Jxgbfc89hNI_1779265795.mp4",
+    "public_url": "/outputs/short_Jxgbfc89hNI_1779265795.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 69.01,
+      "predicted_avd": 79.98,
+      "predicted_virality": 59.45,
+      "ml_outcome_prediction": 22.26,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.65,
+      "pacing_score": 0.81,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-20T14:04:33.534690",
+    "upload_result": {
+      "video_id": "BUYCPudcBW4",
+      "url": "https://youtube.com/shorts/BUYCPudcBW4",
+      "status": "uploaded",
+      "scheduled": false,
+      "first_comment": {
+        "status": "commented",
+        "comment_id": "UgxC9DAqHRckONQW0j94AaABAg"
+      }
+    }
+  },
+  {
+    "title": "\ud83d\udd25 Why Los Gemelos De Sinaloa Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_YNUozFmXqBQ_1779258757.mp4",
+    "public_url": "/outputs/short_YNUozFmXqBQ_1779258757.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 70.39,
+      "predicted_avd": 72.5,
+      "predicted_virality": 61.73,
+      "ml_outcome_prediction": 48.67,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.77,
+      "pacing_score": 0.72,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-20T12:07:17.778846"
+  },
+  {
+    "title": "\ud83d\udd25 Why Honest Trailers Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_QurZzARCihA_1779258502.mp4",
+    "public_url": "/outputs/short_QurZzARCihA_1779258502.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 68.25,
+      "predicted_avd": 67.39,
+      "predicted_virality": 63.22,
+      "ml_outcome_prediction": 48.28,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.79,
+      "pacing_score": 0.63,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-20T12:02:36.053193"
+  },
+  {
+    "title": "\ud83d\udd25 Why Drake Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short__tlMz8sTFMs_1779258224.mp4",
+    "public_url": "/outputs/short__tlMz8sTFMs_1779258224.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 58.24,
+      "predicted_avd": 65.62,
+      "predicted_virality": 58.72,
+      "ml_outcome_prediction": 48.08,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.65,
+      "pacing_score": 0.54,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-20T11:58:08.949014"
+  },
+  {
+    "title": "\ud83d\udd25 Why Spider Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_e5QW457407U_1779257957.mp4",
+    "public_url": "/outputs/short_e5QW457407U_1779257957.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 59.76,
+      "predicted_avd": 62.82,
+      "predicted_virality": 54.33,
+      "ml_outcome_prediction": 47.65,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.75,
+      "hook_score": 0.68,
+      "pacing_score": 0.59,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-20T11:53:43.183052"
+  },
+  {
+    "title": "\ud83d\udd25 Why Peddi Official Trailer (Telugu) Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_AdEE5xFQelY_1779255726.mp4",
+    "public_url": "/outputs/short_AdEE5xFQelY_1779255726.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 78.43,
+      "predicted_avd": 73.33,
+      "predicted_virality": 64.08,
+      "ml_outcome_prediction": 41.53,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.9,
+      "pacing_score": 0.55,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-20T11:18:59.172798"
+  },
+  {
+    "title": "\ud83d\udd25 Why PEDDI Trailer (Tamil) Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_qu3tPDCMNeU_1779254154.mp4",
+    "public_url": "/outputs/short_qu3tPDCMNeU_1779254154.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 72.81,
+      "predicted_avd": 74.84,
+      "predicted_virality": 74.19,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.75,
+      "pacing_score": 0.69,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-20T10:52:30.178143",
+    "upload_result": {
+      "video_id": "83Nvxow9p-g",
+      "url": "https://youtube.com/shorts/83Nvxow9p-g",
+      "status": "uploaded",
+      "scheduled": false
+    }
+  },
+  {
+    "title": "\ud83d\udd25 Why Peddi Official Trailer (Telugu) Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_sF2dj7ycZvA_1779249065.mp4",
+    "public_url": "/outputs/short_sF2dj7ycZvA_1779249065.mp4",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 73.89,
+      "predicted_avd": 79.1,
+      "predicted_virality": 77.58,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.73,
+      "pacing_score": 0.84,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-05-20T09:25:58.983197",
+    "upload_result": {
+      "video_id": "3Hv1W-6hURE",
+      "url": "https://youtube.com/shorts/3Hv1W-6hURE",
+      "status": "uploaded",
+      "scheduled": false,
+      "first_comment": {
+        "status": "commented",
+        "comment_id": "UgyQBrWA5cgX_b2UqS94AaABAg"
+      }
+    }
+  },
+  {
+    "title": "\ud83d\udd25 Why Peddi Official Trailer (Telugu) Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_sF2dj7ycZvA_1779246179.mp4",
+    "public_url": "/outputs/short_sF2dj7ycZvA_1779246179.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 74.21,
+      "predicted_avd": 80.69,
+      "predicted_virality": 79.07,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.79,
+      "pacing_score": 0.86,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-20T08:39:36.596348"
+  },
+  {
+    "title": "\ud83d\udd25 Why Peddi Official Trailer (Telugu) Is Trending",
+    "content_type": "short",
+    "video_path": "outputs\\short_sF2dj7ycZvA_1779208672.mp4",
+    "public_url": "/outputs/short_sF2dj7ycZvA_1779208672.mp4",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 69.88,
+      "predicted_avd": 58.9,
+      "predicted_virality": 68.77,
+      "ml_outcome_prediction": null,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.9,
+      "hook_score": 0.72,
+      "pacing_score": 0.54,
+      "subscriber_conversion_score": 100.0,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-05-19T22:14:48.890092"
+  },
+  {
     "title": "\ud83d\udd25 Drake - High Fives",
     "content_type": "short",
     "video_path": "outputs\\short__tlMz8sTFMs_1779195883.mp4",

@@ -27,6 +27,7 @@ export default function Dashboard() {
   const [pageTitle, setPageTitle] = useState('Overview');
   const { pipelineStats } = useDashboardData();
   const [actionMessage, setActionMessage] = useState('');
+  const [isActionPending, setIsActionPending] = useState(false);
 
   useEffect(() => {
     const item = navItems.find(n => n.path === location.pathname);
@@ -35,10 +36,19 @@ export default function Dashboard() {
 
   const quotaPercent = (pipelineStats.uploadsToday / pipelineStats.dailyCap) * 100;
 
-  const runPipelineAction = async (action: 'start' | 'stop') => {
-    const result = await pipelineAction(action);
-    setActionMessage(result.status ?? `${action} requested`);
-    setTimeout(() => setActionMessage(''), 3000);
+  const runPipelineAction = async () => {
+    const action = pipelineStats.pipelineStatus === 'RUNNING' ? 'stop' : 'start';
+    setIsActionPending(true);
+    try {
+      const result = await pipelineAction(action);
+      setActionMessage(result.status ?? `${action} requested`);
+      window.setTimeout(() => setActionMessage(''), 3000);
+    } catch (error) {
+      setActionMessage(error instanceof Error ? error.message : `Pipeline ${action} failed`);
+      window.setTimeout(() => setActionMessage(''), 4000);
+    } finally {
+      setIsActionPending(false);
+    }
   };
 
   const handleLogout = async () => {
@@ -128,17 +138,21 @@ export default function Dashboard() {
             {actionMessage && (
               <span className="font-mono text-xs" style={{ color: '#00F0FF' }}>{actionMessage}</span>
             )}
-            <button onClick={() => runPipelineAction('start')}
-              className="flex items-center gap-2 px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all hover:bg-white/5"
-              style={{ color: '#00FF66', border: '1px solid #121212' }}>
-              <Play size={12} />
-              Run
-            </button>
-            <button onClick={() => runPipelineAction('stop')}
-              className="flex items-center gap-2 px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all hover:bg-white/5"
-              style={{ color: '#FF3366', border: '1px solid #121212' }}>
-              <Square size={12} />
-              Stop
+            <button
+              onClick={runPipelineAction}
+              disabled={isActionPending}
+              className="flex items-center gap-2 px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-60"
+              style={{
+                color: pipelineStats.pipelineStatus === 'RUNNING' ? '#FF3366' : '#00FF66',
+                border: '1px solid #121212',
+              }}
+            >
+              {pipelineStats.pipelineStatus === 'RUNNING' ? <Square size={12} /> : <Play size={12} />}
+              {isActionPending
+                ? 'Working...'
+                : pipelineStats.pipelineStatus === 'RUNNING'
+                  ? 'Stop Pipeline'
+                  : 'Start Pipeline'}
             </button>
             <button className="relative p-2 transition-colors hover:bg-white/5"
               style={{ color: 'rgba(255,255,255,0.5)' }}>

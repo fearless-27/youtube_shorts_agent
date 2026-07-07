@@ -16,6 +16,23 @@ GhostPipe is an **end-to-end Shorts production system** combining:
 
 Perfect for content teams, growth operators, and creators who want a repeatable Shorts engine instead of manual editing chains.
 
+### Workflow Diagram of the Content Generation Pipeline
+
+```mermaid
+flowchart LR
+	A[Trend sources<br/>YouTube, Reddit, Telegram] --> B[Collect video + metadata]
+	B --> C[Analyze hooks, scenes, captions, audio]
+	C --> D[Generate Short<br/>cut, format, captions, voiceover]
+	D --> E[Score for virality]
+	E --> F{Approve or auto-queue?}
+	F -->|Review| G[Dashboard approval]
+	F -->|Auto| H[Schedule upload]
+	G --> H
+	H --> I[Publish to YouTube]
+	I --> J[Store history + learning data]
+	J --> C
+```
+
 ---
 
 ## ⚙️ Quick Start
@@ -188,9 +205,74 @@ Edit `config/ghostpipe.json` to set:
 - `mode`: `live` (auto-upload), `semi-live` (approval), `dry-run` (test)
 - `max_daily_uploads`: Cap uploads per day (default: 5)
 - `upload_peak_times`: e.g., `["07:30", "12:00", "18:00"]`
+- Upload scheduling uses at most one upload per configured peak window, up to `max_daily_uploads` per day
+- `growth_discovery_groups`: Optional grouped search targets, e.g. 2 trending, 2 anime, and 2 comedy million-view candidates
+- `content_language`: Upload metadata and search-language targeting, e.g. `"fr"` for French
+- `youtube_region_code`: YouTube trend/search region, e.g. `"FR"` for France
+- `schedule_uploads_ahead`: Upload to your authenticated YouTube channel now and schedule publishing for peak slots
+- `schedule_upload_days_ahead`: Number of days ahead to schedule peak-slot publishes
+- `upload_window_minutes`: Minutes in each peak upload window
+- `upload_window_position`: Use `"before"` to upload before each peak time or `"after"` to upload after it
+- `upload_public_stats_viewable`: Set `false` to hide public extended stats/ratings where YouTube supports it
+- `custom_thumbnails_enabled`: Generate a custom thumbnail for each Short and upload it after the video is created
+- `custom_thumbnail_frame_ratio`: Frame position to capture for the thumbnail, from `0.0` start to `1.0` end
+- `custom_thumbnail_label` / `custom_thumbnail_accent`: Small thumbnail label and accent color
 - `upload_timezone`: e.g., `"Asia/Kolkata"` or `"America/New_York"`
 - `categories`: Content categories to scan
 - `min_virality_threshold`: Minimum score to upload (default: 45)
+- `yt_dlp_cookies_from_browser`: Browser cookies for downloads when YouTube asks you to sign in, e.g. `"chrome,edge,firefox"`
+- `yt_dlp_cookie_file`: Optional Netscape-format cookies file path if you prefer exporting cookies manually
+
+If downloads fail with `Sign in to confirm you're not a bot`, first sign in to YouTube in Chrome, Edge, or Firefox on the same machine, then set:
+
+```json
+"yt_dlp_cookies_from_browser": "chrome,edge,firefox"
+```
+
+You can also set `YT_DLP_COOKIES_FROM_BROWSER=chrome,edge,firefox` or `YT_DLP_COOKIE_FILE=path/to/cookies.txt` in `.env`.
+
+---
+
+## Telegram to Tamil Shorts Pipeline
+
+This pipeline downloads recent videos from a Telegram channel, creates a vertical Short, replaces the original audio with Tamil voiceover or a supplied Tamil audio file, then uploads through the same YouTube OAuth setup.
+
+Install the new dependencies:
+
+```powershell
+pip install -r pipeline/requirements.txt
+```
+
+Configure `config/telegram_tamil_shorts.json` and `.env`:
+
+```env
+TELEGRAM_CHANNELS=https://t.me/channel_one,https://t.me/channel_two,https://t.me/channel_three
+TELEGRAM_PHONE=+911234567890
+TELEGRAM_API_ID=123456
+TELEGRAM_API_HASH=your_api_hash
+TELEGRAM_TAMIL_MODE=dry_run
+```
+
+Run one cycle:
+
+```powershell
+python pipeline/telegram_tamil_shorts_pipeline.py --once
+```
+
+Important settings:
+
+- `telegram_mode`: `dry_run` renders only, `live` renders and uploads.
+- `telegram_channels`: public channel URLs, usernames, or channel ids readable by your Telegram account.
+- `telegram_fetch_limit`: how many recent Telegram posts to inspect.
+- `telegram_max_uploads_per_run`: max new Shorts to process per run.
+- `telegram_short_duration`: max output length in seconds.
+- `tamil_audio_file`: optional ready-made Tamil narration/music file. When set, it replaces the source audio.
+- `telegram_transcribe_source`: uses Whisper to transcribe the source video before Tamil translation.
+- `telegram_translate_to_tamil`: uses configured LLM API keys through `pipeline/api_integrations.py`; if unavailable, it falls back to caption/title text.
+- `tamil_tts_voice`: Edge TTS Tamil voice used for generated narration.
+- `telegram_delete_local_files_after_upload`: deletes downloaded Telegram videos, generated Tamil audio, and rendered Shorts after a successful YouTube upload.
+
+The first Telegram run may ask for a phone login code in the terminal because Telethon creates a local session file.
 
 ---
 

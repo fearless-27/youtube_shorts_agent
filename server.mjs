@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { randomBytes, timingSafeEqual } from "node:crypto";
@@ -13,6 +13,7 @@ const downloadsDir = resolve(root, "downloads");
 const configPath = resolve(root, "config", "ghostpipe.json");
 const logPath = resolve(root, "ghostpipe.log");
 const lockPath = resolve(root, "ghostpipe.lock");
+const approvalQueuePath = "public/data/approval_queue.json";
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "0.0.0.0";
 const sessions = new Map();
@@ -105,21 +106,60 @@ function writeConfigPatch(patch) {
   const current = readConfig();
   const allowed = new Set([
     "mode",
+    "min_views",
+    "max_video_age_hours",
+    "content_language",
+    "youtube_region_code",
+    "growth_min_views",
+    "subscriber_cta",
+    "subscriber_value_promise",
+    "growth_first_comment",
+    "growth_audience_keywords",
+    "growth_search_results_per_term",
+    "growth_discovery_terms",
+    "growth_discovery_groups",
     "max_daily_uploads",
     "upload_privacy",
     "upload_timezone",
     "upload_peak_times",
+    "schedule_uploads_ahead",
+    "schedule_upload_days_ahead",
+    "upload_window_minutes",
+    "upload_window_position",
     "delete_local_files_after_upload",
     "auto_approve_pending",
     "approval_auto_min_virality_score",
   ]);
   for (const [key, value] of Object.entries(patch)) {
     if (allowed.has(key)) {
-      current[key] = value;
+      current[key] = normalizeConfigValue(key, value);
     }
   }
   writeFileSync(configPath, `${JSON.stringify(current, null, 2)}\n`, "utf8");
   return current;
+}
+
+function normalizeConfigValue(key, value) {
+  if (key === "mode") {
+    return String(value).replace("-", "_");
+  }
+  if ([
+    "min_views",
+    "max_video_age_hours",
+    "growth_min_views",
+    "growth_search_results_per_term",
+    "max_daily_uploads",
+    "schedule_upload_days_ahead",
+    "upload_window_minutes",
+    "approval_auto_min_virality_score",
+  ].includes(key)) {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : value;
+  }
+  if (key === "upload_peak_times" && Array.isArray(value)) {
+    return value.map(String).filter(Boolean);
+  }
+  return value;
 }
 
 function encodeApprovalId(item) {
@@ -132,7 +172,7 @@ function withIds(items) {
 
 function readApprovals() {
   const config = readConfig();
-  const items = withIds(readJson("public/data/approval_queue.json", []));
+  const items = withIds(readJson(approvalQueuePath, []));
   if (config.auto_approve_pending === true) {
     const minimumScore = Number(config.approval_auto_min_virality_score ?? 0);
     let changed = false;
@@ -153,7 +193,7 @@ function readApprovals() {
 }
 
 function writeApprovals(items) {
-  writeJson("public/data/approval_queue.json", items.map(({ id, ...item }) => item));
+  writeJson(approvalQueuePath, items.map(({ id, ...item }) => item));
 }
 
 function readQuota() {
@@ -175,7 +215,7 @@ function readStatus() {
 
   return {
     mode: config.mode ?? "live",
-    running: existsSync(lockPath),
+    running: isPipelineRunning(),
     lock_file: "ghostpipe.lock",
     log_tail: logTail,
     last_log_line: logTail.at(-1) ?? null,
@@ -280,6 +320,10 @@ async function handleApi(request, response, url) {
     sendJson(response, stopPipeline());
     return true;
   }
+  if (request.method === "POST" && url.pathname === "/api/pipeline/reset") {
+    sendJson(response, resetPipelineQueue());
+    return true;
+  }
   if (request.method === "GET" && url.pathname === "/api/logs/stream") {
     streamLogs(request, response);
     return true;
@@ -316,13 +360,15 @@ async function handleApi(request, response, url) {
 }
 
 function startPipeline() {
-  if (existsSync(lockPath)) {
+  clearStaleLock();
+  if (isPipelineRunning()) {
     return { status: "already_running", ...readStatus() };
   }
   if (managedPipeline && !managedPipeline.killed) {
     return { status: "already_managed", pid: managedPipeline.pid };
   }
-  managedPipeline = spawn("python", ["pipeline\\ghostpipe_v5_1_pipeline.py"], {
+  const python = process.env.PYTHON || "python";
+  managedPipeline = spawn(python, [join("pipeline", "ghostpipe_v5_1_pipeline.py")], {
     cwd: root,
     detached: false,
     stdio: "ignore",
@@ -337,7 +383,7 @@ function startPipeline() {
 }
 
 function stopPipeline() {
-  const pid = managedPipeline?.pid || Number(existsSync(lockPath) ? readFileSync(lockPath, "utf8") : 0);
+  const pid = managedPipeline?.pid || readPipelinePid();
   if (!pid) {
     return { status: "not_running" };
   }
@@ -347,6 +393,44 @@ function stopPipeline() {
     return { status: "stopped", pid };
   } catch (error) {
     return { status: "stop_failed", pid, error: error.message };
+  }
+}
+
+function resetPipelineQueue() {
+  writeApprovals([]);
+  return { status: "queue_reset", approvals: [] };
+}
+
+function isPipelineRunning() {
+  if (managedPipeline && !managedPipeline.killed) return true;
+  if (!existsSync(lockPath)) return false;
+  const pid = readPipelinePid();
+  if (pid === null) return true;
+  if (!pid) return false;
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function readPipelinePid() {
+  if (!existsSync(lockPath)) return 0;
+  try {
+    return Number(readFileSync(lockPath, "utf8"));
+  } catch (error) {
+    if (error?.code === "EBUSY") return null;
+    return 0;
+  }
+}
+
+function clearStaleLock() {
+  if (!existsSync(lockPath) || isPipelineRunning()) return;
+  try {
+    unlinkSync(lockPath);
+  } catch {
+    // The next start attempt will report the remaining lock if it cannot be removed.
   }
 }
 
