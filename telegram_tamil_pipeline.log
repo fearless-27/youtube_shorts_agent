@@ -3449,3 +3449,672 @@ TimeoutError: The write operation timed out
 2026-07-06 21:12:47,712 | INFO     | GhostPipe                | Auto-learning ML model trained on 74 samples, MAE 19.11
 2026-07-06 21:12:47,723 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part019_1780149786.mp4
 2026-07-06 21:12:47,728 | INFO     | TelegramTamilShorts      | Waiting to finish 38 rendered Telegram Shorts before downloading another source video.
+2026-07-07 21:16:54,217 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-08T11:30:00+05:30
+2026-07-07 21:16:54,436 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-07 21:20:32,271 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-07 21:20:32,286 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part015_1780149654.mp4
+2026-07-07 21:20:40,780 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-08T15:30:00+05:30
+2026-07-07 21:20:40,783 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-07 21:22:41,995 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-07 21:22:42,014 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part020_1780149819.mp4
+2026-07-07 21:22:50,487 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-08T18:30:00+05:30
+2026-07-07 21:22:50,491 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-07 21:24:35,183 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-07 21:24:35,201 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part021_1780149852.mp4
+2026-07-07 21:24:43,866 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-08T21:30:00+05:30
+2026-07-07 21:24:43,870 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-07 21:27:02,977 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-07 21:27:02,996 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part022_1780149886.mp4
+2026-07-07 21:27:09,387 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-09T07:30:00+05:30
+2026-07-07 21:27:09,390 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-07 21:27:53,276 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-07 21:27:53,292 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part023_1780149919.mp4
+2026-07-08 09:02:48,668 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-09T11:30:00+05:30
+2026-07-08 09:02:49,024 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-08 09:02:58,313 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-08 09:02:58,335 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part024_1780149953.mp4
+2026-07-08 09:03:04,875 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-09T15:30:00+05:30
+2026-07-08 09:03:04,879 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-08 09:03:20,324 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-08 09:03:20,342 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part025_1780149987.mp4
+2026-07-08 09:03:26,646 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-09T18:30:00+05:30
+2026-07-08 09:03:26,651 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-08 09:03:37,735 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-08 09:03:37,749 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part026_1780150020.mp4
+2026-07-08 09:03:43,821 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-09T21:30:00+05:30
+2026-07-08 09:03:43,824 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-08 09:03:54,950 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-08 09:03:54,971 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part027_1780150052.mp4
+2026-07-08 09:04:01,180 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-10T07:30:00+05:30
+2026-07-08 09:04:01,183 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-08 09:04:12,477 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-08 09:04:12,498 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part028_1780150084.mp4
+2026-07-08 16:20:00,498 | INFO     | TelegramTamilShorts      | Telegram daily upload limit reached. No Shorts will be uploaded today.
+2026-07-08 16:25:57,244 | INFO     | TelegramTamilShorts      | Telegram daily upload limit reached. No Shorts will be uploaded today.
+2026-07-09 12:01:53,554 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-10T21:30:00+05:30
+2026-07-09 12:01:53,803 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-09 12:02:27,926 | INFO     | GhostPipe                | Auto-learning ML model trained on 75 samples, MAE 19.36
+2026-07-09 12:02:27,941 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part029_1780150118.mp4
+2026-07-09 12:02:32,183 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-11T07:30:00+05:30
+2026-07-09 12:02:32,185 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-09 12:02:46,868 | INFO     | GhostPipe                | Auto-learning ML model trained on 76 samples, MAE 19.78
+2026-07-09 12:02:46,882 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part030_1780150151.mp4
+2026-07-09 12:02:51,615 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-11T11:30:00+05:30
+2026-07-09 12:02:51,618 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-09 12:03:04,628 | INFO     | GhostPipe                | Auto-learning ML model trained on 76 samples, MAE 19.78
+2026-07-09 12:03:04,641 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part031_1780150184.mp4
+2026-07-09 12:03:09,713 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-11T15:30:00+05:30
+2026-07-09 12:03:09,715 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-09 12:03:22,307 | INFO     | GhostPipe                | Auto-learning ML model trained on 76 samples, MAE 19.78
+2026-07-09 12:03:22,320 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part032_1780150221.mp4
+2026-07-09 12:03:26,401 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-11T18:30:00+05:30
+2026-07-09 12:03:26,404 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-09 12:03:39,369 | INFO     | GhostPipe                | Auto-learning ML model trained on 76 samples, MAE 19.78
+2026-07-09 12:03:39,385 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part033_1780150256.mp4
+2026-07-15 12:57:57,203 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 12:57:57,496 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 12:57:59,900 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part034. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ~~~~~~~~~~~~~~^
+        http,
+        ^^^^^
+    ...<7 lines>...
+        headers=start_headers,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google_auth_httplib2.py", line 205, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 469, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 203, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 482, in refresh
+    self._perform_refresh_token(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\credentials.py", line 435, in _perform_refresh_token
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\_client.py", line 73, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 12:58:05,272 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 12:58:05,275 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 12:58:06,671 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part035. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ~~~~~~~~~~~~~~^
+        http,
+        ^^^^^
+    ...<7 lines>...
+        headers=start_headers,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google_auth_httplib2.py", line 205, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 469, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 203, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 482, in refresh
+    self._perform_refresh_token(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\credentials.py", line 435, in _perform_refresh_token
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\_client.py", line 73, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 12:58:12,069 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 12:58:12,072 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 12:58:12,957 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part036. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ~~~~~~~~~~~~~~^
+        http,
+        ^^^^^
+    ...<7 lines>...
+        headers=start_headers,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google_auth_httplib2.py", line 205, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 469, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 203, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 482, in refresh
+    self._perform_refresh_token(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\credentials.py", line 435, in _perform_refresh_token
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\_client.py", line 73, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 12:58:18,268 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 12:58:18,271 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 12:58:19,254 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part037. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ~~~~~~~~~~~~~~^
+        http,
+        ^^^^^
+    ...<7 lines>...
+        headers=start_headers,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google_auth_httplib2.py", line 205, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 469, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 203, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 482, in refresh
+    self._perform_refresh_token(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\credentials.py", line 435, in _perform_refresh_token
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\_client.py", line 73, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 12:58:25,150 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 12:58:25,153 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 12:58:26,725 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part038. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ~~~~~~~~~~~~~~^
+        http,
+        ^^^^^
+    ...<7 lines>...
+        headers=start_headers,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google_auth_httplib2.py", line 205, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 469, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 203, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\auth\credentials.py", line 482, in refresh
+    self._perform_refresh_token(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\credentials.py", line 435, in _perform_refresh_token
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\venv\Lib\site-packages\google\oauth2\_client.py", line 73, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 12:58:26,802 | INFO     | TelegramTamilShorts      | Waiting to finish 23 rendered Telegram Shorts before downloading another source video.
+2026-07-15 13:02:10,312 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 13:02:14,201 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:02:15,887 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part034. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google_auth_httplib2.py", line 207, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 230, in before_request
+    self._blocking_refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 193, in _blocking_refresh
+    self.refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\credentials.py", line 412, in refresh
+    ) = reauth.refresh_grant(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 13:02:25,041 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 13:02:25,049 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:02:26,612 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part035. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google_auth_httplib2.py", line 207, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 230, in before_request
+    self._blocking_refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 193, in _blocking_refresh
+    self.refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\credentials.py", line 412, in refresh
+    ) = reauth.refresh_grant(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 13:02:32,060 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 13:02:32,064 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:02:33,340 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part036. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google_auth_httplib2.py", line 207, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 230, in before_request
+    self._blocking_refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 193, in _blocking_refresh
+    self.refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\credentials.py", line 412, in refresh
+    ) = reauth.refresh_grant(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 13:02:39,096 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 13:02:39,099 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:02:40,051 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part037. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google_auth_httplib2.py", line 207, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 230, in before_request
+    self._blocking_refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 193, in _blocking_refresh
+    self.refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\credentials.py", line 412, in refresh
+    ) = reauth.refresh_grant(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 13:02:45,684 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 13:02:45,688 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:02:47,111 | ERROR    | TelegramTamilShorts      | Telegram Short upload failed for telegram:Dragon_ball_tamil_jh:912:part038. Keeping it rendered for retry: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1009, in _try_upload
+    return await self._maybe_upload(video, final_path, tamil_script, metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\telegram_tamil_shorts_pipeline.py", line 1372, in _maybe_upload
+    return await publisher.upload_short(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\OneDrive\文档\youtube Agent\pipeline\api_integrations.py", line 398, in upload_short
+    response = request.execute()
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 902, in execute
+    _, body = self.next_chunk(http=http, num_retries=num_retries)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 1007, in next_chunk
+    resp, content = _retry_request(
+                    ^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google_auth_httplib2.py", line 207, in request
+    self.credentials.before_request(self._request, method, uri, request_headers)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 230, in before_request
+    self._blocking_refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\auth\credentials.py", line 193, in _blocking_refresh
+    self.refresh(request)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\credentials.py", line 412, in refresh
+    ) = reauth.refresh_grant(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+  File "C:\Users\gobi5\AppData\Roaming\Python\Python311\site-packages\google\oauth2\_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-07-15 13:02:47,169 | INFO     | TelegramTamilShorts      | Waiting to finish 23 rendered Telegram Shorts before downloading another source video.
+2026-07-15 13:06:31,358 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 13:06:32,469 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:06:33,537 | WARNING  | TelegramTamilShorts      | YouTube OAuth session is no longer valid. Re-run the OAuth setup to refresh credentials.
+2026-07-15 13:06:33,537 | WARNING  | TelegramTamilShorts      | YouTube OAuth credentials are invalid or revoked for telegram:Dragon_ball_tamil_jh:912:part034. Run `python scripts/youtube_oauth_setup.py` to refresh `youtube_credentials.json`, then retry the Telegram pipeline. Uploads are stopped for this run.
+2026-07-15 13:08:57,482 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T15:30:00+05:30
+2026-07-15 13:08:57,796 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:09:56,744 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-15 13:09:56,775 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part034_1780150289.mp4
+2026-07-15 13:10:02,103 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T18:30:00+05:30
+2026-07-15 13:10:02,106 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:11:01,540 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-15 13:11:01,563 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part035_1780150322.mp4
+2026-07-15 13:11:07,872 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-15T21:30:00+05:30
+2026-07-15 13:11:07,875 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:11:26,405 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-15 13:11:26,424 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part036_1780150356.mp4
+2026-07-15 13:11:31,995 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-16T07:30:00+05:30
+2026-07-15 13:11:31,997 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:12:14,321 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-15 13:12:14,339 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part037_1780150389.mp4
+2026-07-15 13:12:19,288 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-16T11:30:00+05:30
+2026-07-15 13:12:19,291 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-15 13:12:46,732 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-15 13:12:46,748 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part038_1780150423.mp4
+2026-07-21 22:22:25,188 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-22T07:30:00+05:30
+2026-07-21 22:22:25,641 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-21 22:25:37,029 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-21 22:25:37,046 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part039_1780150459.mp4
+2026-07-21 22:25:44,029 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-22T11:30:00+05:30
+2026-07-21 22:25:44,034 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-21 22:25:52,655 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-21 22:25:52,672 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part040_1780150492.mp4
+2026-07-21 22:25:59,427 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-22T15:30:00+05:30
+2026-07-21 22:25:59,433 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-21 22:26:09,171 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-21 22:26:09,192 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part041_1780150524.mp4
+2026-07-21 22:26:16,584 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-22T18:30:00+05:30
+2026-07-21 22:26:16,587 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-21 22:26:24,828 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-21 22:26:24,844 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part042_1780150559.mp4
+2026-07-21 22:26:32,722 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-22T21:30:00+05:30
+2026-07-21 22:26:32,726 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-21 22:26:41,235 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-21 22:26:41,252 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part043_1780150592.mp4
+2026-07-22 19:36:19,006 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-23T07:30:00+05:30
+2026-07-22 19:36:19,431 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-22 19:36:20,368 | WARNING  | TelegramTamilShorts      | YouTube OAuth session is no longer valid. Re-run the OAuth setup to refresh credentials.
+2026-07-22 19:36:20,368 | WARNING  | TelegramTamilShorts      | YouTube OAuth credentials are invalid or revoked for telegram:Dragon_ball_tamil_jh:912:part044. Run `python scripts/youtube_oauth_setup.py` to refresh `youtube_credentials.json`, then retry the Telegram pipeline. Uploads are stopped for this run.
+2026-07-22 19:39:16,489 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-23T07:30:00+05:30
+2026-07-22 19:39:17,939 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-22 19:39:35,101 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-22 19:39:35,116 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part044_1780150626.mp4
+2026-07-22 19:39:42,334 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-23T11:30:00+05:30
+2026-07-22 19:39:42,344 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-22 19:40:01,122 | INFO     | GhostPipe                | Auto-learning ML model trained on 78 samples, MAE 20.82
+2026-07-22 19:40:01,134 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part045_1780150659.mp4
+2026-07-22 19:40:08,604 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-23T15:30:00+05:30
+2026-07-22 19:40:08,615 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-23 20:25:01,655 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-23T21:30:00+05:30
+2026-07-23 20:25:02,913 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-23 20:25:12,776 | INFO     | GhostPipe                | Auto-learning ML model trained on 83 samples, MAE 28.99
+2026-07-23 20:25:12,800 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part046_1780150692.mp4
+2026-07-23 20:25:17,494 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-24T15:30:00+05:30
+2026-07-23 20:25:17,496 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-23 20:25:26,838 | INFO     | GhostPipe                | Auto-learning ML model trained on 83 samples, MAE 28.99
+2026-07-23 20:25:26,847 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part047_1780150726.mp4
+2026-07-23 20:25:30,861 | INFO     | TelegramTamilShorts      | Uploading to channel and scheduling Telegram Short for peak slot: 2026-07-24T18:30:00+05:30
+2026-07-23 20:25:30,866 | INFO     | googleapiclient.discovery_cache | file_cache is only supported with oauth2client<4.0.0
+2026-07-23 20:25:39,619 | INFO     | GhostPipe                | Auto-learning ML model trained on 83 samples, MAE 28.99
+2026-07-23 20:25:39,625 | INFO     | TelegramTamilShorts      | Deleted uploaded Telegram pipeline asset: outputs\telegram_tamil_Dragon_ball_tamil_jh_912_part048_1780150760.mp4

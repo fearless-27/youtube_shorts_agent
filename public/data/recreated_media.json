@@ -1,5 +1,806 @@
 [
   {
+    "title": "\ud83d\udca5 Pourquoi Can Kenji & Kaze Save Nori? (Brawl Stars Anima cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_ylGKgCWazw0_1784818329.mp4",
+    "public_url": "/outputs/short_ylGKgCWazw0_1784818329.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_ylGKgCWazw0_1784818395.jpg",
+    "thumbnail_url": "/outputs/thumbnail_ylGKgCWazw0_1784818395.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 64.58,
+      "predicted_avd": 82.56,
+      "predicted_virality": 68.23,
+      "ml_outcome_prediction": 54.27,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.83,
+      "hook_score": 0.74,
+      "pacing_score": 0.88,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 66,
+      "has_emoji": true,
+      "has_number": false,
+      "has_question": true,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "a_voir"
+    },
+    "metadata": {
+      "title": "\ud83d\udca5 Pourquoi Can Kenji & Kaze Save Nori? (Brawl Stars Anima cartonne",
+      "description": "Can Kenji & Kaze Save Nori? (Brawl Stars Animation)\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "20",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "20",
+      "title_template": "a_voir",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 66,
+        "has_emoji": true,
+        "has_number": false,
+        "has_question": true,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "ylGKgCWazw0"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_ylGKgCWazw0_1784818395.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-07-23T20:23:15.708536",
+    "upload_result": {
+      "video_id": "j3kRLRjXwJA",
+      "url": "https://youtube.com/shorts/j3kRLRjXwJA",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-07-24T11:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_ylGKgCWazw0_1784818395.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "OMmf7iqtKJCr_WyiBxfMFUtfook",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/j3kRLRjXwJA/default.jpg?sqp=CJjUiNMG&rs=AOn4CLAdk4G9HQ6DUui4tJvE3PWJ2TIMGw",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/j3kRLRjXwJA/mqdefault.jpg?sqp=CJjUiNMG&rs=AOn4CLDM-rMXkUdmM92BM_vDEtHPy6Jawg",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/j3kRLRjXwJA/hqdefault.jpg?sqp=CJjUiNMG&rs=AOn4CLCTkJTuMLDv48mqddFjzLhQL-pHAA",
+                "width": 480,
+                "height": 360
+              },
+              "standard": {
+                "url": "https://i9.ytimg.com/vi/j3kRLRjXwJA/sddefault.jpg?sqp=CJjUiNMG&rs=AOn4CLDXsNmDpewlCkLQ4rEpw_aHr01Ciw",
+                "width": 640,
+                "height": 480
+              },
+              "maxres": {
+                "url": "https://i9.ytimg.com/vi/j3kRLRjXwJA/maxresdefault.jpg?sqp=CJjUiNMG&rs=AOn4CLCciVnBy7B6eYxClgGkETTNm0mCbw",
+                "width": 1280,
+                "height": 720
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "title": "\ud83d\udca5 Pourquoi KATSEYE (\ucea3\uce20\uc544\uc774) \"Animal\" Official MV Teaser 2 cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_z7eGToy4MWk_1784818254.mp4",
+    "public_url": "/outputs/short_z7eGToy4MWk_1784818254.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_z7eGToy4MWk_1784818280.jpg",
+    "thumbnail_url": "/outputs/thumbnail_z7eGToy4MWk_1784818280.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 68.46,
+      "predicted_avd": 65.47,
+      "predicted_virality": 59.95,
+      "ml_outcome_prediction": 51.58,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.83,
+      "hook_score": 0.75,
+      "pacing_score": 0.65,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 64,
+      "has_emoji": true,
+      "has_number": true,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "a_voir"
+    },
+    "metadata": {
+      "title": "\ud83d\udca5 Pourquoi KATSEYE (\ucea3\uce20\uc544\uc774) \"Animal\" Official MV Teaser 2 cartonne",
+      "description": "KATSEYE (\ucea3\uce20\uc544\uc774) \"Animal\" Official MV Teaser 2\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "10",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "10",
+      "title_template": "a_voir",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 64,
+        "has_emoji": true,
+        "has_number": true,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "z7eGToy4MWk"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_z7eGToy4MWk_1784818280.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-07-23T20:21:20.949280",
+    "upload_result": {
+      "video_id": "54P2KTXVNI4",
+      "url": "https://youtube.com/shorts/54P2KTXVNI4",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-07-24T07:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_z7eGToy4MWk_1784818280.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "KdUbm5cIcIMXtQKtz_cZM-ECDI4",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/54P2KTXVNI4/default.jpg?sqp=CJjUiNMG&rs=AOn4CLCZYx5gYBOlM4riCAg3Rd_7GxUMdA",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/54P2KTXVNI4/mqdefault.jpg?sqp=CJjUiNMG&rs=AOn4CLDfdXM6ffh5CXkGTgd4YOkLLJuCGQ",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/54P2KTXVNI4/hqdefault.jpg?sqp=CJjUiNMG&rs=AOn4CLB81wdrPzRTDUE6hG-caYag-R7rPA",
+                "width": 480,
+                "height": 360
+              },
+              "standard": {
+                "url": "https://i9.ytimg.com/vi/54P2KTXVNI4/sddefault.jpg?sqp=CJjUiNMG&rs=AOn4CLDhllBB4V3qYRPMqvgBRlHDLRZ8FQ",
+                "width": 640,
+                "height": 480
+              },
+              "maxres": {
+                "url": "https://i9.ytimg.com/vi/54P2KTXVNI4/maxresdefault.jpg?sqp=CJjUiNMG&rs=AOn4CLBrBAzUUPUdxO8u4y4cCZ4uBGhW4Q",
+                "width": 1280,
+                "height": 720
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "title": "\ud83d\udc40 Pourquoi Class Of 2026 cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_iN1D7BrFN2c_1784100797.mp4",
+    "public_url": "/outputs/short_iN1D7BrFN2c_1784100797.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_iN1D7BrFN2c_1784100873.jpg",
+    "thumbnail_url": "/outputs/thumbnail_iN1D7BrFN2c_1784100873.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 72.06,
+      "predicted_avd": 70.79,
+      "predicted_virality": 67.31,
+      "ml_outcome_prediction": 46.84,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.98,
+      "hook_score": 0.79,
+      "pacing_score": 0.61,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 33,
+      "has_emoji": true,
+      "has_number": true,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "a_voir"
+    },
+    "metadata": {
+      "title": "\ud83d\udc40 Pourquoi Class Of 2026 cartonne",
+      "description": "Class Of 2026 | Official Trailer [Streamer University]\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "24",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "24",
+      "title_template": "a_voir",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 33,
+        "has_emoji": true,
+        "has_number": true,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "iN1D7BrFN2c"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_iN1D7BrFN2c_1784100873.jpg"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-07-15T13:04:33.322115"
+  },
+  {
+    "title": "\ud83c\udfac Pourquoi DIGGER | Official Trailer cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_qORTe1wW3Wg_1784100667.mp4",
+    "public_url": "/outputs/short_qORTe1wW3Wg_1784100667.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_qORTe1wW3Wg_1784100746.jpg",
+    "thumbnail_url": "/outputs/thumbnail_qORTe1wW3Wg_1784100746.jpg",
+    "exists": true,
+    "prediction": {
+      "predicted_ctr": 77.56,
+      "predicted_avd": 83.0,
+      "predicted_virality": 67.74,
+      "ml_outcome_prediction": 47.16,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.88,
+      "hook_score": 0.84,
+      "pacing_score": 0.8,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 45,
+      "has_emoji": true,
+      "has_number": false,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "pourquoi_cartonne"
+    },
+    "metadata": {
+      "title": "\ud83c\udfac Pourquoi DIGGER | Official Trailer cartonne",
+      "description": "DIGGER | Official Trailer\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "1",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "1",
+      "title_template": "pourquoi_cartonne",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 45,
+        "has_emoji": true,
+        "has_number": false,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "qORTe1wW3Wg"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_qORTe1wW3Wg_1784100746.jpg"
+    },
+    "schedule_time": null,
+    "approved": null,
+    "timestamp": "2026-07-15T13:02:26.443268"
+  },
+  {
+    "title": "\ud83d\ude80 Pourquoi Avatar Aang: The Last Airbender cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_7b20GRFZBFE_1783494052.mp4",
+    "public_url": "/outputs/short_7b20GRFZBFE_1783494052.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_7b20GRFZBFE_1783494122.jpg",
+    "thumbnail_url": "/outputs/thumbnail_7b20GRFZBFE_1783494122.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 74.36,
+      "predicted_avd": 83.12,
+      "predicted_virality": 64.06,
+      "ml_outcome_prediction": 46.05,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.88,
+      "hook_score": 0.76,
+      "pacing_score": 0.86,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 51,
+      "has_emoji": true,
+      "has_number": false,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "moment_fou"
+    },
+    "metadata": {
+      "title": "\ud83d\ude80 Pourquoi Avatar Aang: The Last Airbender cartonne",
+      "description": "Avatar Aang: The Last Airbender | Official Movie Trailer | Paramount+ | Avatar\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "1",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "1",
+      "title_template": "moment_fou",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 51,
+        "has_emoji": true,
+        "has_number": false,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "7b20GRFZBFE"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_7b20GRFZBFE_1783494122.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-07-08T12:32:02.890167",
+    "upload_result": {
+      "video_id": "o_A7knwIkI4",
+      "url": "https://youtube.com/shorts/o_A7knwIkI4",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-07-10T18:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_7b20GRFZBFE_1783494122.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "p8w0gPkyXd1qY6EzSQg9vD9sJy8",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/o_A7knwIkI4/default.jpg?sqp=CPDqt9IG&rs=AOn4CLBcF9rC7KTHvJvyx4K25OS6hZf3MQ",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/o_A7knwIkI4/mqdefault.jpg?sqp=CPDqt9IG&rs=AOn4CLDFq80vPLf83J6aJeqryGs_U52BAw",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/o_A7knwIkI4/hqdefault.jpg?sqp=CPDqt9IG&rs=AOn4CLAV6jmhlF4bdH6H3MSEGJfbCrl4bA",
+                "width": 480,
+                "height": 360
+              },
+              "standard": {
+                "url": "https://i9.ytimg.com/vi/o_A7knwIkI4/sddefault.jpg?sqp=CPDqt9IG&rs=AOn4CLBXRDrQyseamWmfzcNVQDUOUHJ9eg",
+                "width": 640,
+                "height": 480
+              },
+              "maxres": {
+                "url": "https://i9.ytimg.com/vi/o_A7knwIkI4/maxresdefault.jpg?sqp=CPDqt9IG&rs=AOn4CLBDNcd8QyGB1_KvrCG_dIXjbc4JHQ",
+                "width": 1280,
+                "height": 720
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "title": "\ud83d\udca5 Pourquoi Stray Kids \"THIS & THAT\" Trailer cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_hQUVIT8m-c0_1783493905.mp4",
+    "public_url": "/outputs/short_hQUVIT8m-c0_1783493905.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_hQUVIT8m-c0_1783493971.jpg",
+    "thumbnail_url": "/outputs/thumbnail_hQUVIT8m-c0_1783493971.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 73.58,
+      "predicted_avd": 74.32,
+      "predicted_virality": 62.11,
+      "ml_outcome_prediction": 48.18,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.88,
+      "hook_score": 0.73,
+      "pacing_score": 0.81,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 52,
+      "has_emoji": true,
+      "has_number": false,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "pourquoi_cartonne"
+    },
+    "metadata": {
+      "title": "\ud83d\udca5 Pourquoi Stray Kids \"THIS & THAT\" Trailer cartonne",
+      "description": "Stray Kids \"THIS & THAT\" Trailer\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "10",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "10",
+      "title_template": "pourquoi_cartonne",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 52,
+        "has_emoji": true,
+        "has_number": false,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "hQUVIT8m-c0"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_hQUVIT8m-c0_1783493971.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-07-08T12:29:31.932448",
+    "upload_result": {
+      "video_id": "LB5CHaKB0-o",
+      "url": "https://youtube.com/shorts/LB5CHaKB0-o",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-07-10T15:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_hQUVIT8m-c0_1783493971.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "Si-6OZXAG-f0KiuJbVwmjaqJLOA",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/LB5CHaKB0-o/default.jpg?sqp=CPDqt9IG&rs=AOn4CLAPRNw-HBfy7buiN-On7HauZBEFew",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/LB5CHaKB0-o/mqdefault.jpg?sqp=CPDqt9IG&rs=AOn4CLAjzN-smGzAGaTzgiKBIjxYGygNzg",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/LB5CHaKB0-o/hqdefault.jpg?sqp=CPDqt9IG&rs=AOn4CLDYAXWY6CPAVxZn1wFioWRoCZykTQ",
+                "width": 480,
+                "height": 360
+              },
+              "standard": {
+                "url": "https://i9.ytimg.com/vi/LB5CHaKB0-o/sddefault.jpg?sqp=CPDqt9IG&rs=AOn4CLDZsi9QuvZhrXlLWsHGtyUcI2Mc2w",
+                "width": 640,
+                "height": 480
+              },
+              "maxres": {
+                "url": "https://i9.ytimg.com/vi/LB5CHaKB0-o/maxresdefault.jpg?sqp=CPDqt9IG&rs=AOn4CLBvoz7ZVJVTGMxHulsK1v_HVLKvLg",
+                "width": 1280,
+                "height": 720
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "title": "\u26a1 Pourquoi BABYMONSTER cartonne",
+    "content_type": "short",
+    "video_path": "outputs\\short_9cS2wv6AfHk_1783493672.mp4",
+    "public_url": "/outputs/short_9cS2wv6AfHk_1783493672.mp4",
+    "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_9cS2wv6AfHk_1783493755.jpg",
+    "thumbnail_url": "/outputs/thumbnail_9cS2wv6AfHk_1783493755.jpg",
+    "exists": false,
+    "prediction": {
+      "predicted_ctr": 69.2,
+      "predicted_avd": 65.52,
+      "predicted_virality": 65.31,
+      "ml_outcome_prediction": 53.53,
+      "ml_feature_set": "analytics_v2",
+      "title_score": 0.8,
+      "hook_score": 0.74,
+      "pacing_score": 0.65,
+      "subscriber_conversion_score": 81.25,
+      "growth_goal_daily_subscriber_target": 667,
+      "recommendation": "upload"
+    },
+    "title_features": {
+      "length": 31,
+      "has_emoji": false,
+      "has_number": false,
+      "has_question": false,
+      "attractive_words": [
+        "pourquoi",
+        "cartonne"
+      ]
+    },
+    "learning": {
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_template": "moment_fou"
+    },
+    "metadata": {
+      "title": "\u26a1 Pourquoi BABYMONSTER cartonne",
+      "description": "BABYMONSTER - 'I LIKE IT' M/V\n\nClip source coupe et formate en Short.\n\n#shorts #viral #tendance\n\nAbonne-toi pour comprendre les tendances virales avant tout le monde.\nSur cette chaine: des tendances virales quotidiennes, des explications simples et des Shorts a ne pas manquer.\nObjectif sprint 15 jours: 667 nouveaux abonnes par jour.",
+      "tags": [
+        "10",
+        "shorts",
+        "viral",
+        "tendance",
+        "clip",
+        "youtube shorts",
+        "abonne toi",
+        "shorts quotidien",
+        "viral explique",
+        "tendance france",
+        "a voir",
+        "actualite virale"
+      ],
+      "category": "10",
+      "title_template": "moment_fou",
+      "hook_style": "source_clip",
+      "structure": "cut_and_crop",
+      "title_features": {
+        "length": 31,
+        "has_emoji": false,
+        "has_number": false,
+        "has_question": false,
+        "attractive_words": [
+          "pourquoi",
+          "cartonne"
+        ]
+      },
+      "privacy": "public",
+      "made_for_kids": false,
+      "subscriber_growth_goal": {
+        "enabled": true,
+        "target": 10000,
+        "days": 15,
+        "daily_target": 667,
+        "strategy": "broad_audience",
+        "source_video_id": "9cS2wv6AfHk"
+      },
+      "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_9cS2wv6AfHk_1783493755.jpg"
+    },
+    "schedule_time": null,
+    "approved": true,
+    "timestamp": "2026-07-08T12:25:55.820039",
+    "upload_result": {
+      "video_id": "qFqOwnoZTyw",
+      "url": "https://youtube.com/shorts/qFqOwnoZTyw",
+      "status": "uploaded",
+      "scheduled": true,
+      "scheduled_publish_at": "2026-07-10T11:30:00+02:00",
+      "thumbnail": {
+        "status": "thumbnail_uploaded",
+        "thumbnail_path": "C:\\Users\\gobi5\\OneDrive\\\u6587\u6863\\youtube Agent\\outputs\\thumbnail_9cS2wv6AfHk_1783493755.jpg",
+        "response": {
+          "kind": "youtube#thumbnailSetResponse",
+          "etag": "KZ_OVrZrmDXUwCS89vqNy8bXxtw",
+          "items": [
+            {
+              "default": {
+                "url": "https://i9.ytimg.com/vi/qFqOwnoZTyw/default.jpg?sqp=CMTot9IG&rs=AOn4CLDVHQXOdgkzPg_HDRpZ4-agBU2AfA",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i9.ytimg.com/vi/qFqOwnoZTyw/mqdefault.jpg?sqp=CMTot9IG&rs=AOn4CLBDYw5aSp64OapOaPlaAmOGGUzS0g",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i9.ytimg.com/vi/qFqOwnoZTyw/hqdefault.jpg?sqp=CMTot9IG&rs=AOn4CLBtF6zKRbdKnRWiPOEzrBXqRWhMzQ",
+                "width": 480,
+                "height": 360
+              },
+              "standard": {
+                "url": "https://i9.ytimg.com/vi/qFqOwnoZTyw/sddefault.jpg?sqp=CMTot9IG&rs=AOn4CLD1ZMAeoLnqd399LaKOZ0VFuI6CaQ",
+                "width": 640,
+                "height": 480
+              },
+              "maxres": {
+                "url": "https://i9.ytimg.com/vi/qFqOwnoZTyw/maxresdefault.jpg?sqp=CMTot9IG&rs=AOn4CLD3LZwQj4OjCcuaJc4780DDWxJJYQ",
+                "width": 1280,
+                "height": 720
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
     "title": "\ud83c\udfac Pourquoi i cartonne",
     "content_type": "short",
     "video_path": "outputs\\short_FFjDEkZg-54_1783353110.mp4",

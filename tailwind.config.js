@@ -5,7 +5,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        mono: ["'IBM Plex Mono'", "monospace"],
+        sans: ["'Inter'", "system-ui", "-apple-system", "sans-serif"],
+        display: ["'Space Grotesk'", "'Inter'", "sans-serif"],
+        mono: ["'JetBrains Mono'", "'IBM Plex Mono'", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -13,6 +15,15 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        cyan: {
+          DEFAULT: "#00F0FF",
+          50: "rgba(0,240,255,0.05)",
+          100: "rgba(0,240,255,0.1)",
+          200: "rgba(0,240,255,0.2)",
+          400: "#00D4FF",
+          500: "#00F0FF",
+          600: "#00C4D4",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -58,10 +69,30 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        "glow-pulse": {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(0,240,255,0.1)" },
+          "50%": { boxShadow: "0 0 40px rgba(0,240,255,0.25), 0 0 80px rgba(0,240,255,0.1)" },
+        },
+        "shimmer": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 4s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        "shimmer": "shimmer 3s ease-in-out infinite",
+      },
+      backdropBlur: {
+        xs: "2px",
+        "2xl": "40px",
+        "3xl": "64px",
       },
     },
   },

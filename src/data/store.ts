@@ -39,6 +39,8 @@ export interface PipelineSettings {
   uploadWindowMinutes: number;
   uploadWindowPosition: 'before' | 'after';
   autoDelete: boolean;
+  telegramChannels: string;
+  activePipeline: string;
 }
 
 export interface PipelineStats {
@@ -91,6 +93,8 @@ export const defaultSettings: PipelineSettings = {
   uploadWindowMinutes: 30,
   uploadWindowPosition: 'before',
   autoDelete: true,
+  telegramChannels: '',
+  activePipeline: 'telegram_tamil_shorts_pipeline.py',
 };
 export const pipelineStats: PipelineStats = {
   uploadsToday: 0,
@@ -110,7 +114,7 @@ export async function login(email: string, password: string) {
   const response = await fetch(apiPath('/api/auth/login'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, username: email, password }),
   });
   if (!response.ok) {
     throw new Error('Invalid dashboard credentials');
@@ -206,11 +210,19 @@ export async function saveSettings(settings: PipelineSettings) {
       upload_window_minutes: settings.uploadWindowMinutes,
       upload_window_position: settings.uploadWindowPosition,
       delete_local_files_after_upload: settings.autoDelete,
+      telegram_channels: settings.telegramChannels,
+      active_pipeline: settings.activePipeline,
     }),
   });
   if (!response.ok) {
     throw new Error(`Settings save failed: ${response.status}`);
   }
+  return response.json();
+}
+
+export async function fetchAnalytics() {
+  const response = await fetch(apiPath('/api/analytics'), { cache: 'no-store' });
+  if (!response.ok) throw new Error(`Analytics fetch failed: ${response.status}`);
   return response.json();
 }
 
@@ -326,11 +338,11 @@ function mapUploadRecord(item: Record<string, unknown>): UploadRecord {
   };
 }
 
-function parseLogLine(line: string): LogEntry {
+export function parseLogLine(line: string): LogEntry {
   const parts = line.split('|').map((part) => part.trim());
   const timestamp = parts[0] || new Date().toISOString();
   const rawLevel = (parts[1] || 'INFO').toUpperCase();
-  const level = rawLevel.includes('ERROR') ? 'ERROR' : rawLevel.includes('WARN') ? 'WARN' : 'INFO';
+  const level: LogEntry['level'] = rawLevel.includes('ERROR') ? 'ERROR' : rawLevel.includes('WARN') ? 'WARN' : 'INFO';
   return {
     timestamp,
     level,
@@ -351,6 +363,8 @@ function mapSettings(config: Record<string, unknown>, dailyCap: number): Pipelin
     uploadWindowMinutes: numberValue(config.upload_window_minutes, 30),
     uploadWindowPosition,
     autoDelete: config.delete_local_files_after_upload !== false,
+    telegramChannels: String(config.telegram_channels ?? config.telegram_channel ?? ''),
+    activePipeline: String(config.active_pipeline ?? 'telegram_tamil_shorts_pipeline.py'),
   };
 }
 

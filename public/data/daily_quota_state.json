@@ -1,6 +1,6 @@
 {
-  "date": "2026-07-08",
-  "uploads": 1,
+  "date": "2026-07-23",
+  "uploads": 4,
   "history": [
     {
       "timestamp": "2026-05-16T20:02:07.460118+05:30",
@@ -363,6 +363,281 @@
       "upload_window_key": "2026-07-08T07:30",
       "video_id": "dkcREbWL5LI",
       "url": "https://youtube.com/shorts/dkcREbWL5LI"
+    },
+    {
+      "timestamp": "2026-07-07T21:20:32.281330+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-08T11:30:00+05:30",
+      "upload_window_key": "2026-07-08T11:30",
+      "video_id": "dx06XyeV1ro",
+      "url": "https://youtube.com/shorts/dx06XyeV1ro"
+    },
+    {
+      "timestamp": "2026-07-07T21:22:42.009529+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-08T15:30:00+05:30",
+      "upload_window_key": "2026-07-08T15:30",
+      "video_id": "8HHodXql99g",
+      "url": "https://youtube.com/shorts/8HHodXql99g"
+    },
+    {
+      "timestamp": "2026-07-07T21:24:35.197634+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-08T18:30:00+05:30",
+      "upload_window_key": "2026-07-08T18:30",
+      "video_id": "KSQlqXRGUdY",
+      "url": "https://youtube.com/shorts/KSQlqXRGUdY"
+    },
+    {
+      "timestamp": "2026-07-07T21:27:02.991797+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-08T21:30:00+05:30",
+      "upload_window_key": "2026-07-08T21:30",
+      "video_id": "Jhipu9qvCq4",
+      "url": "https://youtube.com/shorts/Jhipu9qvCq4"
+    },
+    {
+      "timestamp": "2026-07-07T21:27:53.287142+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-09T07:30:00+05:30",
+      "upload_window_key": "2026-07-09T07:30",
+      "video_id": "hgCmXKEaL0I",
+      "url": "https://youtube.com/shorts/hgCmXKEaL0I"
+    },
+    {
+      "timestamp": "2026-07-08T09:02:58.329360+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-09T11:30:00+05:30",
+      "upload_window_key": "2026-07-09T11:30",
+      "video_id": "KST94io5uHg",
+      "url": "https://youtube.com/shorts/KST94io5uHg"
+    },
+    {
+      "timestamp": "2026-07-08T09:03:20.337394+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-09T15:30:00+05:30",
+      "upload_window_key": "2026-07-09T15:30",
+      "video_id": "T-IHYrjVMSE",
+      "url": "https://youtube.com/shorts/T-IHYrjVMSE"
+    },
+    {
+      "timestamp": "2026-07-08T09:03:37.746173+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-09T18:30:00+05:30",
+      "upload_window_key": "2026-07-09T18:30",
+      "video_id": "XcqEsxPsc_s",
+      "url": "https://youtube.com/shorts/XcqEsxPsc_s"
+    },
+    {
+      "timestamp": "2026-07-08T09:03:54.966529+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-09T21:30:00+05:30",
+      "upload_window_key": "2026-07-09T21:30",
+      "video_id": "nBjTNAKnALI",
+      "url": "https://youtube.com/shorts/nBjTNAKnALI"
+    },
+    {
+      "timestamp": "2026-07-08T09:04:12.492761+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-10T07:30:00+05:30",
+      "upload_window_key": "2026-07-10T07:30",
+      "video_id": "la1y1Yaq7LU",
+      "url": "https://youtube.com/shorts/la1y1Yaq7LU"
+    },
+    {
+      "timestamp": "2026-07-08T08:57:46.526331+02:00",
+      "scheduled_publish_at": "2026-07-10T11:30:00+02:00",
+      "upload_window_key": "2026-07-10T11:30",
+      "video_id": "qFqOwnoZTyw",
+      "url": "https://youtube.com/shorts/qFqOwnoZTyw"
+    },
+    {
+      "timestamp": "2026-07-08T09:00:22.402835+02:00",
+      "scheduled_publish_at": "2026-07-10T15:30:00+02:00",
+      "upload_window_key": "2026-07-10T15:30",
+      "video_id": "LB5CHaKB0-o",
+      "url": "https://youtube.com/shorts/LB5CHaKB0-o"
+    },
+    {
+      "timestamp": "2026-07-08T09:02:39.536191+02:00",
+      "scheduled_publish_at": "2026-07-10T18:30:00+02:00",
+      "upload_window_key": "2026-07-10T18:30",
+      "video_id": "o_A7knwIkI4",
+      "url": "https://youtube.com/shorts/o_A7knwIkI4"
+    },
+    {
+      "timestamp": "2026-07-09T12:02:27.938362+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-10T21:30:00+05:30",
+      "upload_window_key": "2026-07-10T21:30",
+      "video_id": "eqK5qrk6bso",
+      "url": "https://youtube.com/shorts/eqK5qrk6bso"
+    },
+    {
+      "timestamp": "2026-07-09T12:02:46.879851+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-11T07:30:00+05:30",
+      "upload_window_key": "2026-07-11T07:30",
+      "video_id": "B6G8vKNb6Og",
+      "url": "https://youtube.com/shorts/B6G8vKNb6Og"
+    },
+    {
+      "timestamp": "2026-07-09T12:03:04.638770+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-11T11:30:00+05:30",
+      "upload_window_key": "2026-07-11T11:30",
+      "video_id": "HbmdnivZUc0",
+      "url": "https://youtube.com/shorts/HbmdnivZUc0"
+    },
+    {
+      "timestamp": "2026-07-09T12:03:22.318160+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-11T15:30:00+05:30",
+      "upload_window_key": "2026-07-11T15:30",
+      "video_id": "8ORaBv0xG9E",
+      "url": "https://youtube.com/shorts/8ORaBv0xG9E"
+    },
+    {
+      "timestamp": "2026-07-09T12:03:39.381801+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-11T18:30:00+05:30",
+      "upload_window_key": "2026-07-11T18:30",
+      "video_id": "bFHKn2Yt_dM",
+      "url": "https://youtube.com/shorts/bFHKn2Yt_dM"
+    },
+    {
+      "timestamp": "2026-07-15T13:09:56.770791+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-15T15:30:00+05:30",
+      "upload_window_key": "2026-07-15T15:30",
+      "video_id": "r5E7fb_8SiE",
+      "url": "https://youtube.com/shorts/r5E7fb_8SiE"
+    },
+    {
+      "timestamp": "2026-07-15T13:11:01.557283+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-15T18:30:00+05:30",
+      "upload_window_key": "2026-07-15T18:30",
+      "video_id": "qWFgBFhAPuw",
+      "url": "https://youtube.com/shorts/qWFgBFhAPuw"
+    },
+    {
+      "timestamp": "2026-07-15T13:11:26.419160+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-15T21:30:00+05:30",
+      "upload_window_key": "2026-07-15T21:30",
+      "video_id": "IPsWOT4hLQA",
+      "url": "https://youtube.com/shorts/IPsWOT4hLQA"
+    },
+    {
+      "timestamp": "2026-07-15T13:12:14.335658+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-16T07:30:00+05:30",
+      "upload_window_key": "2026-07-16T07:30",
+      "video_id": "0iczlhgQX8k",
+      "url": "https://youtube.com/shorts/0iczlhgQX8k"
+    },
+    {
+      "timestamp": "2026-07-15T13:12:46.741677+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-16T11:30:00+05:30",
+      "upload_window_key": "2026-07-16T11:30",
+      "video_id": "BwhU_q8YO1w",
+      "url": "https://youtube.com/shorts/BwhU_q8YO1w"
+    },
+    {
+      "timestamp": "2026-07-21T22:25:37.039914+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-22T07:30:00+05:30",
+      "upload_window_key": "2026-07-22T07:30",
+      "video_id": "xnOPtP7l10E",
+      "url": "https://youtube.com/shorts/xnOPtP7l10E"
+    },
+    {
+      "timestamp": "2026-07-21T22:25:52.666529+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-22T11:30:00+05:30",
+      "upload_window_key": "2026-07-22T11:30",
+      "video_id": "uHdTM2Zy8Q4",
+      "url": "https://youtube.com/shorts/uHdTM2Zy8Q4"
+    },
+    {
+      "timestamp": "2026-07-21T22:26:09.186972+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-22T15:30:00+05:30",
+      "upload_window_key": "2026-07-22T15:30",
+      "video_id": "hSi0tf-Hk4c",
+      "url": "https://youtube.com/shorts/hSi0tf-Hk4c"
+    },
+    {
+      "timestamp": "2026-07-21T22:26:24.839486+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-22T18:30:00+05:30",
+      "upload_window_key": "2026-07-22T18:30",
+      "video_id": "mIBs3sErs8k",
+      "url": "https://youtube.com/shorts/mIBs3sErs8k"
+    },
+    {
+      "timestamp": "2026-07-21T22:26:41.245534+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-22T21:30:00+05:30",
+      "upload_window_key": "2026-07-22T21:30",
+      "video_id": "bk_1vO-RKWM",
+      "url": "https://youtube.com/shorts/bk_1vO-RKWM"
+    },
+    {
+      "timestamp": "2026-07-22T19:39:35.108284+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-23T07:30:00+05:30",
+      "upload_window_key": "2026-07-23T07:30",
+      "video_id": "x9kMsfJfW30",
+      "url": "https://youtube.com/shorts/x9kMsfJfW30"
+    },
+    {
+      "timestamp": "2026-07-22T19:40:01.129662+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-23T11:30:00+05:30",
+      "upload_window_key": "2026-07-23T11:30",
+      "video_id": "9rIaUYgeLlg",
+      "url": "https://youtube.com/shorts/9rIaUYgeLlg"
+    },
+    {
+      "timestamp": "2026-07-23T16:51:39.632730+02:00",
+      "scheduled_publish_at": "2026-07-24T07:30:00+02:00",
+      "upload_window_key": "2026-07-24T07:30",
+      "video_id": "54P2KTXVNI4",
+      "url": "https://youtube.com/shorts/54P2KTXVNI4"
+    },
+    {
+      "timestamp": "2026-07-23T16:53:46.545507+02:00",
+      "scheduled_publish_at": "2026-07-24T11:30:00+02:00",
+      "upload_window_key": "2026-07-24T11:30",
+      "video_id": "j3kRLRjXwJA",
+      "url": "https://youtube.com/shorts/j3kRLRjXwJA"
+    },
+    {
+      "timestamp": "2026-07-23T20:25:12.794083+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-23T21:30:00+05:30",
+      "upload_window_key": "2026-07-23T21:30",
+      "video_id": "FizjSiPATEc",
+      "url": "https://youtube.com/shorts/FizjSiPATEc"
+    },
+    {
+      "timestamp": "2026-07-23T20:25:26.844200+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-24T15:30:00+05:30",
+      "upload_window_key": "2026-07-24T15:30",
+      "video_id": "NfKxegn701o",
+      "url": "https://youtube.com/shorts/NfKxegn701o"
+    },
+    {
+      "timestamp": "2026-07-23T20:25:39.625830+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-07-24T18:30:00+05:30",
+      "upload_window_key": "2026-07-24T18:30",
+      "video_id": "tjuLIUeQFFU",
+      "url": "https://youtube.com/shorts/tjuLIUeQFFU"
     }
   ],
   "max_daily_uploads": 5

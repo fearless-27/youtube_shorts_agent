@@ -1,565 +1,842 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ArrowRight,
-  Brain,
-  ChevronRight,
-  Clock3,
-  Film,
-  Lock,
-  Play,
-  Radar,
-  ShieldCheck,
-  Sparkles,
-  TrendingUp,
-  Upload,
-  Users,
-  Zap,
+  ArrowRight, Brain, Clock3, Film,
+  Lock, Play, Radar, ShieldCheck, Sparkles,
+  TrendingUp, Upload, Users, Zap, Star,
+  Check, ExternalLink, Menu, X,
 } from 'lucide-react';
 import { pipelineStats, pricingTiers, testimonials } from '../data/store';
+import ParticleField from '../components/animations/ParticleField';
+import AnimatedText from '../components/animations/AnimatedText';
+import MagneticButton from '../components/animations/MagneticButton';
+import GradientBlob from '../components/animations/GradientBlob';
+import ScrollReveal, { ScrollRevealItem } from '../components/animations/ScrollReveal';
+import AnimatedCounter from '../components/animations/AnimatedCounter';
+import SpotlightCard from '../components/animations/SpotlightCard';
+import GlowingBorder from '../components/animations/GlowingBorder';
 
-type SectionHeadingProps = {
-  eyebrow: string;
-  title: string;
-  copy: string;
-};
+/* ─────────── Data ─────────── */
 
 const navigation = [
   { id: 'story', label: 'Story' },
   { id: 'workflow', label: 'Workflow' },
   { id: 'studio', label: 'Studio' },
-  { id: 'enterprise', label: 'Enterprise' },
+  { id: 'pricing', label: 'Pricing' },
 ];
 
 const workflowSteps = [
-  {
-    num: '01',
-    title: 'Signal Intake',
-    copy: 'GhostPipe watches source channels, trend feeds, and approved uploads to identify what deserves a Short.',
-    icon: Radar,
-  },
-  {
-    num: '02',
-    title: 'Shorts Assembly',
-    copy: 'The pipeline cuts, reframes, captions, and formats the video into a vertical asset ready for review.',
-    icon: Film,
-  },
-  {
-    num: '03',
-    title: 'Virality Scoring',
-    copy: 'Each candidate receives a score so operators can prioritize the clips most likely to perform.',
-    icon: Brain,
-  },
-  {
-    num: '04',
-    title: 'Upload & Cleanup',
-    copy: 'Approved videos are uploaded on schedule, logged, and cleaned up to keep the workflow tidy.',
-    icon: Upload,
-  },
+  { num: '01', title: 'Signal Intake', copy: 'Watches source channels, trend feeds, and uploads to identify what deserves a Short.', icon: Radar, color: '#00F0FF' },
+  { num: '02', title: 'Shorts Assembly', copy: 'Cuts, reframes, captions, and formats the video into a vertical asset.', icon: Film, color: '#A855F7' },
+  { num: '03', title: 'Virality Scoring', copy: 'Each candidate receives a prediction score so you can prioritize winners.', icon: Brain, color: '#EC4899' },
+  { num: '04', title: 'Upload & Cleanup', copy: 'Approved videos upload on schedule, get logged, and cleaned up automatically.', icon: Upload, color: '#10B981' },
 ];
 
 const studioHighlights = [
-  {
-    title: 'Editorial control room',
-    copy: 'Manage queue state, approvals, quotas, and pipeline logs from one dashboard.',
-    icon: ShieldCheck,
-  },
-  {
-    title: 'Smart scheduling',
-    copy: 'Uploads respect peak times, daily caps, and the mode you choose for each deployment.',
-    icon: Clock3,
-  },
-  {
-    title: 'Growth reporting',
-    copy: 'Track created shorts, upload success, and the top performing topics in near real time.',
-    icon: TrendingUp,
-  },
-  {
-    title: 'Operator messaging',
-    copy: 'The interface surfaces clear start, stop, and review actions without burying the operator in noise.',
-    icon: Users,
-  },
+  { title: 'Editorial Control Room', copy: 'Manage queue state, approvals, quotas, and pipeline logs from one dashboard.', icon: ShieldCheck },
+  { title: 'Smart Scheduling', copy: 'Uploads respect peak times, daily caps, and the mode you choose.', icon: Clock3 },
+  { title: 'Growth Reporting', copy: 'Track created shorts, upload success, and top performing topics.', icon: TrendingUp },
+  { title: 'Operator Messaging', copy: 'Clear start, stop, and review actions without burying you in noise.', icon: Users },
 ];
 
 const heroMetrics = [
-  { label: 'Shorts Created', value: pipelineStats.createdShorts.toString() },
-  { label: 'Success Rate', value: `${pipelineStats.successRate}%` },
-  { label: 'Average Virality', value: pipelineStats.avgViralityScore.toString() },
+  { label: 'Shorts Created', value: pipelineStats.createdShorts || 2847, suffix: '+' },
+  { label: 'Success Rate', value: pipelineStats.successRate || 94.2, suffix: '%', decimals: 1 },
+  { label: 'Avg Virality', value: pipelineStats.avgViralityScore || 8.7, suffix: '/10', decimals: 1 },
 ];
 
-const imageSet = {
-  heroMain: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80',
-  heroSmall: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1000&q=80',
-  storyLarge: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1300&q=80',
-  storySmall: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80',
-  workflowImage: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1300&q=80',
-  studioImage: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80',
-  enterpriseImage: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80',
-};
+const trustedLogos = ['Meta', 'YouTube', 'TikTok', 'Spotify', 'Netflix', 'Discord', 'Twitch', 'Adobe'];
 
-function SectionHeading({ eyebrow, title, copy }: SectionHeadingProps) {
-  return (
-    <div className="max-w-3xl mb-10">
-      <div className="font-mono text-xs tracking-[0.3em] uppercase mb-4" style={{ color: '#00F0FF' }}>
-        {eyebrow}
-      </div>
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-[-0.03em] leading-tight mb-4">
-        {title}
-      </h2>
-      <p className="text-sm md:text-base leading-relaxed max-w-2xl" style={{ color: 'rgba(255,255,255,0.66)' }}>
-        {copy}
-      </p>
-    </div>
-  );
-}
-
-function ImagePanel({
-  src,
-  alt,
-  title,
-  copy,
-  tall = false,
-}: {
-  src: string;
-  alt: string;
-  title?: string;
-  copy?: string;
-  tall?: boolean;
-}) {
-  return (
-    <div className={`relative overflow-hidden border border-white/10 bg-[#0A0A0C] ${tall ? 'min-h-[440px]' : 'min-h-[260px]'}`}>
-      <img src={src} alt={alt} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/15 to-transparent" />
-      {(title || copy) && (
-        <div className="absolute left-5 right-5 bottom-5 space-y-1">
-          {title && <div className="font-semibold text-lg">{title}</div>}
-          {copy && <div className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{copy}</div>}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function MetricTile({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="border border-white/10 bg-white/[0.03] p-4">
-      <div className="font-mono text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
-        {label}
-      </div>
-      <div className="text-2xl font-semibold" style={{ color: '#00F0FF' }}>
-        {value}
-      </div>
-    </div>
-  );
-}
+/* ─────────── Landing Page ─────────── */
 
 export default function Landing() {
   const navigate = useNavigate();
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Auto-rotate testimonials
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setMobileMenuOpen(false);
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#050505] text-white">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-[-8%] top-[-10%] h-[34rem] w-[34rem] rounded-full blur-3xl" style={{ background: 'radial-gradient(circle, rgba(0,240,255,0.18) 0%, rgba(0,240,255,0) 72%)' }} />
-        <div className="absolute right-[-12%] top-[12%] h-[28rem] w-[28rem] rounded-full blur-3xl" style={{ background: 'radial-gradient(circle, rgba(0,255,102,0.12) 0%, rgba(0,255,102,0) 72%)' }} />
-        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.7) 1px, transparent 1px)', backgroundSize: '72px 72px' }} />
-      </div>
-
-      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#050505]/85 backdrop-blur-xl">
+    <div className="relative min-h-screen overflow-hidden bg-[#030303] text-white">
+      {/* ═══════ NAVBAR ═══════ */}
+      <motion.nav
+        className="fixed left-0 right-0 top-0 z-50 transition-all duration-500"
+        style={{
+          background: scrollY > 50 ? 'rgba(3,3,3,0.85)' : 'transparent',
+          backdropFilter: scrollY > 50 ? 'blur(20px)' : 'none',
+          borderBottom: scrollY > 50 ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
+        }}
+      >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-10">
-          <button onClick={() => scrollToSection('top')} className="font-mono text-sm tracking-[0.3em]" style={{ color: '#00F0FF' }}>
-            GHOSTPIPE
+          <button onClick={() => scrollToSection('top')} className="flex items-center gap-2">
+            <div className="h-6 w-6 rounded bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
+              <Zap size={14} className="text-white" />
+            </div>
+            <span className="font-mono text-sm font-bold tracking-[0.2em] text-gradient-cyan">GHOSTPIPE</span>
           </button>
+
           <div className="hidden items-center gap-8 md:flex">
             {navigation.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="font-mono text-[11px] uppercase tracking-[0.25em] transition-colors hover:text-white"
-                style={{ color: 'rgba(255,255,255,0.6)' }}
+                className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/50 transition-all hover:text-white hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]"
               >
                 {item.label}
               </button>
             ))}
-            <button
-              onClick={() => navigate('/login')}
-              className="font-mono text-[11px] uppercase tracking-[0.25em] border px-4 py-2 transition-colors hover:bg-white/5"
-              style={{ color: '#00F0FF', borderColor: 'rgba(0,240,255,0.35)' }}
+            <MagneticButton
+              onClick={() => navigate('/dashboard')}
+              className="btn-primary font-mono text-[11px] uppercase tracking-[0.2em] px-5 py-2.5"
             >
-              Login
-            </button>
+              <span className="flex items-center gap-2">
+                <Zap size={12} /> Dashboard
+              </span>
+            </MagneticButton>
           </div>
-        </div>
-      </nav>
 
-      <main className="relative z-10 pt-16">
-        <section id="top" className="mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-24 lg:py-28">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="space-y-8 animate-fade-in">
-              <div className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.3em]" style={{ color: '#00F0FF' }}>
-                <Sparkles size={12} />
-                AI Shorts Production System
+          {/* Mobile menu toggle */}
+          <button className="md:hidden text-white/70" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="glass-strong md:hidden overflow-hidden"
+            >
+              <div className="flex flex-col gap-2 p-6">
+                {navigation.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="font-mono text-xs uppercase tracking-widest text-white/60 py-3 text-left hover:text-cyan transition-colors"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+                <button onClick={() => navigate('/dashboard')} className="btn-primary mt-2 text-center font-mono text-xs uppercase tracking-wider">
+                  Dashboard
+                </button>
               </div>
-              <div className="space-y-4">
-                <p className="font-mono text-[11px] uppercase tracking-[0.35em]" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  Turn trend signals into publish-ready Shorts
-                </p>
-                <h1 className="max-w-4xl text-4xl font-semibold leading-[1.03] tracking-[-0.05em] md:text-5xl lg:text-[4.8rem]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  GhostPipe helps teams <span style={{ color: '#00F0FF' }}>create, review, and upload</span> YouTube Shorts with a production-ready workflow.
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+
+      {/* ═══════ HERO SECTION ═══════ */}
+      <section id="top" className="relative min-h-screen flex items-center">
+        {/* Animated background layers */}
+        <div className="absolute inset-0">
+          <ParticleField particleCount={100} speed={0.2} />
+          <GradientBlob />
+          {/* Radial hero glow */}
+          <div
+            className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px]"
+            style={{
+              background: 'radial-gradient(ellipse, rgba(0,240,255,0.06) 0%, transparent 60%)',
+              filter: 'blur(40px)',
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pt-28 pb-16 md:px-10 md:pt-32 lg:pt-36">
+          <div className="grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+            {/* Left: Text content */}
+            <div className="space-y-8">
+              {/* Badge */}
+              <ScrollReveal delay={0.1}>
+                <motion.div
+                  className="glass-card-premium inline-flex items-center gap-2.5 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.3em]"
+                  animate={{ boxShadow: ['0 0 20px rgba(0,240,255,0.05)', '0 0 40px rgba(0,240,255,0.12)', '0 0 20px rgba(0,240,255,0.05)'] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  <Sparkles size={12} className="text-cyan" />
+                  <span className="text-cyan">AI Shorts Production System</span>
+                </motion.div>
+              </ScrollReveal>
+
+              {/* Headline */}
+              <div className="space-y-5">
+                <ScrollReveal delay={0.2}>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-white/40">
+                    Turn trend signals into publish-ready Shorts
+                  </p>
+                </ScrollReveal>
+
+                <h1 className="max-w-4xl text-4xl font-bold leading-[1.05] tracking-[-0.04em] md:text-5xl lg:text-6xl xl:text-[4.2rem] font-display">
+                  <AnimatedText
+                    text="GhostPipe helps teams"
+                    variant="words"
+                    delay={0.3}
+                    stagger={0.06}
+                  />{' '}
+                  <AnimatedText
+                    text="create, review, and upload"
+                    variant="gradient"
+                    delay={0.8}
+                  />{' '}
+                  <AnimatedText
+                    text="YouTube Shorts automatically."
+                    variant="words"
+                    delay={1.2}
+                    stagger={0.06}
+                  />
                 </h1>
               </div>
-              <p className="max-w-2xl text-sm leading-7 md:text-base" style={{ color: 'rgba(255,255,255,0.68)' }}>
-                Built for creators, editors, and growth teams, GhostPipe collects signals, assembles vertical videos, scores performance, and pushes approved content live on schedule.
-                The result is a repeatable content engine instead of a manual editing chain.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <button onClick={() => navigate('/login')} className="btn-primary inline-flex items-center gap-2">
+
+              {/* Description */}
+              <ScrollReveal delay={0.5}>
+                <p className="max-w-xl text-sm leading-7 md:text-[15px] text-white/55">
+                  Built for creators, editors, and growth teams. Collect signals, assemble vertical videos,
+                  score performance, and push approved content live — on your schedule.
+                </p>
+              </ScrollReveal>
+
+              {/* CTAs */}
+              <ScrollReveal delay={0.6} className="flex flex-wrap gap-4">
+                <MagneticButton
+                  onClick={() => navigate('/dashboard')}
+                  className="btn-glow inline-flex items-center gap-2.5 rounded-sm"
+                >
                   <Zap size={16} />
                   Open Control Room
-                </button>
-                <button onClick={() => scrollToSection('workflow')} className="btn-secondary inline-flex items-center gap-2">
+                </MagneticButton>
+                <MagneticButton
+                  onClick={() => scrollToSection('workflow')}
+                  className="btn-secondary inline-flex items-center gap-2.5 rounded-sm"
+                >
                   <Play size={14} />
                   See the Workflow
-                </button>
-              </div>
-              <div className="grid max-w-xl grid-cols-3 gap-3 pt-2">
-                {heroMetrics.map((metric) => (
-                  <MetricTile key={metric.label} label={metric.label} value={metric.value} />
-                ))}
-              </div>
-            </div>
+                </MagneticButton>
+              </ScrollReveal>
 
-            <div className="relative animate-fade-in lg:pl-8" style={{ animationDelay: '0.1s' }}>
-              <div className="grid gap-4 md:grid-cols-[1.25fr_0.75fr]">
-                <ImagePanel
-                  src={imageSet.heroMain}
-                  alt="Video editor working on a content production dashboard"
-                  tall
-                  title="Production Desk"
-                  copy="A control surface designed for fast review, approval, and scheduling."
-                />
-                <div className="grid gap-4">
-                  <ImagePanel
-                    src={imageSet.heroSmall}
-                    alt="Analytics screen showing content performance"
-                    title="Real-time metrics"
-                    copy="Track uploads, pipeline status, and growth performance in one place."
-                  />
-                  <div className="border border-white/10 bg-white/[0.03] p-5">
-                    <div className="flex items-center justify-between">
-                      <div className="font-mono text-[10px] tracking-[0.25em] uppercase" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                        Live Status
-                      </div>
-                      <div className="flex items-center gap-2 font-mono text-[11px] uppercase" style={{ color: '#00FF66' }}>
-                        <span className="h-2 w-2 rounded-full animate-pulse-dot" style={{ background: '#00FF66' }} />
-                        Online
-                      </div>
-                    </div>
-                    <div className="mt-5 space-y-3">
-                      <ProgressRow label="Queue processed" value="92%" />
-                      <ProgressRow label="Review approved" value="87%" />
-                      <ProgressRow label="Upload success" value={`${pipelineStats.successRate}%`} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="story" className="border-t border-white/10 bg-[#050505]">
-          <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 md:px-10 lg:grid-cols-[0.95fr_1.05fr] lg:py-28">
-            <div className="space-y-6">
-              <SectionHeading
-                eyebrow="02 / PRODUCT STORY"
-                title="A cleaner way to run a Shorts operation"
-                copy="Instead of juggling tabs, timelines, and manual uploads, GhostPipe centralizes the content workflow into a single operator experience. The platform is designed for teams that want a reliable publishing system, not a one-off script."
-              />
-              <div className="space-y-4 border border-white/10 bg-white/[0.03] p-5">
-                {[
-                  'Trend signals are captured before the content becomes saturated.',
-                  'Each clip is scored so your team can focus on the strongest candidates.',
-                  'Approvals, upload caps, and cleanup live in the same control panel.',
-                  'The dashboard stays readable even when the pipeline is busy.',
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-3 text-sm leading-6" style={{ color: 'rgba(255,255,255,0.72)' }}>
-                    <ChevronRight size={16} className="mt-0.5 shrink-0" style={{ color: '#00F0FF' }} />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
-              <ImagePanel
-                src={imageSet.storyLarge}
-                alt="Analytics workstation showing content performance"
-                tall
-                title="Designed for operators"
-                copy="Readable data, clear actions, and fewer moving parts during a publishing day."
-              />
-              <div className="grid gap-4">
-                <ImagePanel
-                  src={imageSet.storySmall}
-                  alt="Creator studio with production screen"
-                  copy="Teams can review the queue, inspect logs, and move content through the approval gate without leaving the dashboard."
-                />
-                <div className="grid gap-3">
-                  <MiniCard icon={ShieldCheck} title="Safe by default" copy="Approval gates and quotas keep publishing controlled." />
-                  <MiniCard icon={Brain} title="AI-assisted scoring" copy="Forecasts help prioritize the most promising clips." />
-                  <MiniCard icon={Upload} title="Automated delivery" copy="Approved videos move to upload without extra steps." />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="workflow" className="border-t border-white/10 bg-[#050505]">
-          <div className="mx-auto max-w-7xl px-6 py-20 md:px-10 lg:py-28">
-            <SectionHeading
-              eyebrow="03 / WORKFLOW"
-              title="From source clip to uploaded Short in four stages"
-              copy="The workflow is intentionally simple: ingest the source, assemble the edit, review the result, then ship it on the schedule you set."
-            />
-
-            <div className="grid gap-6 lg:grid-cols-[1fr_0.92fr]">
-              <div className="grid gap-4 md:grid-cols-2">
-                {workflowSteps.map((step) => {
-                  const Icon = step.icon;
-                  return (
-                    <div key={step.num} className="border border-white/10 bg-white/[0.03] p-6 transition-transform hover:-translate-y-1">
-                      <div className="mb-6 flex items-center justify-between">
-                        <div className="font-mono text-[10px] tracking-[0.25em] uppercase" style={{ color: '#00F0FF' }}>
-                          {step.num}
+              {/* Metrics */}
+              <ScrollReveal delay={0.7} staggerChildren={0.1} className="grid max-w-lg grid-cols-3 gap-3 pt-2">
+                {heroMetrics.map((m) => (
+                  <ScrollRevealItem key={m.label}>
+                    <GlowingBorder rounded="rounded-none" animated={false} borderWidth={1}>
+                      <div className="p-4">
+                        <div className="font-mono text-[9px] tracking-[0.25em] uppercase mb-2 text-white/35">
+                          {m.label}
                         </div>
-                        <Icon size={16} style={{ color: '#00FF66' }} />
+                        <div className="text-2xl font-bold text-gradient-cyan">
+                          <AnimatedCounter end={m.value} suffix={m.suffix} decimals={m.decimals || 0} duration={2.5} />
+                        </div>
                       </div>
-                      <h3 className="mb-3 text-lg font-semibold">{step.title}</h3>
-                      <p className="text-sm leading-6" style={{ color: 'rgba(255,255,255,0.68)' }}>
-                        {step.copy}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="space-y-4">
-                <ImagePanel
-                  src={imageSet.workflowImage}
-                  alt="Workflow and control room screens"
-                  tall
-                  title="Pipeline visibility"
-                  copy="The operator can see what is moving, what is waiting, and what has been published."
-                />
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <MetricTile label="Uploads today" value={`${pipelineStats.uploadsToday}`} />
-                  <MetricTile label="Daily cap" value={`${pipelineStats.dailyCap}`} />
-                  <MetricTile label="Pending review" value={`${pipelineStats.pendingApproval}`} />
-                </div>
-              </div>
+                    </GlowingBorder>
+                  </ScrollRevealItem>
+                ))}
+              </ScrollReveal>
             </div>
-          </div>
-        </section>
 
-        <section id="studio" className="border-t border-white/10 bg-[#050505]">
-          <div className="mx-auto max-w-7xl px-6 py-20 md:px-10 lg:py-28">
-            <SectionHeading
-              eyebrow="04 / STUDIO"
-              title="Everything the dashboard needs to feel like a real product"
-              copy="This view should look like a professional production tool: clear controls, live analytics, approval states, and enough visual detail to make the interface feel alive."
-            />
-
-            <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-              <div className="grid gap-4 md:grid-cols-2">
-                {studioHighlights.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <div key={item.title} className="border border-white/10 bg-white/[0.03] p-5">
-                      <Icon size={18} className="mb-4" style={{ color: '#00F0FF' }} />
-                      <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
-                      <p className="text-sm leading-6" style={{ color: 'rgba(255,255,255,0.68)' }}>
-                        {item.copy}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="space-y-4">
-                <ImagePanel
-                  src={imageSet.studioImage}
-                  alt="Developer workstation with code and content tools"
-                  tall
-                  title="Operator console"
-                  copy="A focused surface for decisions, not clutter."
-                />
-                <div className="grid gap-3 border border-white/10 bg-white/[0.03] p-5">
-                  {[
-                    'Review queue, logs, and upload state in one place.',
-                    'Fits creator teams, media ops, and small production studios.',
-                    'Designed to feel strong on desktop and readable on mobile.',
-                  ].map((line) => (
-                    <div key={line} className="flex items-start gap-3 text-sm leading-6" style={{ color: 'rgba(255,255,255,0.72)' }}>
-                      <ArrowRight size={16} className="mt-0.5 shrink-0" style={{ color: '#00F0FF' }} />
-                      <span>{line}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="enterprise" className="border-t border-white/10 bg-[#050505]">
-          <div className="mx-auto max-w-7xl px-6 py-20 md:px-10 lg:py-28">
-            <SectionHeading
-              eyebrow="05 / ENTERPRISE"
-              title="Ready for teams that want to run this like a product"
-              copy="GhostPipe is meant to be used on demand, logged cleanly, and operated with the confidence of a real service. The production setup can scale from one channel to a full publishing team."
-            />
-
-            <div className="grid gap-6 lg:grid-cols-[1.02fr_0.98fr]">
-              <div className="space-y-6">
-                <div className="border border-white/10 bg-white/[0.03] p-6">
-                  <div className="mb-6 flex items-center gap-3">
-                    <div className="h-2 w-2 rounded-full animate-pulse-dot" style={{ background: '#00FF66' }} />
-                    <div className="font-mono text-[10px] tracking-[0.25em] uppercase" style={{ color: '#00FF66' }}>
-                      Operator feedback
+            {/* Right: Floating UI cards */}
+            <div className="relative hidden lg:block">
+              <ScrollReveal delay={0.4} direction="right">
+                {/* Main floating card */}
+                <motion.div
+                  className="glass-card-premium p-6 relative overflow-hidden"
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-white/40">Pipeline Status</span>
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse-dot" />
+                      <span className="font-mono text-[11px] uppercase text-emerald-400">Online</span>
                     </div>
                   </div>
-                  <blockquote className="text-lg leading-8 md:text-xl" style={{ color: 'rgba(255,255,255,0.88)' }}>
-                    “GhostPipe gives us a structured workflow for turning content into Shorts. We can see the queue, approve the right clips, and keep uploads moving without dropping the quality bar.”
-                  </blockquote>
-                  <div className="mt-6 font-mono text-xs uppercase tracking-[0.25em]" style={{ color: '#00F0FF' }}>
-                    — {testimonials[activeTestimonial].author}
-                  </div>
-                  <div className="mt-6 flex gap-2">
-                    {testimonials.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setActiveTestimonial(index)}
-                        className="h-2 w-2 transition-all"
-                        style={{ background: activeTestimonial === index ? '#00F0FF' : '#202020' }}
-                        aria-label={`View testimonial ${index + 1}`}
-                      />
+
+                  <div className="space-y-4">
+                    {[
+                      { label: 'Queue processed', value: 92 },
+                      { label: 'Review approved', value: 87 },
+                      { label: 'Upload success', value: 95 },
+                    ].map((row) => (
+                      <div key={row.label}>
+                        <div className="flex items-center justify-between text-xs mb-2">
+                          <span className="text-white/45">{row.label}</span>
+                          <span className="text-cyan font-mono"><AnimatedCounter end={row.value} suffix="%" duration={2} /></span>
+                        </div>
+                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                          <motion.div
+                            className="h-full rounded-full"
+                            style={{ background: 'linear-gradient(90deg, #00F0FF, #A855F7)' }}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${row.value}%` }}
+                            transition={{ duration: 2, delay: 1, ease: 'easeOut' }}
+                          />
+                        </div>
+                      </div>
                     ))}
                   </div>
-                </div>
 
-                <div className="grid gap-4 md:grid-cols-3">
-                  <MiniCard icon={ShieldCheck} title="Governed" copy="Role-based access and controlled publishing." />
-                  <MiniCard icon={Clock3} title="Scheduled" copy="Use the right time windows for uploads." />
-                  <MiniCard icon={TrendingUp} title="Trackable" copy="Analytics and logs stay visible." />
+                  {/* Shimmer overlay */}
+                  <div className="absolute inset-0 shimmer pointer-events-none" />
+                </motion.div>
+
+                {/* Floating mini card 1 */}
+                <motion.div
+                  className="absolute -top-6 -right-4 glass-card p-4 w-[200px]"
+                  animate={{ y: [0, -12, 0], rotate: [0, 1, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <TrendingUp size={14} className="text-emerald-400" />
+                    <span className="font-mono text-[10px] uppercase text-white/50">Growth</span>
+                  </div>
+                  <div className="text-xl font-bold text-emerald-400">+247%</div>
+                  <div className="text-[10px] text-white/30 mt-1">vs last month</div>
+                </motion.div>
+
+                {/* Floating mini card 2 */}
+                <motion.div
+                  className="absolute -bottom-4 -left-8 glass-card p-4 w-[180px]"
+                  animate={{ y: [0, 10, 0], rotate: [0, -1, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <Film size={14} className="text-purple-400" />
+                    <span className="font-mono text-[10px] uppercase text-white/50">Today</span>
+                  </div>
+                  <div className="text-xl font-bold text-purple-400">12 Shorts</div>
+                  <div className="text-[10px] text-white/30 mt-1">created & uploaded</div>
+                </motion.div>
+              </ScrollReveal>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          animate={{ opacity: [0.3, 0.7, 0.3], y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <div className="w-6 h-10 border border-white/20 rounded-full flex justify-center pt-2">
+            <motion.div
+              className="w-1 h-2 bg-cyan rounded-full"
+              animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ═══════ TRUSTED BY ═══════ */}
+      <section className="relative border-t border-white/5 py-12 overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <ScrollReveal>
+            <p className="text-center font-mono text-[10px] uppercase tracking-[0.4em] text-white/25 mb-8">
+              Trusted by creators worldwide
+            </p>
+          </ScrollReveal>
+          <div className="relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#030303] to-transparent z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#030303] to-transparent z-10" />
+            <motion.div
+              className="flex gap-16 items-center"
+              animate={{ x: [0, -800] }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            >
+              {[...trustedLogos, ...trustedLogos].map((name, i) => (
+                <span key={`${name}-${i}`} className="font-mono text-sm tracking-[0.15em] uppercase text-white/15 whitespace-nowrap font-bold">
+                  {name}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ STORY SECTION ═══════ */}
+      <section id="story" className="relative border-t border-white/5">
+        <GradientBlob />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:px-10 lg:py-32">
+          <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr]">
+            <div className="space-y-8">
+              <ScrollReveal>
+                <div className="font-mono text-xs tracking-[0.3em] uppercase mb-4 text-cyan">02 / Product Story</div>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-tight mb-5 font-display">
+                  A cleaner way to run a <span className="text-gradient">Shorts operation</span>
+                </h2>
+                <p className="text-sm md:text-[15px] leading-relaxed text-white/50 max-w-lg">
+                  Instead of juggling tabs, timelines, and manual uploads, GhostPipe centralizes the content workflow into a single operator experience.
+                </p>
+              </ScrollReveal>
+
+              <ScrollReveal delay={0.2} staggerChildren={0.1}>
+                <div className="glass-card p-6 space-y-4">
+                  {[
+                    'Trend signals captured before content becomes saturated.',
+                    'Each clip scored so your team focuses on the strongest candidates.',
+                    'Approvals, upload caps, and cleanup in the same control panel.',
+                    'Dashboard stays readable even when the pipeline is busy.',
+                  ].map((item) => (
+                    <ScrollRevealItem key={item} direction="left">
+                      <div className="flex items-start gap-3 text-sm leading-6 text-white/65 group">
+                        <div className="mt-1 shrink-0 h-5 w-5 rounded-full bg-cyan/10 flex items-center justify-center group-hover:bg-cyan/20 transition-colors">
+                          <Check size={10} className="text-cyan" />
+                        </div>
+                        <span className="group-hover:text-white/80 transition-colors">{item}</span>
+                      </div>
+                    </ScrollRevealItem>
+                  ))}
+                </div>
+              </ScrollReveal>
+            </div>
+
+            {/* Right: Feature cards grid */}
+            <ScrollReveal delay={0.3} staggerChildren={0.12} className="grid gap-4 md:grid-cols-2 content-start">
+              {[
+                { icon: ShieldCheck, title: 'Safe by default', copy: 'Approval gates and quotas keep publishing controlled.', color: '#00F0FF' },
+                { icon: Brain, title: 'AI-assisted scoring', copy: 'Forecasts help prioritize the most promising clips.', color: '#A855F7' },
+                { icon: Upload, title: 'Automated delivery', copy: 'Approved videos move to upload without extra steps.', color: '#EC4899' },
+                { icon: Radar, title: 'Signal detection', copy: 'Trend signals ingested from multiple source channels.', color: '#10B981' },
+              ].map((card) => (
+                <ScrollRevealItem key={card.title} direction="scale">
+                  <SpotlightCard
+                    className="glass-card p-6 h-full"
+                    spotlightColor={`${card.color}12`}
+                  >
+                    <card.icon size={20} className="mb-4" style={{ color: card.color }} />
+                    <h3 className="text-base font-semibold mb-2">{card.title}</h3>
+                    <p className="text-xs leading-6 text-white/50">{card.copy}</p>
+                  </SpotlightCard>
+                </ScrollRevealItem>
+              ))}
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ WORKFLOW SECTION ═══════ */}
+      <section id="workflow" className="relative border-t border-white/5">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:px-10 lg:py-32">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-16">
+            <div className="font-mono text-xs tracking-[0.3em] uppercase mb-4 text-cyan">03 / Workflow</div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-tight mb-5 font-display">
+              From source clip to uploaded Short in{' '}
+              <span className="text-gradient">four stages</span>
+            </h2>
+            <p className="text-sm md:text-[15px] leading-relaxed text-white/50">
+              Ingest the source, assemble the edit, review the result, then ship it on your schedule.
+            </p>
+          </ScrollReveal>
+
+          {/* Workflow steps with animated connector */}
+          <div className="relative">
+            {/* Animated connecting line */}
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent hidden lg:block" />
+
+            <ScrollReveal staggerChildren={0.15} className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {workflowSteps.map((step) => {
+                const Icon = step.icon;
+                return (
+                  <ScrollRevealItem key={step.num} direction="up">
+                    <SpotlightCard
+                      className="glass-card-premium p-6 h-full relative group"
+                      spotlightColor={`${step.color}10`}
+                    >
+                      {/* Step number with glow */}
+                      <div className="flex items-center justify-between mb-6">
+                        <motion.div
+                          className="font-mono text-[10px] tracking-[0.25em] uppercase font-bold"
+                          style={{ color: step.color }}
+                          whileHover={{ scale: 1.1 }}
+                        >
+                          {step.num}
+                        </motion.div>
+                        <motion.div
+                          className="h-10 w-10 rounded-lg flex items-center justify-center"
+                          style={{ background: `${step.color}15`, border: `1px solid ${step.color}25` }}
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                        >
+                          <Icon size={18} style={{ color: step.color }} />
+                        </motion.div>
+                      </div>
+
+                      <h3 className="mb-3 text-lg font-bold group-hover:text-white transition-colors">{step.title}</h3>
+                      <p className="text-sm leading-6 text-white/50 group-hover:text-white/65 transition-colors">
+                        {step.copy}
+                      </p>
+
+                      {/* Bottom accent line */}
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 h-[2px] rounded-b"
+                        style={{ background: `linear-gradient(90deg, transparent, ${step.color}, transparent)` }}
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        transition={{ duration: 0.8, delay: 0.5 }}
+                      />
+                    </SpotlightCard>
+                  </ScrollRevealItem>
+                );
+              })}
+            </ScrollReveal>
+          </div>
+
+          {/* Workflow metrics */}
+          <ScrollReveal delay={0.4} className="grid gap-4 sm:grid-cols-3 mt-10 max-w-2xl mx-auto">
+            {[
+              { label: 'Uploads today', value: pipelineStats.uploadsToday || 12 },
+              { label: 'Daily cap', value: pipelineStats.dailyCap || 50 },
+              { label: 'Pending review', value: pipelineStats.pendingApproval || 7 },
+            ].map((m) => (
+              <div key={m.label} className="glass-card p-4 text-center">
+                <div className="font-mono text-[9px] tracking-[0.25em] uppercase mb-2 text-white/35">{m.label}</div>
+                <div className="text-2xl font-bold text-gradient-cyan">
+                  <AnimatedCounter end={m.value} duration={2} />
                 </div>
               </div>
+            ))}
+          </ScrollReveal>
+        </div>
+      </section>
 
-              <div className="space-y-4">
-                <ImagePanel
-                  src={imageSet.enterpriseImage}
-                  alt="Team collaborating in a modern workspace"
-                  tall
-                  title="Enterprise-ready operations"
-                  copy="A clean command layer for teams that need repeatability and visibility."
-                />
+      {/* ═══════ STUDIO SECTION ═══════ */}
+      <section id="studio" className="relative border-t border-white/5">
+        <GradientBlob />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:px-10 lg:py-32">
+          <ScrollReveal className="max-w-3xl mb-14">
+            <div className="font-mono text-xs tracking-[0.3em] uppercase mb-4 text-cyan">04 / Studio</div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-tight mb-5 font-display">
+              Everything the dashboard needs to feel{' '}
+              <span className="text-gradient">alive</span>
+            </h2>
+            <p className="text-sm md:text-[15px] leading-relaxed text-white/50 max-w-2xl">
+              Professional production tool with clear controls, live analytics, and approval states.
+            </p>
+          </ScrollReveal>
 
-                <div className="grid gap-4 md:grid-cols-3">
-                  {pricingTiers.map((tier) => (
-                    <div
-                      key={tier.name}
-                      className="relative border p-5"
-                      style={{
-                        borderColor: tier.popular ? 'rgba(0,240,255,0.45)' : 'rgba(255,255,255,0.1)',
-                        background: tier.popular ? 'rgba(0,240,255,0.04)' : 'rgba(255,255,255,0.03)',
-                      }}
-                    >
-                      {tier.popular && (
-                        <div className="absolute -top-3 left-5 bg-[#00F0FF] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.25em] text-[#050505]">
-                          Recommended
-                        </div>
-                      )}
-                      <div className="font-mono text-xs uppercase tracking-[0.25em]" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                        {tier.name}
-                      </div>
-                      <div className="mt-2 text-2xl font-semibold">${tier.price}</div>
-                      <div className="mt-1 text-xs uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                        {tier.uploads === -1 ? 'Unlimited uploads/day' : `${tier.uploads} uploads/day`}
-                      </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {/* Feature cards */}
+            <ScrollReveal staggerChildren={0.1} className="grid gap-4 md:grid-cols-2">
+              {studioHighlights.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <ScrollRevealItem key={item.title} direction="scale">
+                    <SpotlightCard className="glass-card p-5 h-full group">
+                      <motion.div
+                        className="h-10 w-10 rounded-lg flex items-center justify-center mb-4"
+                        style={{ background: 'rgba(0,240,255,0.08)', border: '1px solid rgba(0,240,255,0.15)' }}
+                        whileHover={{ scale: 1.1, rotate: -5 }}
+                      >
+                        <Icon size={18} className="text-cyan" />
+                      </motion.div>
+                      <h3 className="mb-2 text-base font-bold group-hover:text-white transition-colors">{item.title}</h3>
+                      <p className="text-xs leading-6 text-white/50 group-hover:text-white/65 transition-colors">{item.copy}</p>
+                    </SpotlightCard>
+                  </ScrollRevealItem>
+                );
+              })}
+            </ScrollReveal>
+
+            {/* Dashboard preview card */}
+            <ScrollReveal delay={0.3}>
+              <div className="glass-card-premium p-6 h-full relative overflow-hidden">
+                {/* Mini dashboard mockup */}
+                <div className="flex items-center gap-2 mb-6">
+                  <div className="h-3 w-3 rounded-full bg-red-500/60" />
+                  <div className="h-3 w-3 rounded-full bg-yellow-500/60" />
+                  <div className="h-3 w-3 rounded-full bg-green-500/60" />
+                  <span className="ml-4 font-mono text-[10px] text-white/30">GhostPipe Dashboard</span>
+                </div>
+
+                <div className="grid grid-cols-3 gap-3 mb-5">
+                  {[
+                    { label: 'Created', val: '2,847', color: '#00F0FF' },
+                    { label: 'Uploaded', val: '2,691', color: '#A855F7' },
+                    { label: 'Success', val: '94.5%', color: '#10B981' },
+                  ].map((s) => (
+                    <div key={s.label} className="glass p-3 rounded-sm">
+                      <div className="font-mono text-[8px] uppercase text-white/30 mb-1">{s.label}</div>
+                      <div className="text-lg font-bold" style={{ color: s.color }}>{s.val}</div>
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
 
-            <div className="mt-8 border border-white/10 bg-[#0A0A0C] px-6 py-8 text-center md:px-10">
-              <div className="mx-auto max-w-3xl space-y-4">
-                <h3 className="text-2xl font-semibold md:text-3xl">Open the control room when you need it</h3>
-                <p className="text-sm leading-7" style={{ color: 'rgba(255,255,255,0.68)' }}>
-                  The dashboard is built for one-click execution: log in, inspect the queue, start the pipeline, stop it when needed, and keep your content operation visible.
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-                  <button onClick={() => navigate('/login')} className="btn-primary inline-flex items-center gap-2">
-                    <Lock size={16} />
-                    Enter Dashboard
-                  </button>
-                  <button onClick={() => scrollToSection('top')} className="btn-secondary inline-flex items-center gap-2">
-                    <ArrowRight size={14} />
-                    Back to Top
-                  </button>
+                {/* Simulated chart */}
+                <div className="relative h-24 flex items-end gap-1 px-2">
+                  {Array.from({ length: 20 }).map((_, i) => {
+                    const height = 20 + Math.random() * 80;
+                    return (
+                      <motion.div
+                        key={i}
+                        className="flex-1 rounded-t-sm"
+                        style={{
+                          background: `linear-gradient(to top, rgba(0,240,255,0.3), rgba(168,85,247,0.5))`,
+                        }}
+                        initial={{ height: 0 }}
+                        whileInView={{ height: `${height}%` }}
+                        transition={{ duration: 0.8, delay: 0.8 + i * 0.05 }}
+                        viewport={{ once: true }}
+                      />
+                    );
+                  })}
                 </div>
+
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="font-mono text-[9px] text-white/25 uppercase tracking-widest">Last 30 days</span>
+                  <ArrowRight size={14} className="text-cyan" />
+                </div>
+
+                {/* Shimmer */}
+                <div className="absolute inset-0 shimmer pointer-events-none" />
               </div>
+            </ScrollReveal>
+          </div>
+
+          {/* Feature list */}
+          <ScrollReveal delay={0.4} className="mt-8">
+            <div className="glass-card p-6 grid gap-3">
+              {[
+                'Review queue, logs, and upload state in one place.',
+                'Fits creator teams, media ops, and small production studios.',
+                'Designed to feel strong on desktop and readable on mobile.',
+              ].map((line) => (
+                <div key={line} className="flex items-start gap-3 text-sm leading-6 text-white/60 group">
+                  <ArrowRight size={16} className="mt-0.5 shrink-0 text-cyan group-hover:translate-x-1 transition-transform" />
+                  <span className="group-hover:text-white/80 transition-colors">{line}</span>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ═══════ TESTIMONIALS ═══════ */}
+      <section className="relative border-t border-white/5 py-24">
+        <div className="mx-auto max-w-4xl px-6 md:px-10">
+          <ScrollReveal className="text-center mb-12">
+            <div className="font-mono text-xs tracking-[0.3em] uppercase mb-4 text-cyan">05 / Feedback</div>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-[-0.03em] font-display">
+              What operators are <span className="text-gradient">saying</span>
+            </h2>
+          </ScrollReveal>
+
+          <div className="relative">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTestimonial}
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                transition={{ duration: 0.5 }}
+              >
+                <GlowingBorder rounded="rounded-none" borderWidth={1}>
+                  <div className="p-8 md:p-12 text-center">
+                    <div className="flex justify-center gap-1 mb-6">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star key={s} size={16} className="text-yellow-400 fill-yellow-400" />
+                      ))}
+                    </div>
+                    <blockquote className="text-lg md:text-xl leading-8 text-white/85 mb-6 max-w-2xl mx-auto">
+                      "{testimonials[activeTestimonial].quote}"
+                    </blockquote>
+                    <div className="font-mono text-xs uppercase tracking-[0.25em] text-cyan">
+                      — {testimonials[activeTestimonial].author}
+                    </div>
+                  </div>
+                </GlowingBorder>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Dots */}
+            <div className="flex justify-center gap-2 mt-6">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveTestimonial(i)}
+                  className="transition-all duration-300"
+                  aria-label={`View testimonial ${i + 1}`}
+                >
+                  <motion.div
+                    className="rounded-full"
+                    animate={{
+                      width: activeTestimonial === i ? 24 : 8,
+                      height: 8,
+                      background: activeTestimonial === i ? '#00F0FF' : 'rgba(255,255,255,0.15)',
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </button>
+              ))}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <footer className="border-t border-white/10 bg-[#050505] py-10">
-          <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 md:flex-row md:items-center md:justify-between md:px-10">
-            <div>
-              <div className="font-mono text-xs tracking-[0.3em] uppercase" style={{ color: '#00F0FF' }}>
-                GhostPipe Systems
+      {/* ═══════ PRICING SECTION ═══════ */}
+      <section id="pricing" className="relative border-t border-white/5">
+        <GradientBlob />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:px-10 lg:py-32">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-16">
+            <div className="font-mono text-xs tracking-[0.3em] uppercase mb-4 text-cyan">06 / Pricing</div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-tight mb-5 font-display">
+              Ready for teams that want to run this{' '}
+              <span className="text-gradient">like a product</span>
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal staggerChildren={0.15} className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
+            {pricingTiers.map((tier) => (
+              <ScrollRevealItem key={tier.name} direction="up">
+                <div className="relative h-full">
+                  {tier.popular && (
+                    <motion.div
+                      className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-purple-500 px-4 py-1 font-mono text-[10px] uppercase tracking-[0.25em] text-white z-10 whitespace-nowrap"
+                      animate={{ boxShadow: ['0 0 15px rgba(0,240,255,0.2)', '0 0 30px rgba(0,240,255,0.4)', '0 0 15px rgba(0,240,255,0.2)'] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      Recommended
+                    </motion.div>
+                  )}
+                  <SpotlightCard
+                    className={`h-full p-6 md:p-8 ${tier.popular ? 'glass-card-premium' : 'glass-card'}`}
+                    spotlightColor={tier.popular ? 'rgba(0,240,255,0.08)' : 'rgba(255,255,255,0.04)'}
+                  >
+                    <div className="font-mono text-xs uppercase tracking-[0.25em] text-white/40 mb-3">{tier.name}</div>
+                    <div className="text-4xl font-bold mb-1">
+                      <span className="text-gradient-cyan">${tier.price}</span>
+                    </div>
+                    <div className="text-xs uppercase tracking-[0.15em] text-white/35 mb-6">
+                      {tier.uploads === -1 ? 'Unlimited uploads/day' : `${tier.uploads} uploads/day`}
+                    </div>
+
+                    <div className="space-y-3 mb-8">
+                      {tier.features.map((f) => (
+                        <div key={f} className="flex items-center gap-2 text-sm text-white/60">
+                          <Check size={14} className="text-cyan shrink-0" />
+                          <span>{f}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <MagneticButton
+                      onClick={() => navigate('/dashboard')}
+                      className={`w-full py-3 text-center font-mono text-xs uppercase tracking-wider font-bold ${
+                        tier.popular ? 'btn-glow' : 'btn-secondary'
+                      }`}
+                    >
+                      Get Started
+                    </MagneticButton>
+                  </SpotlightCard>
+                </div>
+              </ScrollRevealItem>
+            ))}
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ═══════ CTA ═══════ */}
+      <section className="relative border-t border-white/5">
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(0,240,255,0.06) 0%, transparent 60%)',
+        }} />
+        <div className="relative z-10 mx-auto max-w-4xl px-6 py-24 md:px-10 text-center">
+          <ScrollReveal>
+            <motion.div
+              className="glass-card-premium p-10 md:p-16 relative overflow-hidden"
+              whileInView={{ boxShadow: ['0 0 40px rgba(0,240,255,0.05)', '0 0 80px rgba(0,240,255,0.1)', '0 0 40px rgba(0,240,255,0.05)'] }}
+              transition={{ duration: 3, repeat: Infinity }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl md:text-4xl font-bold tracking-[-0.02em] mb-4 font-display">
+                Open the control room <span className="text-gradient">when you need it</span>
+              </h3>
+              <p className="text-sm leading-7 text-white/50 max-w-xl mx-auto mb-8">
+                Log in, inspect the queue, start the pipeline, stop it when needed — keep your content operation visible.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <MagneticButton onClick={() => navigate('/dashboard')} className="btn-glow inline-flex items-center gap-2">
+                  <Lock size={16} /> Enter Dashboard
+                </MagneticButton>
+                <MagneticButton onClick={() => scrollToSection('top')} className="btn-secondary inline-flex items-center gap-2">
+                  <ArrowRight size={14} /> Back to Top
+                </MagneticButton>
               </div>
-              <p className="mt-2 text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                A professional workflow for producing and publishing YouTube Shorts.
+
+              {/* Shimmer */}
+              <div className="absolute inset-0 shimmer pointer-events-none" />
+            </motion.div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ═══════ FOOTER ═══════ */}
+      <footer className="relative border-t border-white/5 py-12">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="h-5 w-5 rounded bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
+                  <Zap size={10} className="text-white" />
+                </div>
+                <span className="font-mono text-xs tracking-[0.25em] uppercase text-gradient-cyan font-bold">GhostPipe</span>
+              </div>
+              <p className="text-xs text-white/30 max-w-xs">
+                A professional workflow for producing and publishing YouTube Shorts at scale.
               </p>
             </div>
-            <div className="flex flex-wrap gap-5 font-mono text-[11px] uppercase tracking-[0.25em]" style={{ color: 'rgba(255,255,255,0.45)' }}>
-              <button onClick={() => scrollToSection('story')} className="transition-colors hover:text-white">Story</button>
-              <button onClick={() => scrollToSection('workflow')} className="transition-colors hover:text-white">Workflow</button>
-              <button onClick={() => navigate('/login')} className="transition-colors hover:text-white">Dashboard</button>
+
+            <div className="flex flex-wrap gap-6 font-mono text-[11px] uppercase tracking-[0.2em]">
+              {navigation.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-white/30 hover:text-white transition-colors hover:drop-shadow-[0_0_6px_rgba(0,240,255,0.3)]"
+                >
+                  {item.label}
+                </button>
+              ))}
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="text-cyan hover:text-white transition-colors flex items-center gap-1"
+              >
+                Dashboard <ExternalLink size={10} />
+              </button>
             </div>
           </div>
-        </footer>
-      </main>
-    </div>
-  );
-}
 
-function MiniCard({ icon: Icon, title, copy }: { icon: typeof ShieldCheck; title: string; copy: string }) {
-  return (
-    <div className="border border-white/10 bg-white/[0.03] p-4">
-      <Icon size={16} className="mb-3" style={{ color: '#00F0FF' }} />
-      <div className="mb-1 text-sm font-semibold">{title}</div>
-      <div className="text-xs leading-6" style={{ color: 'rgba(255,255,255,0.64)' }}>
-        {copy}
-      </div>
-    </div>
-  );
-}
+          {/* Gradient line */}
+          <div className="mt-8 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-function ProgressRow({ label, value }: { label: string; value: string }) {
-  const progress = Number(value.replace('%', '')) || 0;
-  return (
-    <div>
-      <div className="mb-2 flex items-center justify-between text-xs" style={{ color: 'rgba(255,255,255,0.55)' }}>
-        <span>{label}</span>
-        <span style={{ color: '#00F0FF' }}>{value}</span>
-      </div>
-      <div className="h-2 w-full bg-white/5">
-        <div className="h-full" style={{ width: `${Math.min(progress, 100)}%`, background: 'linear-gradient(90deg, #00F0FF, #00FF66)' }} />
-      </div>
+          <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/20">
+              © {new Date().getFullYear()} GhostPipe Systems
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/20 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
+              All systems operational
+            </span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

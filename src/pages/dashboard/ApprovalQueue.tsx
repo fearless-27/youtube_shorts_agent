@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Check, X, ChevronDown, ChevronUp } from 'lucide-react';
-import { updateApproval, useDashboardData, type Video } from '../../data/store';
+import { motion } from 'framer-motion';
+import { updateApproval } from '../../data/store';
+import { useDashboard, type Video } from '../../context/DashboardContext';
+import {
+  IconQueue, IconCheck, IconX, IconSparkles,
+  IconShieldCheck,
+} from '../../components/icons/StreamlineIcons';
 
 export default function ApprovalQueue() {
-  const { videos } = useDashboardData();
+  const { videos, autoApproveEnabled, refresh } = useDashboard();
   const [items, setItems] = useState<Video[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [showApproved, setShowApproved] = useState(false);
@@ -13,222 +18,191 @@ export default function ApprovalQueue() {
     setItems(videos.filter((video) => video.source === 'approval' && video.approvalId));
   }, [videos]);
 
-  const pending = items.filter(v => v.status === 'PENDING_REVIEW');
-  const approved = items.filter(v => v.status === 'APPROVED' || v.status === 'QUEUED');
+  const pending = items.filter((v) => v.status === 'PENDING_REVIEW');
+  const approved = items.filter((v) => v.status === 'APPROVED' || v.status === 'QUEUED');
+  const rejected = items.filter((v) => v.status === 'REJECTED');
+
+  const showMsg = (msg: string) => {
+    setMessage(msg);
+    setTimeout(() => setMessage(''), 3000);
+  };
 
   const toggleSelect = (id: string) => {
     const next = new Set(selected);
-    if (next.has(id)) next.delete(id);
-    else next.add(id);
+    if (next.has(id)) next.delete(id); else next.add(id);
     setSelected(next);
   };
 
   const toggleAll = () => {
     if (selected.size === pending.length) setSelected(new Set());
-    else setSelected(new Set(pending.map(v => v.id)));
+    else setSelected(new Set(pending.map((v) => v.id)));
   };
 
-  const approve = async (id: string) => {
-    const approvalId = items.find(v => v.id === id)?.approvalId ?? id;
-    await updateApproval(approvalId, true);
-    setItems(prev => prev.map(v => v.id === id ? { ...v, status: 'APPROVED' as const } : v));
-    setSelected(prev => { const n = new Set(prev); n.delete(id); return n; });
-    setMessage('Approved');
+  const handleApprove = async (id: string) => {
+    try {
+      const approvalId = items.find((v) => v.id === id)?.approvalId ?? id;
+      await updateApproval(approvalId, true);
+      setItems((prev) => prev.map((v) => v.id === id ? { ...v, status: 'APPROVED' as const } : v));
+      setSelected((prev) => { const n = new Set(prev); n.delete(id); return n; });
+      showMsg('Short Approved ✓');
+      refresh();
+    } catch {
+      showMsg('Approval action failed');
+    }
   };
 
-  const reject = async (id: string) => {
-    const approvalId = items.find(v => v.id === id)?.approvalId ?? id;
-    await updateApproval(approvalId, false);
-    setItems(prev => prev.map(v => v.id === id ? { ...v, status: 'REJECTED' as const } : v));
-    setSelected(prev => { const n = new Set(prev); n.delete(id); return n; });
-    setMessage('Rejected');
+  const handleReject = async (id: string) => {
+    try {
+      const approvalId = items.find((v) => v.id === id)?.approvalId ?? id;
+      await updateApproval(approvalId, false);
+      setItems((prev) => prev.map((v) => v.id === id ? { ...v, status: 'REJECTED' as const } : v));
+      setSelected((prev) => { const n = new Set(prev); n.delete(id); return n; });
+      showMsg('Short Rejected ✗');
+      refresh();
+    } catch {
+      showMsg('Rejection action failed');
+    }
   };
 
-  const bulkApprove = async () => {
-    await Promise.all(Array.from(selected).map(id => updateApproval(items.find(v => v.id === id)?.approvalId ?? id, true)));
-    setItems(prev => prev.map(v => selected.has(v.id) ? { ...v, status: 'APPROVED' as const } : v));
-    setSelected(new Set());
-    setMessage('Selected Shorts approved');
-  };
-
-  const bulkReject = async () => {
-    await Promise.all(Array.from(selected).map(id => updateApproval(items.find(v => v.id === id)?.approvalId ?? id, false)));
-    setItems(prev => prev.map(v => selected.has(v.id) ? { ...v, status: 'REJECTED' as const } : v));
-    setSelected(new Set());
-    setMessage('Selected Shorts rejected');
-  };
-
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return '#00FF66';
-    if (score >= 50) return '#FFB800';
-    return '#FF3366';
+  const handleBatchApprove = async () => {
+    for (const id of selected) {
+      await handleApprove(id);
+    }
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+    <div className="space-y-5">
+      {/* Control bar */}
+      <div className="hud-panel p-4 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <h2 className="text-lg font-semibold uppercase tracking-[-0.01em]">Approval Queue</h2>
-          <span className="font-mono text-xs px-2 py-0.5" style={{ background: '#FFB800', color: '#050505' }}>
-            {pending.length} PENDING
-          </span>
-          <span className="font-mono text-xs px-2 py-0.5" style={{ background: 'rgba(0,255,102,0.12)', color: '#00FF66' }}>
-            AUTO APPROVAL ON
-          </span>
+          <IconQueue size={18} color="#00F0FF" />
+          <div>
+            <div className="font-mono text-xs uppercase tracking-[0.2em] font-bold" style={{ color: '#00F0FF' }}>
+              Operator Approval Control
+            </div>
+            <div className="font-mono text-[9px] text-white/40">
+              {pending.length} clip(s) awaiting sign-off • Mode: {autoApproveEnabled ? 'AUTO-APPROVE' : 'MANUAL'}
+            </div>
+          </div>
         </div>
-        {message && (
-          <span className="font-mono text-xs" style={{ color: '#00FF66' }}>
-            {message}
-          </span>
+
+        {/* Batch actions */}
+        {pending.length > 0 && (
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleAll}
+              className="btn-secondary py-1.5 px-3 text-[9px]"
+            >
+              {selected.size === pending.length ? 'Deselect All' : 'Select All'}
+            </button>
+            {selected.size > 0 && (
+              <button
+                onClick={handleBatchApprove}
+                className="btn-primary py-1.5 px-3 text-[9px] bg-[#00FF66]"
+              >
+                Approve ({selected.size})
+              </button>
+            )}
+          </div>
         )}
       </div>
 
-      {/* Pending Table */}
-      <div style={{ background: '#0A0A0C', border: '1px solid #121212' }}>
-        {/* Table Header */}
-        <div className="grid items-center px-4 py-3 font-mono text-xs uppercase tracking-wider"
-          style={{ background: '#121212', color: 'rgba(255,255,255,0.4)', gridTemplateColumns: '40px 60px 1fr 100px 80px 100px 80px 140px' }}>
-          <input 
-            type="checkbox" 
-            checked={selected.size === pending.length && pending.length > 0}
-            onChange={toggleAll}
-            className="w-4 h-4 cursor-pointer"
-            style={{ accentColor: '#00F0FF' }}
-          />
-          <span>ID</span>
-          <span>Title</span>
-          <span>Type</span>
-          <span>Score</span>
-          <span>Privacy</span>
-          <span>Status</span>
-          <span className="text-right">Actions</span>
+      {message && (
+        <div className="p-3 bg-[#00F0FF]/10 border border-[#00F0FF]/30 font-mono text-xs text-[#00F0FF] animate-fade-in">
+          {message}
+        </div>
+      )}
+
+      {/* Main pending list */}
+      <div className="space-y-3">
+        <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/40">
+          Pending Queue ({pending.length})
         </div>
 
         {pending.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="font-mono text-xs uppercase" style={{ color: 'rgba(255,255,255,0.3)' }}>
-              No items pending review
-            </p>
+          <div className="hud-panel p-10 text-center">
+            <IconShieldCheck size={28} color="#00FF66" className="mx-auto mb-2" />
+            <div className="font-mono text-xs uppercase tracking-widest text-white/50">Approval queue clear</div>
+            <div className="font-mono text-[9px] text-white/30 mt-1">All processed clips have been acted upon</div>
           </div>
         ) : (
-          pending.map(video => (
-            <div key={video.id} 
-              className="grid items-center px-4 py-3 transition-colors hover:bg-white/[0.02]"
-              style={{ gridTemplateColumns: '40px 60px 1fr 100px 80px 100px 80px 140px', borderBottom: '1px solid #121212' }}>
-              <input 
-                type="checkbox" 
-                checked={selected.has(video.id)}
-                onChange={() => toggleSelect(video.id)}
-                className="w-4 h-4 cursor-pointer"
-                style={{ accentColor: '#00F0FF' }}
-              />
-              <span className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>{video.id}</span>
-              <div className="pr-4">
-                <span className="text-xs truncate block">{video.title}</span>
-                {video.thumbnail && (
-                  <img
-                    className="mt-2 w-40 max-w-full aspect-video object-cover"
-                    style={{ border: '1px solid #121212', background: '#050505' }}
-                    src={video.thumbnail}
-                    alt=""
-                    loading="lazy"
-                  />
-                )}
-                {video.previewUrl && (
-                  <video className="mt-2 w-40 max-w-full" style={{ border: '1px solid #121212', background: '#050505' }} src={video.previewUrl} controls preload="metadata" />
-                )}
+          pending.map((item) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="hud-panel p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+            >
+              <div className="flex items-start gap-3 min-w-0 flex-1">
+                <input
+                  type="checkbox"
+                  checked={selected.has(item.id)}
+                  onChange={() => toggleSelect(item.id)}
+                  className="mt-1 accent-[#00F0FF] cursor-pointer"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-mono text-[8px] uppercase tracking-wider px-2 py-0.5 bg-[#FFB800]/10 text-[#FFB800] border border-[#FFB800]/30">
+                      PENDING REVIEW
+                    </span>
+                    {item.viralityScore && (
+                      <span className="font-mono text-[9px] text-[#00F0FF] flex items-center gap-1">
+                        <IconSparkles size={10} /> {item.viralityScore}/10
+                      </span>
+                    )}
+                  </div>
+                  <h4 className="font-mono text-xs font-bold text-white truncate">{item.title}</h4>
+                  <div className="font-mono text-[9px] text-white/40 mt-1 flex items-center gap-3">
+                    <span>Type: {item.type}</span>
+                    <span>Created: {item.createdAt ? item.createdAt.slice(0, 10) : 'Recent'}</span>
+                  </div>
+                </div>
               </div>
-              <span className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{video.type}</span>
-              <span className="font-mono text-xs font-semibold" style={{ color: getScoreColor(video.viralityScore) }}>
-                {video.viralityScore}
-              </span>
-              <span className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{video.privacy}</span>
-              <span className="font-mono text-xs px-2 py-0.5" 
-                style={{ background: 'rgba(255,184,0,0.1)', color: '#FFB800' }}>
-                PENDING
-              </span>
-              <div className="flex items-center gap-2 justify-end">
-                <button onClick={() => approve(video.id)}
-                  className="p-1.5 transition-colors hover:bg-cyan/20" style={{ color: '#00F0FF' }}>
-                  <Check size={14} />
+
+              {/* Action buttons */}
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => handleReject(item.id)}
+                  className="btn-secondary py-1.5 px-3 text-[9px] hover:border-red-500 hover:text-red-400 flex items-center gap-1"
+                >
+                  <IconX size={12} /> Reject
                 </button>
-                <button onClick={() => reject(video.id)}
-                  className="p-1.5 transition-colors hover:bg-red/20" style={{ color: '#FF3366' }}>
-                  <X size={14} />
+                <button
+                  onClick={() => handleApprove(item.id)}
+                  className="btn-primary py-1.5 px-4 text-[9px] bg-[#00FF66] text-black font-bold flex items-center gap-1"
+                >
+                  <IconCheck size={12} /> Approve
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))
         )}
       </div>
 
-      {/* Bulk Actions */}
-      {selected.size > 0 && (
-        <div className="sticky bottom-4 flex items-center justify-between px-6 py-3"
-          style={{ background: '#0A0A0C', border: '1px solid #00F0FF', boxShadow: '0 0 20px rgba(0,240,255,0.1)' }}>
-          <span className="font-mono text-xs uppercase" style={{ color: 'rgba(255,255,255,0.5)' }}>
-            {selected.size} selected
-          </span>
-          <div className="flex items-center gap-3">
-            <button onClick={bulkApprove}
-              className="px-4 py-2 font-mono text-xs uppercase tracking-wider font-semibold flex items-center gap-2"
-              style={{ background: '#00F0FF', color: '#050505' }}>
-              <Check size={12} /> Approve Selected
-            </button>
-            <button onClick={bulkReject}
-              className="px-4 py-2 font-mono text-xs uppercase tracking-wider font-semibold flex items-center gap-2"
-              style={{ background: '#FF3366', color: '#fff' }}>
-              <X size={12} /> Reject Selected
-            </button>
-          </div>
-        </div>
-      )}
+      {/* History Toggle */}
+      <div className="pt-4">
+        <button
+          onClick={() => setShowApproved(!showApproved)}
+          className="font-mono text-[9px] uppercase tracking-widest text-[#00F0FF] hover:underline flex items-center gap-1 cursor-pointer"
+        >
+          {showApproved ? 'Hide Decided History ▲' : 'Show Decided History (Approved / Rejected) ▼'}
+        </button>
 
-      {/* Approved Items */}
-      {approved.length > 0 && (
-        <div>
-          <button onClick={() => setShowApproved(!showApproved)}
-            className="flex items-center gap-2 mb-4 font-mono text-xs uppercase tracking-wider transition-colors hover:text-white"
-            style={{ color: 'rgba(255,255,255,0.5)' }}>
-            {showApproved ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-            Approved ({approved.length}) — Ready for Upload
-          </button>
-          {showApproved && (
-            <div style={{ background: '#0A0A0C', border: '1px solid #121212' }}>
-              {approved.map(video => (
-                <div key={video.id}
-                  className="grid items-center px-4 py-3"
-                  style={{ gridTemplateColumns: '40px 60px 1fr 100px 80px 100px 80px 140px', borderBottom: '1px solid #121212' }}>
-                  <span />
-                  <span className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>{video.id}</span>
-                  <div className="pr-4">
-                    <span className="text-xs truncate block">{video.title}</span>
-                    {video.previewUrl && (
-                      <video className="mt-2 w-40 max-w-full" style={{ border: '1px solid #121212', background: '#050505' }} src={video.previewUrl} controls preload="metadata" />
-                    )}
-                  </div>
-                  <span className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{video.type}</span>
-                  <span className="font-mono text-xs font-semibold" style={{ color: getScoreColor(video.viralityScore) }}>
-                    {video.viralityScore}
-                  </span>
-                  <span className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{video.privacy}</span>
-                  <span className="font-mono text-xs px-2 py-0.5"
-                    style={{ background: 'rgba(0,255,102,0.1)', color: '#00FF66' }}>
-                    READY
-                  </span>
-                  <div className="text-right">
-                    <button className="font-mono text-xs px-3 py-1 transition-colors hover:brightness-110"
-                      style={{ background: '#00F0FF', color: '#050505' }}>
-                      Queue Upload
-                    </button>
-                  </div>
+        {showApproved && (
+          <div className="mt-3 space-y-2">
+            {[...approved, ...rejected].map((item) => (
+              <div key={item.id} className="hud-panel p-3 flex items-center justify-between text-xs font-mono">
+                <div className="truncate flex-1 mr-4">
+                  <span className="text-white/80">{item.title}</span>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+                <span className={`text-[9px] font-bold px-2 py-0.5 ${item.status === 'REJECTED' ? 'text-red-400 bg-red-400/10' : 'text-[#00FF66] bg-[#00FF66]/10'}`}>
+                  {item.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

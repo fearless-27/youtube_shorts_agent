@@ -1024,6 +1024,15 @@ class TelegramTamilShortsPipeline:
                     video.source_id,
                     exc,
                 )
+            elif self._is_youtube_auth_error(exc):
+                self.upload_blocked_for_run = True
+                self._record_youtube_auth_block(exc)
+                logger.warning(
+                    "YouTube OAuth credentials are invalid or revoked for %s. "
+                    "Run `python scripts/youtube_oauth_setup.py` to refresh `youtube_credentials.json`, "
+                    "then retry the Telegram pipeline. Uploads are stopped for this run.",
+                    video.source_id,
+                )
             else:
                 logger.exception(
                     "Telegram Short upload failed for %s. Keeping it rendered for retry: %s",
@@ -1037,6 +1046,17 @@ class TelegramTamilShortsPipeline:
     def _is_youtube_upload_quota_error(exc: Exception) -> bool:
         text = str(exc).lower()
         return "quota exceeded" in text or "ratelimitexceeded" in text or "rate limit exceeded" in text
+
+    @staticmethod
+    def _is_youtube_auth_error(exc: Exception) -> bool:
+        text = str(exc).lower()
+        return (
+            "invalid_grant" in text
+            or "expired or revoked" in text
+            or "refresherror" in text
+            or "invalid_client" in text
+            or "unauthorized" in text and "oauth" in text
+        )
 
     @staticmethod
     def _is_youtube_network_block_error(exc: Exception) -> bool:
@@ -1214,6 +1234,15 @@ class TelegramTamilShortsPipeline:
         state["max_daily_uploads"] = self._telegram_daily_upload_limit()
         self._save_quota_state(state)
         logger.warning("YouTube upload quota exceeded. Stopping Telegram uploads until the quota resets.")
+
+    def _record_youtube_auth_block(self, exc: Exception):
+        state = self._load_quota_state()
+        today = self._today_upload_key()
+        state["date"] = today
+        state["youtube_auth_blocked_date"] = today
+        state["youtube_auth_block_reason"] = str(exc)[:500]
+        self._save_quota_state(state)
+        logger.warning("YouTube OAuth session is no longer valid. Re-run the OAuth setup to refresh credentials.")
 
     def _record_upload_success(self, upload_result: dict):
         state = self._load_quota_state()
@@ -1574,7 +1603,9 @@ def load_config() -> dict:
     }
     for key, value in env_overrides.items():
         if value not in (None, ""):
-            config[key] = value
+            existing_value = config.get(key)
+            if existing_value in (None, "", []):
+                config[key] = value
     return config
 
 
