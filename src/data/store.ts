@@ -110,22 +110,6 @@ export const pipelineStats: PipelineStats = {
   bestTopic: 'Waiting for data',
 };
 
-export async function login(email: string, password: string) {
-  const response = await fetch(apiPath('/api/auth/login'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, username: email, password }),
-  });
-  if (!response.ok) {
-    throw new Error('Invalid dashboard credentials');
-  }
-  return response.json();
-}
-
-export async function logout() {
-  await fetch(apiPath('/api/auth/logout'), { method: 'POST' });
-}
-
 export async function pipelineAction(action: 'start' | 'stop') {
   const response = await fetch(apiPath(`/api/pipeline/${action}`), { method: 'POST' });
   if (!response.ok) {

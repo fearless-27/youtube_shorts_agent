@@ -54,8 +54,8 @@ async def main():
             "telegram_transcribe_source": False,
             "telegram_translate_to_tamil": False,
             "tamil_voiceover_script": TAMIL_SCRIPT,
-            "tamil_audio_file": str(video_path) if args.audio_source == "source" else "",
-            "telegram_generate_tamil_voiceover": args.audio_source == "tts",
+            "telegram_preserve_source_audio": True,
+            "telegram_generate_tamil_voiceover": False,
             "telegram_short_duration": 25,
             "telegram_allow_audio_replacement": False,
             "telegram_output_dir": str(PROJECT_ROOT / "outputs"),
@@ -63,6 +63,8 @@ async def main():
             "telegram_delete_local_files_after_upload": False,
         }
     )
+
+    skip_intro = float(config.get("telegram_skip_intro_seconds", 90.0))
 
     video = TelegramVideo(
         source_id=f"telegram:{args.channel}:{args.message_id}",
@@ -73,6 +75,7 @@ async def main():
         source_url=f"https://t.me/{args.channel}/{args.message_id}",
         local_path=str(video_path),
         posted_at=datetime.now(timezone.utc),
+        segment_start=skip_intro,
     )
 
     audio_path, script = await TamilAudioFactory(config).build_audio(video)

@@ -15,6 +15,9 @@ import base64
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import mimetypes
+import logging
+
+logger = logging.getLogger(__name__)
 
 try:
     from dotenv import load_dotenv
@@ -217,11 +220,17 @@ class AIServiceRouter:
     async def _execute_call(self, service: str, prompt: dict, timeout: int):
         """Execute specific API call"""
         config = self.services[service]
+        url = config["endpoint"]
 
         async with aiohttp.ClientSession() as session:
             headers = {"Authorization": f"Bearer {config['key']}", "Content-Type": "application/json"}
 
             if service == "claude":
+                headers = {
+                    "x-api-key": config["key"],
+                    "anthropic-version": "2023-06-01",
+                    "Content-Type": "application/json",
+                }
                 payload = {
                     "model": "claude-3-5-sonnet-20241022",
                     "max_tokens": 4096,
@@ -232,6 +241,12 @@ class AIServiceRouter:
                     "model": "gpt-4o",
                     "messages": [{"role": "user", "content": prompt.get("text", "")}],
                     "temperature": 0.7
+                }
+            elif service == "gemini":
+                headers = {"Content-Type": "application/json"}
+                url = f"{config['endpoint']}?key={config['key']}"
+                payload = {
+                    "contents": [{"parts": [{"text": prompt.get("text", "")}]}]
                 }
             elif service == "elevenlabs":
                 headers = {"xi-api-key": config["key"], "Content-Type": "application/json"}
@@ -259,7 +274,7 @@ class AIServiceRouter:
             else:
                 payload = prompt
 
-            async with session.post(config["endpoint"], json=payload, headers=headers, timeout=timeout) as resp:
+            async with session.post(url, json=payload, headers=headers, timeout=timeout) as resp:
                 if resp.status == 200:
                     return await resp.json()
                 else:
@@ -318,6 +333,14 @@ class YouTubePublisher:
 
         if Path(self.credentials_path).exists():
             credentials = Credentials.from_authorized_user_file(self.credentials_path, scopes)
+            if credentials and credentials.expired and credentials.refresh_token:
+                try:
+                    from google.auth.transport.requests import Request
+                    credentials.refresh(Request())
+                    with open(self.credentials_path, "w", encoding="utf-8") as f:
+                        f.write(credentials.to_json())
+                except Exception as exc:
+                    logger.warning("Could not refresh YouTube OAuth credentials: %s", exc)
             if include_analytics and self.analytics_scope not in set(credentials.scopes or []):
                 raise PermissionError(
                     "YouTube Analytics scope is missing. Re-run `python scripts/youtube_oauth_setup.py` "

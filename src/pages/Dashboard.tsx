@@ -1,4 +1,4 @@
-import { Routes, Route, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Overview from './dashboard/Overview';
@@ -7,23 +7,25 @@ import ApprovalQueue from './dashboard/ApprovalQueue';
 import YouTubeUploads from './dashboard/YouTubeUploads';
 import PipelineLogs from './dashboard/PipelineLogs';
 import SettingsPage from './dashboard/SettingsPage';
-import { logout, pipelineAction } from '../data/store';
+import AudioTracker from './dashboard/AudioTracker';
+import { pipelineAction } from '../data/store';
 import { DashboardProvider, useDashboard } from '../context/DashboardContext';
 import {
   IconDashboard, IconFilm, IconQueue, IconUpload, IconTerminal,
-  IconSettings, IconBell, IconLogOut, IconPlay, IconGhost,
+  IconSettings, IconBell, IconPlay, IconGhost,
   IconAlertTriangle, IconInfo, IconActivity,
-  IconChevronRight, IconX,
+  IconChevronRight, IconX, IconRadar,
 } from '../components/icons/StreamlineIcons';
 
 /* ── nav items ─────────────────────────────────────────── */
 const navItems = [
-  { path: '/dashboard',          label: 'Overview',       icon: IconDashboard, end: true },
-  { path: '/dashboard/videos',   label: 'Created Videos', icon: IconFilm },
-  { path: '/dashboard/approval', label: 'Approval Queue', icon: IconQueue },
-  { path: '/dashboard/uploads',  label: 'YT Uploads',     icon: IconUpload },
-  { path: '/dashboard/logs',     label: 'Pipeline Logs',  icon: IconTerminal },
-  { path: '/dashboard/settings', label: 'Settings',       icon: IconSettings },
+  { path: '/dashboard',          label: 'Overview',           icon: IconDashboard, end: true },
+  { path: '/dashboard/videos',   label: 'Created Videos',     icon: IconFilm },
+  { path: '/dashboard/approval', label: 'Approval Queue',     icon: IconQueue },
+  { path: '/dashboard/audio',    label: 'Audio Intelligence', icon: IconRadar },
+  { path: '/dashboard/uploads',  label: 'YT Uploads',         icon: IconUpload },
+  { path: '/dashboard/logs',     label: 'Pipeline Logs',      icon: IconTerminal },
+  { path: '/dashboard/settings', label: 'Settings',           icon: IconSettings },
 ];
 
 const MODE_STYLES: Record<string, { bg: string; color: string; label: string; dot: string }> = {
@@ -37,33 +39,7 @@ function getModeStyle(mode?: string) {
   return MODE_STYLES[key] ?? MODE_STYLES.live;
 }
 
-/* ── Auth Guard ─────────────────────────────────────────── */
-function AuthGuard({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
-  const [checked, setChecked] = useState(false);
-  useEffect(() => {
-    const base = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/$/, '');
-    fetch(`${base}/api/session`, { cache: 'no-store' })
-      .then((r) => r.json())
-      .then((d: { authenticated?: boolean }) => {
-        if (!d.authenticated) navigate('/login', { replace: true });
-        else setChecked(true);
-      })
-      .catch(() => setChecked(true));
-  }, [navigate]);
 
-  if (!checked) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: '#020617' }}>
-      <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em]"
-        style={{ color: 'rgba(0,240,255,0.5)' }}>
-        <motion.div className="w-2 h-2" style={{ background: '#00F0FF' }}
-          animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 1, repeat: Infinity }} />
-        AUTHENTICATING OPERATOR...
-      </div>
-    </div>
-  );
-  return <>{children}</>;
-}
 
 /* ── Notification panel ─────────────────────────────────── */
 function NotificationPanel({ onClose }: { onClose: () => void }) {
@@ -117,7 +93,6 @@ function NotificationPanel({ onClose }: { onClose: () => void }) {
 
 /* ── Inner Dashboard shell ─────────────────────────────── */
 function DashboardShell() {
-  const navigate       = useNavigate();
   const location       = useLocation();
   const { pipelineLogs, pipelineStats, defaultSettings, loading, refresh } = useDashboard();
   const [bellOpen, setBellOpen]     = useState(false);
@@ -146,10 +121,6 @@ function DashboardShell() {
     return () => document.removeEventListener('mousedown', handler);
   }, [bellOpen]);
 
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login');
-  };
 
   const handlePipeline = async (action: 'start' | 'stop') => {
     setPipeRunning(action === 'start');
@@ -316,15 +287,6 @@ function DashboardShell() {
           })()}
         </div>
 
-        {/* Logout */}
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2.5 px-5 py-4 font-mono text-[9px] uppercase tracking-[0.15em] transition-all cursor-pointer hover:bg-white/5 group"
-          style={{ borderTop: '1px solid rgba(0,240,255,0.05)', color: 'rgba(255,255,255,0.3)' }}
-        >
-          <IconLogOut size={13} className="group-hover:text-red transition-colors" />
-          <span className="group-hover:text-white transition-colors">Logout</span>
-        </button>
       </aside>
 
       {/* ═══ MAIN CONTENT ═══ */}
@@ -410,6 +372,7 @@ function DashboardShell() {
               <Route path="/"         element={<Overview />} />
               <Route path="/videos"   element={<CreatedVideos />} />
               <Route path="/approval" element={<ApprovalQueue />} />
+              <Route path="/audio"    element={<AudioTracker />} />
               <Route path="/uploads"  element={<YouTubeUploads />} />
               <Route path="/logs"     element={<PipelineLogs />} />
               <Route path="/settings" element={<SettingsPage />} />
@@ -424,10 +387,8 @@ function DashboardShell() {
 /* ── Root export ─────────────────────────────────────────── */
 export default function Dashboard() {
   return (
-    <AuthGuard>
-      <DashboardProvider>
-        <DashboardShell />
-      </DashboardProvider>
-    </AuthGuard>
+    <DashboardProvider>
+      <DashboardShell />
+    </DashboardProvider>
   );
 }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { updateApproval } from '../../data/store';
 import { useDashboard, type Video } from '../../context/DashboardContext';
 import {
   IconQueue, IconCheck, IconX, IconSparkles,
-  IconShieldCheck,
+  IconShieldCheck, IconPlay,
 } from '../../components/icons/StreamlineIcons';
 
 export default function ApprovalQueue() {
@@ -13,6 +13,7 @@ export default function ApprovalQueue() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [showApproved, setShowApproved] = useState(false);
   const [message, setMessage] = useState('');
+  const [previewingVideo, setPreviewingVideo] = useState<Video | null>(null);
 
   useEffect(() => {
     setItems(videos.filter((video) => video.source === 'approval' && video.approvalId));
@@ -161,15 +162,23 @@ export default function ApprovalQueue() {
 
               {/* Action buttons */}
               <div className="flex items-center gap-2 shrink-0">
+                {item.previewUrl && (
+                  <button
+                    onClick={() => setPreviewingVideo(item)}
+                    className="btn-secondary py-1.5 px-3 text-[9px] hover:border-[#00F0FF] hover:text-[#00F0FF] flex items-center gap-1 cursor-pointer"
+                  >
+                    <IconPlay size={10} color="#00F0FF" /> Preview
+                  </button>
+                )}
                 <button
                   onClick={() => handleReject(item.id)}
-                  className="btn-secondary py-1.5 px-3 text-[9px] hover:border-red-500 hover:text-red-400 flex items-center gap-1"
+                  className="btn-secondary py-1.5 px-3 text-[9px] hover:border-red-500 hover:text-red-400 flex items-center gap-1 cursor-pointer"
                 >
                   <IconX size={12} /> Reject
                 </button>
                 <button
                   onClick={() => handleApprove(item.id)}
-                  className="btn-primary py-1.5 px-4 text-[9px] bg-[#00FF66] text-black font-bold flex items-center gap-1"
+                  className="btn-primary py-1.5 px-4 text-[9px] bg-[#00FF66] text-black font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <IconCheck size={12} /> Approve
                 </button>
@@ -178,6 +187,86 @@ export default function ApprovalQueue() {
           ))
         )}
       </div>
+
+      {/* Video Preview Modal */}
+      <AnimatePresence>
+        {previewingVideo && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              className="hud-panel p-6 max-w-xl w-full relative border border-[#00F0FF]/30 shadow-2xl"
+            >
+              <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <IconPlay size={14} color="#00F0FF" />
+                  <span className="font-mono text-xs uppercase tracking-widest text-[#00F0FF] font-bold">
+                    Short Video Reviewer
+                  </span>
+                </div>
+                <button
+                  onClick={() => setPreviewingVideo(null)}
+                  className="text-white/50 hover:text-white font-mono text-sm cursor-pointer px-2"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* HTML5 Video Player */}
+              <div className="bg-black rounded-lg overflow-hidden border border-white/10 mb-4 flex items-center justify-center">
+                {previewingVideo.previewUrl ? (
+                  <video
+                    src={previewingVideo.previewUrl}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full max-h-[55vh] object-contain"
+                  />
+                ) : (
+                  <div className="p-8 text-center font-mono text-xs text-white/40">
+                    No preview media stream available for this video
+                  </div>
+                )}
+              </div>
+
+              {/* Video metadata overview */}
+              <div className="space-y-2 mb-5 font-mono text-xs">
+                <div className="font-bold text-white text-sm line-clamp-2">
+                  {previewingVideo.title}
+                </div>
+                <div className="flex items-center gap-4 text-[10px] text-white/50">
+                  <span>Virality: <strong className="text-[#00F0FF]">{previewingVideo.viralityScore || 'N/A'}/10</strong></span>
+                  <span>Type: <strong className="text-white">{previewingVideo.type}</strong></span>
+                  <span>Status: <strong className="text-[#FFB800]">{previewingVideo.status}</strong></span>
+                </div>
+              </div>
+
+              {/* Modal action bar */}
+              <div className="flex items-center justify-end gap-3 pt-2 border-t border-white/10">
+                <button
+                  onClick={() => {
+                    handleReject(previewingVideo.id);
+                    setPreviewingVideo(null);
+                  }}
+                  className="btn-secondary py-2 px-5 text-xs hover:border-red-500 hover:text-red-400 flex items-center gap-1.5 cursor-pointer"
+                >
+                  <IconX size={14} /> Reject Video
+                </button>
+                <button
+                  onClick={() => {
+                    handleApprove(previewingVideo.id);
+                    setPreviewingVideo(null);
+                  }}
+                  className="btn-primary py-2 px-6 text-xs bg-[#00FF66] text-black font-bold flex items-center gap-1.5 cursor-pointer"
+                >
+                  <IconCheck size={14} /> Approve for YouTube Upload
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* History Toggle */}
       <div className="pt-4">

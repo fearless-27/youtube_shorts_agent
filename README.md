@@ -1,4 +1,6 @@
-# 🚀 GhostPipe — AI YouTube Shorts Automation
+# 🚀 GhostPipe — Autonomous AI YouTube Agent
+
+![Autonomous YouTube Agent 5-Video Reel Banner](public/images/five_video_banner.png)
 
 > **Automate your YouTube Shorts workflow.** GhostPipe scans viral trends, generates AI-powered vertical videos, scores performance, and uploads to YouTube—fully autonomous. From trend signal to live upload, zero manual work.
 
@@ -60,9 +62,7 @@ pip install -r pipeline/requirements.txt
 python pipeline/ghostpipe_v5_1_pipeline.py
 ```
 
-Login to the dashboard at `http://127.0.0.1:5173` with:
-- **Email:** `operator@ghostpipe.local`
-- **Password:** `ghostpipe`
+Open the dashboard at `http://127.0.0.1:5173`.
 
 ---
 

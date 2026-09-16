@@ -275,6 +275,7 @@ function mapSettings(config: Record<string, unknown>, dailyCap: number): Pipelin
     uploadWindowPosition,
     autoDelete: config.delete_local_files_after_upload !== false,
     telegramChannels: String(config.telegram_channels ?? config.telegram_channel ?? ''),
+    activePipeline: String(config.active_pipeline ?? 'telegram_tamil_shorts_pipeline.py'),
   };
 }
 

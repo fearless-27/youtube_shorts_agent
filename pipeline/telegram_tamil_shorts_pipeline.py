@@ -59,6 +59,176 @@ def config_bool(config: dict, key: str, default: bool = False) -> bool:
     return str(value).strip().lower() in {"1", "true", "yes", "y", "on"}
 
 
+import shutil
+
+
+def get_ffmpeg_binary() -> str:
+    """Find a functional ffmpeg binary."""
+    # 1. Check PATH
+    ffmpeg = shutil.which("ffmpeg")
+    if ffmpeg and os.path.exists(ffmpeg):
+        return ffmpeg
+    # 2. Check imageio_ffmpeg bundled binary
+    try:
+        import imageio_ffmpeg
+        ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+        if ffmpeg_exe and os.path.exists(ffmpeg_exe):
+            return ffmpeg_exe
+    except Exception:
+        pass
+    # 3. Check common Windows locations (including winget default install path)
+    if os.name == "nt":
+        for candidate in [
+            os.path.expanduser(r"~\scoop\shims\ffmpeg.exe"),
+            r"C:\ffmpeg\bin\ffmpeg.exe",
+            r"C:\ProgramData\chocolatey\bin\ffmpeg.exe",
+            os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Links\ffmpeg.exe"),
+        ]:
+            if os.path.exists(candidate):
+                return candidate
+    logger.warning("ffmpeg not found on PATH or common locations. Audio processing will fail.")
+    return "ffmpeg"
+
+
+def get_ffprobe_binary() -> str:
+    """Find a functional ffprobe binary."""
+    # 1. Check PATH
+    ffprobe = shutil.which("ffprobe")
+    if ffprobe and os.path.exists(ffprobe):
+        return ffprobe
+    # 2. Derive from ffmpeg location (ffprobe lives alongside ffmpeg)
+    ffmpeg_bin = get_ffmpeg_binary()
+    if ffmpeg_bin and ffmpeg_bin != "ffmpeg":
+        ffmpeg_dir = os.path.dirname(ffmpeg_bin)
+        probe_name = "ffprobe.exe" if os.name == "nt" else "ffprobe"
+        ffprobe_candidate = os.path.join(ffmpeg_dir, probe_name)
+        if os.path.exists(ffprobe_candidate):
+            return ffprobe_candidate
+    # 3. Try imageio_ffmpeg directly
+    try:
+        import imageio_ffmpeg
+        ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+        if ffmpeg_exe:
+            ffmpeg_path = Path(ffmpeg_exe)
+            possible_ffprobe = ffmpeg_path.parent / ("ffprobe.exe" if os.name == "nt" else "ffprobe")
+            if possible_ffprobe.exists():
+                return str(possible_ffprobe)
+    except Exception:
+        pass
+    # 4. Try static_ffmpeg package (pip install static-ffmpeg)
+    try:
+        import static_ffmpeg
+        static_ffmpeg.add_paths()
+        ffprobe_static = shutil.which("ffprobe")
+        if ffprobe_static and os.path.exists(ffprobe_static):
+            return ffprobe_static
+    except Exception:
+        pass
+    # 5. Check common Windows locations (including winget default install path)
+    if os.name == "nt":
+        for candidate in [
+            os.path.expanduser(r"~\scoop\shims\ffprobe.exe"),
+            r"C:\ffmpeg\bin\ffprobe.exe",
+            r"C:\ProgramData\chocolatey\bin\ffprobe.exe",
+            # winget installs Gyan.FFmpeg here by default
+            os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Links\ffprobe.exe"),
+        ]:
+            if os.path.exists(candidate):
+                return candidate
+        # Also scan Program Files for ffprobe
+        for prog_dir in [os.environ.get("ProgramFiles", r"C:\Program Files"),
+                         os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)")]:
+            ffprobe_glob = Path(prog_dir).glob("**/ffprobe.exe")
+            try:
+                first_match = next(ffprobe_glob, None)
+                if first_match and first_match.exists():
+                    return str(first_match)
+            except Exception:
+                pass
+    logger.warning("ffprobe not found on PATH or common locations. Audio stream detection will fail.")
+    return "ffprobe"
+
+
+def is_valid_video_file(video_path: str) -> bool:
+    """Check if video file exists, is non-empty, and readable by ffprobe or ffmpeg."""
+    path = Path(video_path)
+    if not path.exists() or path.stat().st_size < 1000:
+        return False
+
+    # 1. Try ffprobe first if available
+    ffprobe_bin = get_ffprobe_binary()
+    try:
+        res = subprocess.run(
+            [
+                ffprobe_bin,
+                "-v", "error",
+                "-select_streams", "v:0",
+                "-show_entries", "stream=width,height",
+                "-of", "json",
+                str(path)
+            ],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if res.returncode == 0 and res.stdout.strip():
+            data = json.loads(res.stdout)
+            streams = data.get("streams", [])
+            if streams and int(streams[0].get("width", 0)) > 0:
+                return True
+    except Exception:
+        pass
+
+    # 2. Fallback: duration-aware deep frame probe via ffmpeg.
+    #    Get the container-reported duration, then try decoding a frame at 75% of it.
+    #    Catches truncated files that have valid headers but are corrupt mid-stream.
+    ffmpeg_bin = get_ffmpeg_binary()
+
+    # Step A: extract container-reported duration from ffmpeg stderr
+    reported_duration = None
+    try:
+        res = subprocess.run(
+            [ffmpeg_bin, "-i", str(path)],
+            capture_output=True, text=True, timeout=10,
+        )
+        for line in (res.stderr or "").splitlines():
+            if "Duration:" in line:
+                match = re.search(r"Duration:\s*(\d+):(\d+):([\d.]+)", line)
+                if match:
+                    reported_duration = (
+                        float(match.group(1)) * 3600
+                        + float(match.group(2)) * 60
+                        + float(match.group(3))
+                    )
+                break
+    except Exception:
+        pass
+
+    # Step B: try decoding a frame at 75% of reported duration (or at 30s if unknown)
+    probe_offset = max(1.0, reported_duration * 0.75) if reported_duration and reported_duration > 2 else 30.0
+    try:
+        res = subprocess.run(
+            [ffmpeg_bin, "-v", "error", "-ss", f"{probe_offset:.1f}", "-i", str(path),
+             "-t", "1", "-f", "null", "-"],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        if res.returncode != 0:
+            logger.warning(
+                "FFmpeg deep probe at %.1fs FAILED for %s (exit %s): %s",
+                probe_offset, video_path, res.returncode, (res.stderr or "")[:300],
+            )
+            return False
+        return True
+    except subprocess.TimeoutExpired:
+        logger.warning("FFmpeg deep probe timed out for %s — treating as valid", video_path)
+        return True
+    except Exception as exc:
+        logger.warning("FFmpeg video probing failed for %s: %s", video_path, exc)
+        return False
+
+
 @dataclass
 class TelegramVideo:
     source_id: str
@@ -73,6 +243,7 @@ class TelegramVideo:
     segment_total: int = 1
     segment_start: float = 0.0
     segment_duration: float = 60.0
+    audio_stream_index: int = 0
 
 
 class TelegramTamilStore:
@@ -106,12 +277,14 @@ class TelegramTamilStore:
                     segment_total INTEGER DEFAULT 1,
                     segment_start REAL DEFAULT 0,
                     segment_duration REAL DEFAULT 60,
+                    audio_stream_index INTEGER DEFAULT 0,
                     error TEXT,
                     created_at TEXT NOT NULL,
                     updated_at TEXT NOT NULL
                 )
                 """
             )
+
             self._ensure_column(conn, "title", "TEXT")
             self._ensure_column(conn, "caption", "TEXT")
             self._ensure_column(conn, "local_path", "TEXT")
@@ -119,6 +292,7 @@ class TelegramTamilStore:
             self._ensure_column(conn, "segment_total", "INTEGER DEFAULT 1")
             self._ensure_column(conn, "segment_start", "REAL DEFAULT 0")
             self._ensure_column(conn, "segment_duration", "REAL DEFAULT 60")
+            self._ensure_column(conn, "audio_stream_index", "INTEGER DEFAULT 0")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_telegram_status ON telegram_sources(status)")
 
     def _ensure_column(self, conn, column: str, definition: str):
@@ -131,6 +305,11 @@ class TelegramTamilStore:
             row = conn.execute("SELECT status FROM telegram_sources WHERE source_id = ?", (source_id,)).fetchone()
         return bool(row and row[0] in {"uploaded", "skipped", "rendered"})
 
+    def remove_source(self, source_id: str):
+        with self._connect() as conn:
+            conn.execute("DELETE FROM telegram_sources WHERE source_id = ? OR source_id LIKE ?", (source_id, f"{source_id}:part%"))
+
+
     def mark(self, video: TelegramVideo, status: str, **values):
         now = datetime.now(timezone.utc).isoformat()
         with self._connect() as conn:
@@ -139,10 +318,10 @@ class TelegramTamilStore:
                 INSERT INTO telegram_sources (
                     source_id, channel, message_id, title, caption, source_url, local_path, status,
                     final_video_path, uploaded_video_id, uploaded_url,
-                    segment_index, segment_total, segment_start, segment_duration, error,
+                    segment_index, segment_total, segment_start, segment_duration, audio_stream_index, error,
                     created_at, updated_at
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(source_id) DO UPDATE SET
                     title = excluded.title,
                     caption = excluded.caption,
@@ -155,6 +334,7 @@ class TelegramTamilStore:
                     segment_total = excluded.segment_total,
                     segment_start = excluded.segment_start,
                     segment_duration = excluded.segment_duration,
+                    audio_stream_index = excluded.audio_stream_index,
                     error = excluded.error,
                     updated_at = excluded.updated_at
                 """,
@@ -174,6 +354,7 @@ class TelegramTamilStore:
                     video.segment_total,
                     video.segment_start,
                     video.segment_duration,
+                    video.audio_stream_index,
                     values.get("error"),
                     now,
                     now,
@@ -185,7 +366,7 @@ class TelegramTamilStore:
             rows = conn.execute(
                 """
                 SELECT source_id, channel, message_id, title, caption, source_url, local_path,
-                       final_video_path, segment_index, segment_total, segment_start, segment_duration
+                       final_video_path, segment_index, segment_total, segment_start, segment_duration, audio_stream_index
                 FROM telegram_sources
                 WHERE status = 'rendered' AND final_video_path IS NOT NULL
                 ORDER BY created_at ASC, segment_index ASC
@@ -208,6 +389,7 @@ class TelegramTamilStore:
                 segment_total=int(row[9] or 1),
                 segment_start=float(row[10] or 0),
                 segment_duration=float(row[11] or 60),
+                audio_stream_index=int(row[12] or 0),
             )
             pending.append((video, row[7]))
         return pending
@@ -271,7 +453,7 @@ class TelegramVideoDownloader:
     def __init__(self, config: dict, store: TelegramTamilStore):
         self.config = config
         self.store = store
-        self.download_dir = Path(config.get("telegram_download_dir", "downloads/telegram"))
+        self.download_dir = PROJECT_ROOT / Path(config.get("telegram_download_dir", "downloads/telegram"))
         self.download_dir.mkdir(parents=True, exist_ok=True)
 
     async def fetch_latest(self) -> list[TelegramVideo]:
@@ -285,7 +467,7 @@ class TelegramVideoDownloader:
         phone = self.config.get("telegram_phone") or os.getenv("TELEGRAM_PHONE")
         channels = self._configured_channels()
         session_name = self.config.get("telegram_session_name", "ghostpipe_telegram")
-        limit = int(self.config.get("telegram_fetch_limit", 10) or 10)
+        limit = int(self.config.get("telegram_fetch_limit", 50) or 50)
         max_downloads = int(
             self.config.get(
                 "telegram_max_source_videos_per_run",
@@ -295,7 +477,7 @@ class TelegramVideoDownloader:
         )
         if self.config.get("telegram_sequential_source_workflow", True):
             max_downloads = 1
-        download_timeout = int(self.config.get("telegram_download_timeout_seconds", 600) or 600)
+        download_timeout = int(self.config.get("telegram_download_timeout_seconds", 1200) or 1200)
         min_download_bytes = int(self.config.get("telegram_min_download_bytes", 1024 * 1024) or 0)
 
         if not api_id or not api_hash or not channels:
@@ -317,6 +499,8 @@ class TelegramVideoDownloader:
                     f"Delete {PROJECT_ROOT / (str(session_name) + '.session')} and rerun with your Telegram phone number."
                 )
 
+            required_lang = str(self.config.get("telegram_required_audio_language", "") or "").strip().lower()
+
             for channel in channels:
                 inspected_video_count = 0
                 skipped_done_count = 0
@@ -327,7 +511,12 @@ class TelegramVideoDownloader:
                     continue
 
                 username = getattr(entity, "username", None) or self._safe_channel_name(str(channel))
-                async for message in client.iter_messages(entity, limit=limit):
+                fetch_limit = limit
+                # Deep scan: if initial limit was 10, try scanning up to 100 messages deep
+                if fetch_limit < 100:
+                    fetch_limit = 100
+
+                async for message in client.iter_messages(entity, limit=fetch_limit):
                     if not message or not message.media:
                         continue
                     mime = getattr(getattr(message, "file", None), "mime_type", "") or ""
@@ -342,13 +531,27 @@ class TelegramVideoDownloader:
 
                     suffix = Path(getattr(message.file, "name", "") or "").suffix or ".mp4"
                     target = self.download_dir / f"{self._safe_channel_name(username)}_{message.id}{suffix}"
-                    if target.exists() and target.stat().st_size < min_download_bytes:
+                    if target.exists() and (target.stat().st_size < min_download_bytes or not is_valid_video_file(str(target))):
+                        logger.warning("Target video file exists but is invalid or corrupted. Removing: %s", target)
                         target.unlink(missing_ok=True)
+                        self.store.remove_source(source_id)
 
                     caption = (message.message or "").strip()
                     title = self._title_from_caption(caption) or f"Telegram video {message.id}"
                     source_url = f"https://t.me/{username}/{message.id}" if getattr(entity, "username", None) else str(channel)
-                    if target.exists() and target.stat().st_size >= min_download_bytes:
+
+                    if target.exists() and target.stat().st_size >= min_download_bytes and is_valid_video_file(str(target)):
+                        audio_stream_idx = 0
+                        if required_lang:
+                            logger.info("Checking audio language for cached video %s", source_id)
+                            lang_matched, idx = await self._check_audio_language(str(target), required_lang)
+                            if not lang_matched:
+                                logger.info("Cached video %s doesn't match required language '%s', removing", source_id, required_lang)
+                                target.unlink(missing_ok=True)
+                                self.store.remove_source(source_id)
+                                continue
+                            audio_stream_idx = idx
+
                         logger.info("Reusing completed Telegram download %s: %s", source_id, target)
                         videos.append(
                             TelegramVideo(
@@ -360,6 +563,7 @@ class TelegramVideoDownloader:
                                 source_url=source_url,
                                 local_path=str(target),
                                 posted_at=message.date,
+                                audio_stream_index=audio_stream_idx,
                             )
                         )
                         if len(videos) >= max_downloads:
@@ -370,17 +574,28 @@ class TelegramVideoDownloader:
                     logger.info("Downloading Telegram video %s", source_id)
                     progress = self._progress_logger(source_id)
                     try:
-                        downloaded = await asyncio.wait_for(
-                            client.download_media(message, file=str(target), progress_callback=progress),
-                            timeout=download_timeout,
-                        )
-                    except asyncio.TimeoutError:
-                        target.unlink(missing_ok=True)
-                        logger.warning("Telegram download timed out after %ss: %s", download_timeout, source_id)
-                        continue
+                        downloaded = None
+                        for attempt in range(3):
+                            try:
+                                downloaded = await asyncio.wait_for(
+                                    client.download_media(message, file=str(target), progress_callback=progress),
+                                    timeout=download_timeout,
+                                )
+                                break
+                            except asyncio.TimeoutError:
+                                logger.warning("Telegram download timed out after %ss (attempt %d/3): %s", download_timeout, attempt+1, source_id)
+                            except Exception as e:
+                                logger.warning("Telegram download error (attempt %d/3) for %s: %s", attempt+1, source_id, e)
+                            if attempt < 2:
+                                await asyncio.sleep(5)
 
-                    if not downloaded:
+                        if not downloaded:
+                            target.unlink(missing_ok=True)
+                            logger.warning("Telegram download failed completely after 3 attempts: %s", source_id)
+                            continue
+                    except Exception as exc:
                         target.unlink(missing_ok=True)
+                        logger.warning("Unexpected error during download: %s", exc)
                         continue
                     downloaded_path = Path(downloaded)
                     if downloaded_path.exists() and downloaded_path.stat().st_size < min_download_bytes:
@@ -392,6 +607,16 @@ class TelegramVideoDownloader:
                         downloaded_path.unlink(missing_ok=True)
                         continue
 
+                    audio_stream_idx = 0
+                    if required_lang:
+                        logger.info("Detecting audio language for %s", source_id)
+                        lang_matched, idx = await self._check_audio_language(str(downloaded_path), required_lang)
+                        if not lang_matched:
+                            logger.info("Skipping video %s: audio language did not match required '%s'", source_id, required_lang)
+                            downloaded_path.unlink(missing_ok=True)
+                            continue
+                        audio_stream_idx = idx
+
                     videos.append(
                         TelegramVideo(
                             source_id=source_id,
@@ -402,6 +627,7 @@ class TelegramVideoDownloader:
                             source_url=source_url,
                             local_path=str(downloaded),
                             posted_at=message.date,
+                            audio_stream_index=audio_stream_idx,
                         )
                     )
                     if len(videos) >= max_downloads:
@@ -421,6 +647,103 @@ class TelegramVideoDownloader:
         if not videos:
             logger.info("All configured Telegram links have no new videos in the current fetch window.")
         return videos
+
+    async def _check_audio_language(self, video_path: str, required_lang: str) -> tuple[bool, int]:
+        """Check all audio streams to see if any matches required_lang using AudioIntelligenceEngine."""
+        ffprobe_bin = get_ffprobe_binary()
+        num_streams = 0
+        probe_tool_available = True
+
+        try:
+            res = subprocess.run(
+                [
+                    ffprobe_bin,
+                    "-v", "error",
+                    "-select_streams", "a",
+                    "-show_entries", "stream=index",
+                    "-of", "json",
+                    str(video_path)
+                ],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            if res.returncode == 0:
+                data = json.loads(res.stdout)
+                num_streams = len(data.get("streams", []))
+        except FileNotFoundError:
+            probe_tool_available = False
+            logger.warning(
+                "ffprobe binary not found on this system. "
+                "Install FFmpeg (winget install Gyan.FFmpeg) for proper audio detection. "
+                "Attempting ffmpeg fallback..."
+            )
+        except Exception as e:
+            logger.warning("Error reading audio streams via ffprobe: %s", e)
+
+        # Fallback: use ffmpeg to detect audio streams when ffprobe is missing or found 0
+        if num_streams == 0:
+            ffmpeg_bin = get_ffmpeg_binary()
+            if ffmpeg_bin and ffmpeg_bin != "ffmpeg":
+                try:
+                    res2 = subprocess.run(
+                        [ffmpeg_bin, "-i", str(video_path), "-hide_banner"],
+                        capture_output=True,
+                        text=True,
+                        timeout=15,
+                    )
+                    stderr_text = (res2.stderr or "") + (res2.stdout or "")
+                    audio_lines = re.findall(r"Stream\s+#\d+:\d+.*Audio:", stderr_text)
+                    if audio_lines:
+                        num_streams = len(audio_lines)
+                        logger.info("ffmpeg fallback detected %d audio stream(s) in %s", num_streams, Path(video_path).name)
+                except Exception as e2:
+                    logger.warning("ffmpeg audio stream detection fallback also failed: %s", e2)
+
+        # If neither ffprobe nor ffmpeg could detect streams, ACCEPT the video by default
+        # rather than rejecting it. The rendering pipeline has _tamil_audio_stream_index()
+        # which will attempt its own detection later.
+        if num_streams == 0 and not probe_tool_available:
+            logger.warning(
+                "Cannot detect audio streams (no ffprobe/ffmpeg). "
+                "ACCEPTING video by default to avoid data loss. "
+                "The rendering phase will attempt audio detection independently."
+            )
+            return True, 0
+
+        if num_streams == 0:
+            logger.info("No audio streams found in video.")
+            return False, 0
+
+        # Accepted languages setup
+        accepted_langs = self.config.get("telegram_accepted_audio_languages")
+        if isinstance(accepted_langs, list):
+            accepted_langs = {str(lang).strip().lower() for lang in accepted_langs if str(lang).strip()}
+        else:
+            accepted_langs = {required_lang.lower()}
+        accepted_langs.add(required_lang.lower())
+        accepted_langs.add("ta")
+
+        # Fallback to audio_intelligence
+        from audio_intelligence import AudioIntelligenceEngine
+        engine = AudioIntelligenceEngine(self.config)
+
+        for stream_idx in range(num_streams):
+            try:
+                matched, lang, prob = await engine.quick_language_check(
+                    video_path,
+                    accepted_langs,
+                    audio_stream_index=stream_idx,
+                    max_seconds=600.0  # Check up to 10 mins of audio to bypass long intros
+                )
+                if matched:
+                    logger.info("Stream %d ACCEPTED: %s (%.1f%% confidence)", stream_idx, lang, prob * 100)
+                    return True, stream_idx
+            except Exception as e:
+                logger.warning("Error detecting language on stream %d: %s", stream_idx, e)
+
+        logger.info("No audio stream matched accepted languages %s", sorted(accepted_langs))
+        return False, 0
 
     def _configured_channels(self) -> list[str]:
         channels = self.config.get("telegram_channels") or os.getenv("TELEGRAM_CHANNELS")
@@ -622,45 +945,218 @@ class ShortsRenderer:
         )
         target_duration = int(self.config.get("telegram_short_duration", 60) or 60)
 
-        source = VideoFileClip(video.local_path)
-        source_duration = float(source.duration or target_duration)
-        start = min(max(float(video.segment_start or 0), 0), max(source_duration - 0.1, 0))
-        duration = min(source_duration - start, float(video.segment_duration or target_duration), float(target_duration))
-        duration = max(duration, 0.1)
-        end = start + duration
-        clip = source.subclip(start, end) if hasattr(source, "subclip") else source.subclipped(start, end)
+        try:
+            source = VideoFileClip(video.local_path)
+            source_duration = float(source.duration or target_duration)
+            start = min(max(float(video.segment_start or 0), 0), max(source_duration - 0.1, 0))
+            duration = min(source_duration - start, float(video.segment_duration or target_duration), float(target_duration))
+            duration = max(duration, 0.1)
+            end = start + duration
+            clip = source.subclip(start, end) if hasattr(source, "subclip") else source.subclipped(start, end)
+        except Exception as err:
+            logger.error("Corrupted or unreadable video file detected: %s. Removing file. Error: %s", video.local_path, err)
+            if os.path.exists(video.local_path):
+                try:
+                    os.remove(video.local_path)
+                except Exception:
+                    pass
+            raise RuntimeError(f"Video file corrupted or unreadable: {video.local_path} ({err})")
+
 
         target_w, target_h = 1080, 1920
-        scaled = clip.resize(height=target_h) if hasattr(clip, "resize") else clip.resized(height=target_h)
-        if scaled.w < target_w:
-            scaled = clip.resize(width=target_w) if hasattr(clip, "resize") else clip.resized(width=target_w)
+        layout = self.config.get("telegram_video_layout", "crop")
 
-        crop_kwargs = {"x_center": scaled.w / 2, "y_center": scaled.h / 2, "width": target_w, "height": target_h}
-        vertical = scaled.crop(**crop_kwargs) if hasattr(scaled, "crop") else scaled.cropped(**crop_kwargs)
-        final = CompositeVideoClip([vertical], size=(target_w, target_h))
-        final = final.set_duration(duration) if hasattr(final, "set_duration") else final.with_duration(duration)
+        if layout == "blur_background":
+            from PIL import Image, ImageFilter
+            import numpy as np
+            from moviepy.editor import ImageClip
+
+            # 1. Scale main video to fit width
+            main_vid = clip.resize(width=target_w) if hasattr(clip, "resize") else clip.resized(width=target_w)
+            if main_vid.h > target_h:
+                main_vid = main_vid.resize(height=target_h) if hasattr(main_vid, "resize") else main_vid.resized(height=target_h)
+            
+            # Crop margins to bypass visual hashing algorithms
+            crop_margin = float(self.config.get("visual_crop_margin", 0.0))
+            if crop_margin > 0:
+                try:
+                    from moviepy.video.fx.all import crop
+                    cx = int(main_vid.w * crop_margin)
+                    cy = int(main_vid.h * crop_margin)
+                    main_vid = main_vid.fx(crop, x1=cx, y1=cy, x2=main_vid.w - cx, y2=main_vid.h - cy) if hasattr(main_vid, "fx") else crop(main_vid, x1=cx, y1=cy, x2=main_vid.w - cx, y2=main_vid.h - cy)
+                    main_vid = main_vid.resize(width=target_w) if hasattr(main_vid, "resize") else main_vid.resized(width=target_w)
+                except Exception as e:
+                    logger.warning(f"Failed to apply crop: {e}")
+            
+            # 1.5 Apply visual transformation for copyright bypass
+            if config_bool(self.config, "visual_mirror_segments", True):
+                try:
+                    from moviepy.video.fx.all import mirror_x
+                    main_vid = main_vid.fx(mirror_x) if hasattr(main_vid, "fx") else mirror_x(main_vid)
+                except Exception as e:
+                    logger.warning(f"Failed to apply mirror_x: {e}")
+            
+            if config_bool(self.config, "visual_color_grade", True):
+                try:
+                    # Apply a slight color shift (warm tint) to disrupt visual hashing
+                    def color_shift(image):
+                        img = image.copy().astype(float)
+                        img[:,:,0] = np.clip(img[:,:,0] * 1.05, 0, 255) # Red
+                        img[:,:,2] = np.clip(img[:,:,2] * 0.95, 0, 255) # Blue
+                        return img.astype(np.uint8)
+                    main_vid = main_vid.fl_image(color_shift)
+                except Exception as e:
+                    logger.warning(f"Failed to apply color shift: {e}")
+
+            # 2. Blurred Background
+            bg_vid = clip.resize(height=target_h) if hasattr(clip, "resize") else clip.resized(height=target_h)
+            if bg_vid.w < target_w:
+                bg_vid = bg_vid.resize(width=target_w) if hasattr(bg_vid, "resize") else bg_vid.resized(width=target_w)
+            
+            crop_kwargs = {"x_center": bg_vid.w / 2, "y_center": bg_vid.h / 2, "width": target_w, "height": target_h}
+            bg_vid = bg_vid.crop(**crop_kwargs) if hasattr(bg_vid, "crop") else bg_vid.cropped(**crop_kwargs)
+
+            def blur_frame(frame):
+                img = Image.fromarray(frame)
+                blurred = img.filter(ImageFilter.GaussianBlur(radius=25))
+                return np.array(blurred)
+
+            bg_vid = bg_vid.fl_image(blur_frame)
+
+            # 3. Branded Header & Footer (matching channel template)
+            header_h, footer_h = 250, 150
+            header_array = self._create_branded_header(target_w, header_h)
+            footer_array = self._create_branded_footer(target_w, footer_h)
+
+            header_clip = ImageClip(header_array).set_duration(duration) if hasattr(ImageClip, "set_duration") else ImageClip(header_array).with_duration(duration)
+            header_clip = header_clip.set_position(("center", 0)) if hasattr(header_clip, "set_position") else header_clip.with_position(("center", 0))
+
+            footer_clip = ImageClip(footer_array).set_duration(duration) if hasattr(ImageClip, "set_duration") else ImageClip(footer_array).with_duration(duration)
+            footer_clip = footer_clip.set_position(("center", target_h - footer_h)) if hasattr(footer_clip, "set_position") else footer_clip.with_position(("center", target_h - footer_h))
+
+            # 4. Center watermark overlay
+            wm_h = 50
+            watermark_array = self._create_watermark(target_w, wm_h)
+            watermark_clip = ImageClip(watermark_array).set_duration(duration) if hasattr(ImageClip, "set_duration") else ImageClip(watermark_array).with_duration(duration)
+            wm_y = int(target_h * 0.48)
+            watermark_clip = watermark_clip.set_position(("center", wm_y)) if hasattr(watermark_clip, "set_position") else watermark_clip.with_position(("center", wm_y))
+            # Make watermark semi-transparent via per-pixel alpha mask
+            wm_mask_arr = (watermark_array.max(axis=2) * 0.35).astype(np.uint8)
+            try:
+                wm_mask_clip = ImageClip(wm_mask_arr, ismask=True)
+                wm_mask_clip = wm_mask_clip.set_duration(duration) if hasattr(wm_mask_clip, "set_duration") else wm_mask_clip.with_duration(duration)
+                watermark_clip = watermark_clip.set_mask(wm_mask_clip) if hasattr(watermark_clip, "set_mask") else watermark_clip.with_mask(wm_mask_clip)
+            except Exception:
+                pass
+
+            main_vid = main_vid.set_position("center") if hasattr(main_vid, "set_position") else main_vid.with_position("center")
+
+            clips_to_composite = [bg_vid, main_vid, watermark_clip, header_clip, footer_clip]
+            final = CompositeVideoClip(clips_to_composite, size=(target_w, target_h))
+            final = final.set_duration(duration) if hasattr(final, "set_duration") else final.with_duration(duration)
+        else:
+            scaled = clip.resize(height=target_h) if hasattr(clip, "resize") else clip.resized(height=target_h)
+            if scaled.w < target_w:
+                scaled = clip.resize(width=target_w) if hasattr(clip, "resize") else clip.resized(width=target_w)
+
+            crop_kwargs = {"x_center": scaled.w / 2, "y_center": scaled.h / 2, "width": target_w, "height": target_h}
+            vertical = scaled.crop(**crop_kwargs) if hasattr(scaled, "crop") else scaled.cropped(**crop_kwargs)
+            final = CompositeVideoClip([vertical], size=(target_w, target_h))
+            final = final.set_duration(duration) if hasattr(final, "set_duration") else final.with_duration(duration)
 
         audio_clip = None
+        source_audio = getattr(clip, "audio", None)
+        
+        temp_extracted_audio = None
+        if getattr(video, "audio_stream_index", 0) > 0:
+            import tempfile
+            import subprocess
+            temp_extracted_audio = tempfile.NamedTemporaryFile(suffix=".wav", delete=False).name
+            ffmpeg_bin = get_ffmpeg_binary()
+            try:
+                res = subprocess.run(
+                    [
+                        ffmpeg_bin, "-y",
+                        "-ss", str(start),
+                        "-t", str(duration),
+                        "-i", str(video.local_path),
+                        "-map", f"0:a:{video.audio_stream_index}",
+                        temp_extracted_audio
+                    ],
+                    capture_output=True,
+                    timeout=60
+                )
+                if res.returncode == 0:
+                    try:
+                        from moviepy.editor import AudioFileClip
+                    except ModuleNotFoundError:
+                        from moviepy import AudioFileClip
+                    if source_audio:
+                        try:
+                            source_audio.close()
+                        except Exception:
+                            pass
+                    source_audio = AudioFileClip(temp_extracted_audio)
+                    logger.info("Using specific audio stream %d for video %s", video.audio_stream_index, video.source_id)
+                else:
+                    logger.warning("Failed to extract specific audio stream %d: %s", video.audio_stream_index, res.stderr)
+            except Exception as e:
+                logger.warning("Error extracting specific audio stream %d: %s", video.audio_stream_index, e)
+
+        ducked_source_audio = None
+        final_audio_clips = []
         audio_uses_source = False
+
         if audio_path:
             try:
                 audio_uses_source = Path(audio_path).resolve() == Path(video.local_path).resolve()
             except Exception:
                 audio_uses_source = False
 
-        if audio_path and not audio_uses_source:
-            audio_clip = AudioFileClip(audio_path)
-            audio_duration = min(float(audio_clip.duration or duration), duration)
-            audio_clip = audio_clip.subclip(0, audio_duration) if hasattr(audio_clip, "subclip") else audio_clip.subclipped(0, audio_duration)
-            if audio_duration < duration:
-                final = final.set_duration(audio_duration) if hasattr(final, "set_duration") else final.with_duration(audio_duration)
-            final = final.set_audio(audio_clip) if hasattr(final, "set_audio") else final.with_audio(audio_clip)
-        elif audio_uses_source or config_bool(self.config, "telegram_preserve_source_audio", True):
-            source_audio = getattr(clip, "audio", None)
+            if not audio_uses_source:
+                audio_clip = AudioFileClip(audio_path)
+                audio_duration = min(float(audio_clip.duration or duration), duration)
+                audio_clip = audio_clip.subclip(0, audio_duration) if hasattr(audio_clip, "subclip") else audio_clip.subclipped(0, audio_duration)
+                final_audio_clips.append(audio_clip)
+
+                if source_audio and not config_bool(self.config, "telegram_preserve_source_audio", False):
+                    # We are replacing audio, but we want to duck the original to bypass copyright
+                    duck_volume = float(self.config.get("audio_duck_source_volume", 0.12))
+                    if duck_volume > 0:
+                        try:
+                            from moviepy.audio.fx.all import volumex
+                            ducked_source_audio = source_audio.fx(volumex, duck_volume) if hasattr(source_audio, "fx") else volumex(source_audio, duck_volume)
+                            ducked_source_audio = ducked_source_audio.set_duration(audio_duration) if hasattr(ducked_source_audio, "set_duration") else ducked_source_audio.with_duration(audio_duration)
+                            final_audio_clips.append(ducked_source_audio)
+                        except Exception as e:
+                            logger.warning(f"Failed to apply volumex: {e}")
+
+        if not final_audio_clips and (audio_uses_source or config_bool(self.config, "telegram_preserve_source_audio", False)):
             if source_audio:
                 final = final.set_audio(source_audio) if hasattr(final, "set_audio") else final.with_audio(source_audio)
-        elif not config_bool(self.config, "telegram_preserve_source_audio", True) and hasattr(final, "without_audio"):
+        elif final_audio_clips:
+            if len(final_audio_clips) > 1:
+                try:
+                    from moviepy.editor import CompositeAudioClip
+                except ModuleNotFoundError:
+                    from moviepy import CompositeAudioClip
+                composite_audio = CompositeAudioClip(final_audio_clips)
+                final = final.set_audio(composite_audio) if hasattr(final, "set_audio") else final.with_audio(composite_audio)
+            else:
+                final = final.set_audio(final_audio_clips[0]) if hasattr(final, "set_audio") else final.with_audio(final_audio_clips[0])
+            
+            if final_audio_clips[0].duration < duration:
+                final = final.set_duration(final_audio_clips[0].duration) if hasattr(final, "set_duration") else final.with_duration(final_audio_clips[0].duration)
+        elif not config_bool(self.config, "telegram_preserve_source_audio", False) and hasattr(final, "without_audio"):
             final = final.without_audio()
+
+        speed_factor = float(self.config.get("audio_distortion_speed_factor", 1.0))
+        if speed_factor != 1.0:
+            try:
+                from moviepy.video.fx.all import speedx
+                final = final.fx(speedx, speed_factor) if hasattr(final, "fx") else speedx(final, speed_factor)
+            except ImportError:
+                pass
 
         write_kwargs = {
             "codec": "libx264",
@@ -677,13 +1173,249 @@ class ShortsRenderer:
         if audio_clip:
             audio_clip.close()
         final.close()
-        vertical.close()
-        scaled.close()
+        if layout == "blur_background":
+            bg_vid.close()
+            main_vid.close()
+            header_clip.close()
+            footer_clip.close()
+            try:
+                watermark_clip.close()
+            except Exception:
+                pass
+        else:
+            vertical.close()
+            scaled.close()
         clip.close()
         source.close()
 
+        if temp_extracted_audio:
+            if source_audio:
+                try:
+                    source_audio.close()
+                except Exception:
+                    pass
+            if os.path.exists(temp_extracted_audio):
+                try:
+                    os.unlink(temp_extracted_audio)
+                except Exception:
+                    pass
+
         logger.info("Rendered Telegram Short part %s/%s: %s", video.segment_index, video.segment_total, output_path)
         return str(output_path)
+
+    def _create_text_overlay(self, text: str, width: int, height: int, bg_color: tuple, text_color: tuple, font_size: int = 40):
+        try:
+            from PIL import Image, ImageDraw, ImageFont
+            import numpy as np
+        except ImportError:
+            import numpy as np
+            return np.zeros((height, width, 3), dtype=np.uint8)
+
+        img = Image.new("RGB", (width, height), bg_color)
+        draw = ImageDraw.Draw(img)
+        
+        font = None
+        font_paths = ["arialbd.ttf", "arial.ttf", "impact.ttf"]
+        for path in font_paths:
+            try:
+                font = ImageFont.truetype(path, size=font_size)
+                break
+            except Exception:
+                continue
+                
+        if not font:
+            font = ImageFont.load_default()
+            
+        try:
+            text_bbox = draw.multiline_textbbox((0, 0), text, font=font, align="center")
+            text_w = text_bbox[2] - text_bbox[0]
+            text_h = text_bbox[3] - text_bbox[1]
+            x = (width - text_w) / 2
+            y = (height - text_h) / 2
+            draw.multiline_text((x, y), text, font=font, fill=text_color, align="center")
+        except Exception:
+            draw.text((50, height//3), text, font=font, fill=text_color)
+            
+        return np.array(img)
+
+    def _create_branded_header(self, width: int, height: int):
+        """Create branded header: black bar with channel logo image + channel name + handle.
+
+        Loads the actual logo.png file (configured via telegram_channel_logo_path)
+        and places it on the left side, with bold channel name and handle on the right.
+        """
+        try:
+            from PIL import Image, ImageDraw, ImageFont
+            import numpy as np
+        except ImportError:
+            import numpy as np
+            return np.zeros((height, width, 3), dtype=np.uint8)
+
+        img = Image.new("RGB", (width, height), (0, 0, 0))
+        draw = ImageDraw.Draw(img)
+
+        # Parse config
+        header_parts = str(
+            self.config.get("telegram_header_text", "MEP SHORTS\n@mepshorts")
+        ).split("\n")
+        channel_name = header_parts[0].strip() if header_parts else "MEP SHORTS"
+        channel_handle = header_parts[1].strip() if len(header_parts) > 1 else ""
+
+        # ── Logo image ──
+        logo_size = int(height * 0.85)
+        pad_left = int(width * 0.03)
+        logo_y = (height - logo_size) // 2
+        logo_loaded = False
+
+        logo_path_raw = str(self.config.get("telegram_channel_logo_path", "logo.png")).strip()
+        if logo_path_raw:
+            logo_path = Path(logo_path_raw)
+            if not logo_path.is_absolute():
+                logo_path = PROJECT_ROOT / logo_path
+            if logo_path.exists():
+                try:
+                    logo_img = Image.open(str(logo_path)).convert("RGBA")
+                    # Crop to square (center crop)
+                    side = min(logo_img.width, logo_img.height)
+                    left = (logo_img.width - side) // 2
+                    top = (logo_img.height - side) // 2
+                    logo_img = logo_img.crop((left, top, left + side, top + side))
+                    # Resize to target
+                    logo_img = logo_img.resize((logo_size, logo_size), Image.LANCZOS)
+                    # Create circular mask
+                    circle_mask = Image.new("L", (logo_size, logo_size), 0)
+                    mask_draw = ImageDraw.Draw(circle_mask)
+                    mask_draw.ellipse([0, 0, logo_size, logo_size], fill=255)
+                    # Draw glow ring behind logo
+                    brand_hex = str(self.config.get("telegram_brand_color", "#00AAFF")).strip()
+                    try:
+                        ring_rgb = tuple(int(brand_hex.lstrip("#")[i : i + 2], 16) for i in (0, 2, 4))
+                    except Exception:
+                        ring_rgb = (0, 170, 255)
+                    ring_w = 4
+                    draw.ellipse(
+                        [pad_left - ring_w, logo_y - ring_w,
+                         pad_left + logo_size + ring_w, logo_y + logo_size + ring_w],
+                        outline=ring_rgb, width=ring_w
+                    )
+                    # Paste circular-cropped logo
+                    lx = pad_left
+                    ly = logo_y
+                    logo_rgb = logo_img.convert("RGB")
+                    img.paste(logo_rgb, (lx, ly), circle_mask)
+                    logo_loaded = True
+                except Exception as exc:
+                    logger.warning("Could not load channel logo %s: %s", logo_path, exc)
+
+        if not logo_loaded:
+            # Fallback: draw a simple circle with channel initials
+            circle_d = int(height * 0.52)
+            cy = (height - circle_d) // 2
+            draw.ellipse([pad_left, cy, pad_left + circle_d, cy + circle_d], fill=(255, 255, 255))
+            initials = "".join(w[0] for w in channel_name.split()[:3]).upper() or "M"
+            logo_font = self._load_font(["impact.ttf", "arialbd.ttf", "arial.ttf"], int(circle_d * 0.42))
+            bbox = draw.textbbox((0, 0), initials, font=logo_font)
+            lx = pad_left + (circle_d - (bbox[2] - bbox[0])) // 2
+            ly = cy + (circle_d - (bbox[3] - bbox[1])) // 2 - bbox[1]
+            draw.text((lx, ly), initials, font=logo_font, fill=(0, 170, 255))
+
+        # ── Channel name (large, bold, white with dark stroke) ──
+        text_x = pad_left + logo_size + int(width * 0.03)
+        name_font = self._load_font(["impact.ttf", "arialbd.ttf", "arial.ttf"], int(height * 0.28))
+        name_y = int(height * 0.18)
+        # Stroke for visibility
+        for dx in range(-2, 3):
+            for dy in range(-2, 3):
+                if dx or dy:
+                    draw.text((text_x + dx, name_y + dy), channel_name, font=name_font, fill=(30, 30, 30))
+        draw.text((text_x, name_y), channel_name, font=name_font, fill=(255, 255, 255))
+
+        # ── Handle text ──
+        if channel_handle:
+            handle_font = self._load_font(["arial.ttf", "arialbd.ttf"], int(height * 0.19))
+            handle_y = name_y + int(height * 0.35)
+            draw.text((text_x, handle_y), channel_handle, font=handle_font, fill=(220, 220, 220))
+
+        return np.array(img)
+
+    def _create_branded_footer(self, width: int, height: int):
+        """Create branded footer: subscribe CTA on solid black bar."""
+        try:
+            from PIL import Image, ImageDraw, ImageFont
+            import numpy as np
+        except ImportError:
+            import numpy as np
+            return np.zeros((height, width, 3), dtype=np.uint8)
+
+        img = Image.new("RGB", (width, height), (0, 0, 0))
+        draw = ImageDraw.Draw(img)
+
+        footer_text = str(
+            self.config.get("telegram_footer_text", "\U0001f514SUBSCRIBE FOR MORE ANIME CONTENT \U0001f929")
+        ).strip()
+        # NOTE: footer default is fine — channel-agnostic CTA
+        font = self._load_font(["impact.ttf", "arialbd.ttf", "arial.ttf"], int(height * 0.35))
+
+        try:
+            bbox = draw.textbbox((0, 0), footer_text, font=font)
+            tw = bbox[2] - bbox[0]
+            th = bbox[3] - bbox[1]
+            x = (width - tw) / 2
+            y = (height - th) / 2 - bbox[1]
+            # Subtle stroke
+            for dx in range(-1, 2):
+                for dy in range(-1, 2):
+                    if dx or dy:
+                        draw.text((x + dx, y + dy), footer_text, font=font, fill=(40, 40, 40))
+            draw.text((x, y), footer_text, font=font, fill=(255, 255, 255))
+        except Exception:
+            draw.text((50, height // 3), footer_text, font=font, fill=(255, 255, 255))
+
+        return np.array(img)
+
+    def _create_watermark(self, width: int, height: int):
+        """Create center watermark strip (white text on black, applied with alpha mask)."""
+        try:
+            from PIL import Image, ImageDraw, ImageFont
+            import numpy as np
+        except ImportError:
+            import numpy as np
+            return np.zeros((height, width, 3), dtype=np.uint8)
+
+        header_parts = str(
+            self.config.get("telegram_header_text", "MEP SHORTS")
+        ).split("\n")
+        watermark_text = str(
+            self.config.get("telegram_watermark_text", header_parts[0].strip())
+        ).strip()
+
+        img = Image.new("RGB", (width, height), (0, 0, 0))
+        draw = ImageDraw.Draw(img)
+        font = self._load_font(["arialbd.ttf", "arial.ttf", "impact.ttf"], int(height * 0.55))
+
+        try:
+            bbox = draw.textbbox((0, 0), watermark_text, font=font)
+            tw = bbox[2] - bbox[0]
+            th = bbox[3] - bbox[1]
+            x = (width - tw) / 2
+            y = (height - th) / 2 - bbox[1]
+            draw.text((x, y), watermark_text, font=font, fill=(255, 255, 255))
+        except Exception:
+            draw.text((width // 4, height // 4), watermark_text, font=font, fill=(255, 255, 255))
+
+        return np.array(img)
+
+    @staticmethod
+    def _load_font(paths: list, size: int):
+        """Try loading fonts in order, fall back to PIL default."""
+        from PIL import ImageFont
+
+        for path in paths:
+            try:
+                return ImageFont.truetype(path, size=size)
+            except Exception:
+                continue
+        return ImageFont.load_default()
 
 
 class TelegramTamilShortsPipeline:
@@ -707,6 +1439,14 @@ class TelegramTamilShortsPipeline:
 
     async def run_once(self):
         results = []
+        # Clean up any corrupt files in download directory automatically
+        download_dir = PROJECT_ROOT / Path(self.config.get("telegram_download_dir", "downloads/telegram"))
+        if download_dir.exists():
+            for f in download_dir.glob("*.mp4"):
+                if not is_valid_video_file(str(f)):
+                    logger.warning("Found corrupted video download on startup. Deleting: %s", f)
+                    f.unlink(missing_ok=True)
+
         upload_budget = self._uploads_remaining_today()
         if upload_budget <= 0:
             logger.info("Telegram daily upload limit reached. No Shorts will be uploaded today.")
@@ -743,7 +1483,12 @@ class TelegramTamilShortsPipeline:
                 rendered = await self._render_all_segments(video)
                 self._cleanup_source_after_render(video)
 
-                for segment_video, final_path, audio_path, tamil_script in rendered:
+                for item in rendered:
+                    if len(item) == 5:
+                        segment_video, final_path, audio_path, tamil_script, safety_report = item
+                    else:
+                        segment_video, final_path, audio_path, tamil_script = item
+                        safety_report = None
                     metadata = self._metadata(segment_video, tamil_script)
                     prediction = self._predict_metadata(metadata)
                     learning_result = self._learning_result(segment_video, final_path, metadata, prediction)
@@ -751,7 +1496,7 @@ class TelegramTamilShortsPipeline:
 
                     upload_result = None
                     if self._uploads_remaining_today() > 0:
-                        upload_result = await self._try_upload(segment_video, final_path, tamil_script, metadata)
+                        upload_result = await self._try_upload(segment_video, final_path, tamil_script, metadata, safety_report)
                     if self.upload_blocked_for_run:
                         break
                     if upload_result:
@@ -791,23 +1536,118 @@ class TelegramTamilShortsPipeline:
                     break
             except Exception as exc:
                 logger.exception("Telegram Tamil pipeline failed for %s", video.source_id)
-                self.store.mark(video, "failed", error=str(exc))
+                self.store.remove_source(video.source_id)
+                if os.path.exists(video.local_path):
+                    try:
+                        os.remove(video.local_path)
+                        logger.info("Removed failed or corrupted source video: %s", video.local_path)
+                    except Exception:
+                        pass
         return results
+
+    def _get_video_content_range(self, video_path: str, total_duration: float) -> tuple[float, float]:
+        """Determine the usable range of the video, skipping intro/outro."""
+        skip_intro = float(self.config.get("telegram_skip_intro_seconds", 0.0))
+        skip_outro = float(self.config.get("telegram_skip_outro_seconds", 0.0))
+        
+        if skip_intro == 0.0 and skip_outro == 0.0 and total_duration >= 300.0:
+            if config_bool(self.config, "telegram_auto_skip_anime_intro_outro", True):
+                skip_intro = float(self.config.get("telegram_default_anime_intro_seconds", 90.0))
+                skip_outro = float(self.config.get("telegram_default_anime_outro_seconds", 90.0))
+                logger.info("Auto-applied anime intro/outro skip: %ss intro, %ss outro for %ss video", skip_intro, skip_outro, total_duration)
+
+        if total_duration <= (skip_intro + skip_outro + 10.0):
+            usable_start = 0.0
+            usable_end = total_duration
+        else:
+            usable_start = min(skip_intro, max(0.0, total_duration - 10.0))
+            usable_end = max(usable_start + 5.0, total_duration - skip_outro)
+
+        if not config_bool(self.config, "telegram_use_chapters_if_available", True):
+            return usable_start, usable_end
+
+        try:
+            ffprobe_bin = get_ffprobe_binary()
+            result = subprocess.run(
+                [ffprobe_bin, "-v", "quiet", "-print_format", "json", "-show_chapters", video_path],
+                check=True, capture_output=True, text=True
+            )
+
+            data = json.loads(result.stdout)
+            chapters = data.get("chapters", [])
+            if chapters and len(chapters) >= 3:
+                # Find the first and last "long" chapter (> 120 seconds)
+                # Anime usually has: OP (~90s), Part A (~10m), Part B (~10m), ED (~90s), Preview (~30s)
+                long_chapters = []
+                for chap in chapters:
+                    start_t = float(chap.get("start_time", 0))
+                    end_t = float(chap.get("end_time", total_duration))
+                    if end_t - start_t >= 120:
+                        long_chapters.append((start_t, end_t))
+                
+                if long_chapters:
+                    auto_start = max(usable_start, long_chapters[0][0])
+                    auto_end = min(usable_end, long_chapters[-1][1])
+                    logger.info("Auto-detected video content range from chapters: %ss to %ss", auto_start, auto_end)
+                    return auto_start, auto_end
+        except Exception as exc:
+            logger.warning("Could not read chapters for auto-skip: %s", exc)
+
+        logger.info("Enforcing configured video content range: %ss to %ss (intro: %ss, outro: %ss)", usable_start, usable_end, skip_intro, skip_outro)
+        return usable_start, usable_end
 
     async def _render_all_segments(self, video: TelegramVideo) -> list[tuple[TelegramVideo, str, Optional[str], str]]:
         source_duration = self.renderer.source_duration(video.local_path)
         segment_seconds = int(self.config.get("telegram_short_duration", 60) or 60)
+        
         if source_duration <= 0:
             source_duration = float(segment_seconds)
-        segment_total = max(1, int((source_duration + segment_seconds - 0.001) // segment_seconds))
+            
+        usable_start, usable_end = self._get_video_content_range(video.local_path, source_duration)
+        usable_duration = usable_end - usable_start
+        
+        if usable_duration <= 0:
+            usable_start = 0
+            usable_end = source_duration
+            usable_duration = source_duration
+            
+        segment_total = max(1, int((usable_duration + segment_seconds - 0.001) // segment_seconds))
+        
+        max_segments = int(self.config.get("telegram_max_segments_per_video", 0))
+        if max_segments > 0:
+            segment_total = min(segment_total, max_segments)
+
         tamil_script = await self.audio_factory.build_script(video)
         tamil_audio: Optional[tuple[Optional[str], str]] = None
-        tamil_audio_stream = self._tamil_audio_stream_index(video.local_path)
+        # Prefer Whisper-detected audio stream from download phase; fall back to metadata-based detection
+        if getattr(video, "audio_stream_index", 0) > 0:
+            tamil_audio_stream = video.audio_stream_index
+            logger.info("Using Whisper-detected audio stream index %d for %s", tamil_audio_stream, video.source_id)
+        else:
+            tamil_audio_stream = self._tamil_audio_stream_index(video.local_path)
+
+        # ── Audio Changer: auto-replace non-Tamil audio with Tamil TTS ──
+        auto_replace = config_bool(self.config, "telegram_auto_replace_non_tamil_audio", False)
+        needs_audio_replacement = False
+        if auto_replace and tamil_audio_stream is None:
+            logger.info(
+                "AUDIO CHANGER: No Tamil audio stream detected for %s. "
+                "Will auto-generate Tamil TTS voiceover to replace source audio.",
+                video.source_id,
+            )
+            needs_audio_replacement = True
+        elif auto_replace and tamil_audio_stream is not None:
+            logger.info(
+                "AUDIO CHANGER: Tamil audio stream found at index %s for %s. "
+                "Keeping original Tamil audio.",
+                tamil_audio_stream, video.source_id,
+            )
+
         rendered = []
 
         for index in range(segment_total):
-            start = index * segment_seconds
-            if start >= source_duration:
+            start = usable_start + (index * segment_seconds)
+            if start >= usable_end:
                 break
             segment_video = TelegramVideo(
                 source_id=f"{video.source_id}:part{index + 1:03d}",
@@ -821,9 +1661,12 @@ class TelegramTamilShortsPipeline:
                 segment_index=index + 1,
                 segment_total=segment_total,
                 segment_start=float(start),
-                segment_duration=float(min(segment_seconds, source_duration - start)),
+                segment_duration=float(min(segment_seconds, usable_end - start)),
+                audio_stream_index=getattr(video, "audio_stream_index", 0),
             )
             audio_path = None
+
+            # Priority 1: Force Tamil audio from detected stream or TTS
             if config_bool(self.config, "telegram_force_tamil_audio", False):
                 if tamil_audio_stream is not None:
                     audio_path = self._extract_tamil_audio_segment(segment_video, tamil_audio_stream)
@@ -831,6 +1674,23 @@ class TelegramTamilShortsPipeline:
                     if not tamil_audio:
                         tamil_audio = await self.audio_factory.build_audio(video)
                     audio_path, tamil_script = tamil_audio
+
+            # Priority 2: Audio Changer - auto-replace when no Tamil stream exists
+            elif needs_audio_replacement:
+                if not tamil_audio:
+                    tamil_audio = await self.audio_factory.build_audio(video)
+                audio_path, tamil_script = tamil_audio
+                if audio_path:
+                    logger.info(
+                        "AUDIO CHANGER: Replacing audio for segment %s with Tamil TTS: %s",
+                        segment_video.source_id, audio_path,
+                    )
+                else:
+                    logger.warning(
+                        "AUDIO CHANGER: Tamil TTS generation returned no audio for %s. "
+                        "Keeping original source audio.",
+                        segment_video.source_id,
+                    )
 
             final_path = await self.renderer.render(segment_video, audio_path, tamil_script)
             safety_report = await self._copyright_scan(final_path, final_path, tamil_script)
@@ -872,18 +1732,36 @@ class TelegramTamilShortsPipeline:
                 continue
 
             self.store.mark(segment_video, "rendered", final_video_path=final_path)
-            rendered.append((segment_video, final_path, audio_path, tamil_script))
+            rendered.append((segment_video, final_path, audio_path, tamil_script, safety_report))
 
         logger.info("Rendered %s Telegram Shorts from %s.", len(rendered), video.source_id)
         return rendered
 
     def _tamil_audio_stream_index(self, video_path: str) -> Optional[int]:
-        if not config_bool(self.config, "telegram_prefer_tamil_audio_track", False):
+        """Find the Tamil audio stream index.
+
+        Detection order:
+        1. Configured telegram_audio_track_index (if set)
+        2. ffprobe metadata tags (language=ta/tam/tamil)
+        3. Whisper-based language detection on each stream (NEW - fallback)
+        4. Default multi-audio track index (last resort)
+        """
+        if not config_bool(self.config, "telegram_prefer_tamil_audio_track", True):
             return None
+
+        configured_idx = self.config.get("telegram_audio_track_index")
+        if configured_idx is not None:
+            try:
+                return int(configured_idx)
+            except Exception:
+                pass
+
+        ffprobe_bin = get_ffprobe_binary()
+        streams = []
         try:
             result = subprocess.run(
                 [
-                    "ffprobe",
+                    ffprobe_bin,
                     "-v",
                     "error",
                     "-select_streams",
@@ -894,37 +1772,166 @@ class TelegramTamilShortsPipeline:
                     "json",
                     video_path,
                 ],
-                check=True,
                 capture_output=True,
                 text=True,
+                timeout=10,
             )
-            streams = json.loads(result.stdout or "{}").get("streams", [])
+            if result.returncode == 0:
+                streams = json.loads(result.stdout or "{}").get("streams", [])
+        except FileNotFoundError:
+            logger.warning("ffprobe binary not found. Attempting ffmpeg fallback for stream count.")
         except Exception as exc:
             logger.warning("Could not inspect audio streams for %s: %s", video_path, exc)
+
+        # Fallback to ffmpeg for stream counting if ffprobe fails
+        if not streams:
+            ffmpeg_bin = get_ffmpeg_binary()
+            if ffmpeg_bin and ffmpeg_bin != "ffmpeg":
+                try:
+                    res2 = subprocess.run(
+                        [ffmpeg_bin, "-i", str(video_path), "-hide_banner"],
+                        capture_output=True,
+                        text=True,
+                        timeout=15,
+                    )
+                    stderr_text = (res2.stderr or "") + (res2.stdout or "")
+                    audio_lines = re.findall(r"Stream\s+#\d+:\d+.*Audio:", stderr_text)
+                    if audio_lines:
+                        # Construct a dummy streams list so it can proceed to Whisper fallback
+                        streams = [{"index": i, "tags": {}} for i in range(len(audio_lines))]
+                        logger.info("ffmpeg fallback detected %d audio stream(s) for %s", len(streams), video_path)
+                except Exception as e2:
+                    logger.warning("ffmpeg fallback also failed: %s", e2)
+
+        if not streams:
             return None
 
-        fallback = None
+        # Step 1: Check ffprobe metadata tags
         for position, stream in enumerate(streams):
             tags = {str(key).lower(): str(value).lower() for key, value in (stream.get("tags") or {}).items()}
             language = tags.get("language", "").strip()
             title = tags.get("title", "").strip()
-            if fallback is None:
-                fallback = position
-            if language in {"ta", "tam", "tamil"} or "tamil" in title:
-                logger.info("Using Tamil audio stream %s for %s", position, video_path)
+            if language in {"ta", "tam", "tamil", "tamizh"} or "tamil" in title or "tamizh" in title:
+                logger.info("Found Tamil audio stream at index %s via metadata tag for %s", position, video_path)
                 return position
+
+        # Step 2: Whisper-based fallback for multi-stream videos without tags
         if len(streams) > 1:
-            logger.info("No Tamil-labelled audio stream found in %s; generated Tamil audio will be used.", video_path)
-        return None
+            logger.info(
+                "No Tamil metadata tags found in %d streams. Running Whisper detection on each stream for %s",
+                len(streams), video_path,
+            )
+            whisper_result = self._whisper_detect_tamil_stream(video_path, len(streams))
+            if whisper_result is not None:
+                logger.info("Whisper detected Tamil audio on stream index %d for %s", whisper_result, video_path)
+                return whisper_result
+
+            # Whisper didn't find Tamil either; fall back to configured default
+            default_multi_index = int(self.config.get("default_multi_audio_track_index", 1))
+            chosen_index = min(default_multi_index, len(streams) - 1)
+            logger.info(
+                "Whisper found no Tamil stream. Falling back to default track index %s for %s.",
+                chosen_index, video_path,
+            )
+            return chosen_index
+
+        return 0
+
+    def _whisper_detect_tamil_stream(self, video_path: str, num_streams: int) -> Optional[int]:
+        """Use Whisper to detect which audio stream is Tamil. Returns stream index or None."""
+        import tempfile
+
+        try:
+            import torch
+            import whisper
+        except ImportError:
+            logger.warning("Whisper not available for Tamil stream detection fallback.")
+            return None
+
+        device = str(self.config.get("whisper_device", "auto"))
+        if device == "auto":
+            import torch
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        whisper_model_name = str(self.config.get("whisper_model", "small"))
+        try:
+            model = whisper.load_model(whisper_model_name, device=device)
+        except Exception as e:
+            logger.warning("Could not load Whisper model for stream detection: %s", e)
+            return None
+
+        ffmpeg_bin = get_ffmpeg_binary()
+        accepted_langs = self.config.get("telegram_accepted_audio_languages")
+        if isinstance(accepted_langs, list):
+            accepted_langs = {str(lang).strip().lower() for lang in accepted_langs if str(lang).strip()}
+        else:
+            accepted_langs = {"ta"}
+        accepted_langs.add("ta")
+        confidence_threshold = float(self.config.get("telegram_whisper_confidence_threshold", 0.10))
+
+        best_stream = None
+        best_confidence = 0.0
+
+        for stream_idx in range(num_streams):
+            with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_audio:
+                temp_audio_path = temp_audio.name
+
+            try:
+                # Sample from middle of video for better accuracy
+                res = subprocess.run(
+                    [
+                        ffmpeg_bin, "-y",
+                        "-ss", "60",  # skip first 60s (intro)
+                        "-i", str(video_path),
+                        "-map", f"0:a:{stream_idx}",
+                        "-t", "30",
+                        "-ac", "1",
+                        "-ar", "16000",
+                        temp_audio_path,
+                    ],
+                    capture_output=True,
+                    timeout=30,
+                )
+                if res.returncode != 0:
+                    continue
+
+                audio = whisper.load_audio(temp_audio_path)
+                audio = whisper.pad_or_trim(audio)
+                mel = whisper.log_mel_spectrogram(audio).to(model.device)
+                _, probs = model.detect_language(mel)
+
+                sorted_langs = sorted(probs.items(), key=lambda x: x[1], reverse=True)[:5]
+                top_str = ", ".join(f"{l}={p:.1%}" for l, p in sorted_langs)
+                logger.info("Whisper stream %d: [%s]", stream_idx, top_str)
+
+                for lang, prob in sorted_langs:
+                    if lang.lower() in accepted_langs and prob >= confidence_threshold:
+                        if prob > best_confidence:
+                            best_confidence = prob
+                            best_stream = stream_idx
+                        break
+
+            except Exception as e:
+                logger.warning("Whisper stream detection error on stream %d: %s", stream_idx, e)
+            finally:
+                if os.path.exists(temp_audio_path):
+                    try:
+                        os.unlink(temp_audio_path)
+                    except Exception:
+                        pass
+
+        return best_stream
 
     def _extract_tamil_audio_segment(self, video: TelegramVideo, stream_index: int) -> Optional[str]:
-        audio_dir = Path(self.config.get("tamil_audio_dir", "outputs/telegram_tamil_audio"))
+        audio_dir = PROJECT_ROOT / Path(self.config.get("tamil_audio_dir", "outputs/telegram_tamil_audio"))
         audio_dir.mkdir(parents=True, exist_ok=True)
         output_path = audio_dir / f"{self._safe_id(video.source_id)}_track{stream_index}.m4a"
+        ffmpeg_bin = get_ffmpeg_binary()
+
         try:
             subprocess.run(
                 [
-                    "ffmpeg",
+                    ffmpeg_bin,
                     "-y",
                     "-v",
                     "error",
@@ -945,6 +1952,7 @@ class TelegramTamilShortsPipeline:
                 capture_output=True,
                 text=True,
             )
+
             return str(output_path)
         except Exception as exc:
             logger.warning("Could not extract Tamil audio stream for %s: %s", video.source_id, exc)
@@ -1004,9 +2012,10 @@ class TelegramTamilShortsPipeline:
         final_path: str,
         tamil_script: str,
         metadata: Optional[dict] = None,
+        safety_report: Optional[dict] = None,
     ) -> Optional[dict]:
         try:
-            return await self._maybe_upload(video, final_path, tamil_script, metadata)
+            return await self._maybe_upload(video, final_path, tamil_script, metadata, safety_report)
         except Exception as exc:
             if self._is_youtube_upload_quota_error(exc):
                 self.upload_blocked_for_run = True
@@ -1055,7 +2064,9 @@ class TelegramTamilShortsPipeline:
             or "expired or revoked" in text
             or "refresherror" in text
             or "invalid_client" in text
-            or "unauthorized" in text and "oauth" in text
+            or "only supported with oauth" in text
+            or ("oauth2" in text and "required" in text)
+            or ("unauthorized" in text and "oauth" in text)
         )
 
     @staticmethod
@@ -1367,13 +2378,15 @@ class TelegramTamilShortsPipeline:
         final_path: str,
         tamil_script: str,
         metadata: Optional[dict] = None,
+        safety_report: Optional[dict] = None,
     ) -> Optional[dict]:
         mode = str(self.config.get("telegram_mode", self.config.get("mode", "dry_run"))).lower()
         if mode in {"dry_run", "dry-run"}:
             logger.info("DRY RUN - rendered %s but did not upload.", final_path)
             return None
 
-        safety_report = await self._copyright_scan(final_path, final_path, tamil_script)
+        if not safety_report:
+            safety_report = await self._copyright_scan(final_path, final_path, tamil_script)
         if not self._safe_to_upload(safety_report):
             logger.warning(
                 "Upload skipped for %s - copyright safety gate did not approve this Short: %s",
@@ -1600,12 +2613,11 @@ def load_config() -> dict:
         "telegram_generate_tamil_voiceover": os.getenv("TELEGRAM_GENERATE_TAMIL_VOICEOVER"),
         "telegram_allow_audio_replacement": os.getenv("TELEGRAM_ALLOW_AUDIO_REPLACEMENT"),
         "telegram_preserve_source_audio": os.getenv("TELEGRAM_PRESERVE_SOURCE_AUDIO"),
+        "telegram_required_audio_language": os.getenv("TELEGRAM_REQUIRED_AUDIO_LANGUAGE"),
     }
     for key, value in env_overrides.items():
         if value not in (None, ""):
-            existing_value = config.get(key)
-            if existing_value in (None, "", []):
-                config[key] = value
+            config[key] = value
     return config
 
 

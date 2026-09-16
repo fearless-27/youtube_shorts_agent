@@ -175,10 +175,16 @@ export default function CreatedVideos() {
                 </div>
 
                 {selectedVideo.previewUrl && (
-                  <div>
-                    <div className="text-[9px] uppercase tracking-wider text-white/40 mb-1">Preview / Media URL</div>
-                    <div className="bg-black/50 p-2 text-[10px] text-[#00F0FF] break-all border border-white/5">
-                      {selectedVideo.previewUrl}
+                  <div className="space-y-1.5">
+                    <div className="text-[9px] uppercase tracking-wider text-white/40">Clip Playback</div>
+                    <div className="bg-black rounded border border-white/10 overflow-hidden flex items-center justify-center">
+                      <video
+                        src={selectedVideo.previewUrl}
+                        controls
+                        autoPlay
+                        playsInline
+                        className="w-full max-h-64 object-contain"
+                      />
                     </div>
                   </div>
                 )}

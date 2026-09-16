@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import Landing from './pages/Landing';
-import Login from './pages/Login';
+
 import Dashboard from './pages/Dashboard';
 
 const pageVariants = {
@@ -30,8 +29,8 @@ function App() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageWrapper><Landing /></PageWrapper>} />
-        <Route path="/login" element={<PageWrapper><Login /></PageWrapper>} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/login" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard/*" element={<PageWrapper><Dashboard /></PageWrapper>} />
       </Routes>
     </AnimatePresence>

@@ -1,21 +1,46 @@
+# ── Environment & Secrets ────────────────────────────────────
 .env
 client_secrets.json
 youtube_credentials.json
+
+# ── Build Output ─────────────────────────────────────────────
+dist/
+
+# ── Dependencies ─────────────────────────────────────────────
+node_modules/
+venv/
+
+# ── Python Cache ─────────────────────────────────────────────
+__pycache__/
+*.pyc
+
+# ── Pipeline Runtime Files ───────────────────────────────────
 ghostpipe.lock
 ghostpipe.log
 telegram_tamil_pipeline.log
-dist/
+pipeline/ghostpipe.lock
+pipeline/ghostpipe.log
 pipeline/upload_history.sqlite3
 pipeline/upload_history.sqlite3-*
 pipeline/learning_memory.sqlite3
 pipeline/telegram_tamil_history.sqlite3
 pipeline/copyright_shield.db
+pipeline/pipeline/
 copyright_shield.db
+
+# ── Telegram Sessions ───────────────────────────────────────
 ghostpipe_telegram.session
+*.session
+
+# ── Media Working Files ─────────────────────────────────────
 downloads/
 outputs/
-venv/
-node_modules/
-__pycache__/
-*.pyc
-*.session
+*TEMP_MPY*.mp4
+
+# ── IDE & OS ─────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+.DS_Store

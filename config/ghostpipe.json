@@ -1,9 +1,13 @@
 {
-  "mode": "live",
+  "mode": "semi_live",
   "scan_interval_minutes": 30,
   "min_views": 1000000,
   "max_video_age_hours": 168,
-  "categories": ["Entertainment", "Film & Animation", "Comedy"],
+  "categories": [
+    "Entertainment",
+    "Film & Animation",
+    "Comedy"
+  ],
   "content_language": "fr",
   "youtube_region_code": "FR",
   "youtube_api_max_results": 50,
@@ -80,7 +84,16 @@
   "growth_min_engagement_rate": 0.015,
   "growth_search_results_per_term": 2,
   "upload_title_emoji": "🔥",
-  "upload_title_emojis": ["🔥", "⚡", "🎬", "🚀", "👀", "✨", "💥", "📌"],
+  "upload_title_emojis": [
+    "🔥",
+    "⚡",
+    "🎬",
+    "🚀",
+    "👀",
+    "✨",
+    "💥",
+    "📌"
+  ],
   "min_virality_threshold": 45,
   "max_daily_uploads": 5,
   "upload_public_stats_viewable": false,
@@ -95,7 +108,7 @@
   "learning_model_min_samples": 12,
   "youtube_analytics_lookback_days": 28,
   "youtube_analytics_enabled": false,
-  "whisper_model": "base",
+  "whisper_model": "small",
   "whisper_device": "auto",
   "copyright_safety_level": "maximum",
   "require_safe_to_upload": true,
@@ -107,9 +120,15 @@
   "lock_file_path": "ghostpipe.lock",
   "youtube_credentials_path": "youtube_credentials.json",
   "youtube_client_secrets_path": "client_secrets.json",
-  "upload_privacy": "public",
+  "upload_privacy": "private",
   "upload_timezone": "Europe/Paris",
-  "upload_peak_times": ["07:30", "11:30", "15:30", "18:30", "21:30"],
+  "upload_peak_times": [
+    "07:30",
+    "11:30",
+    "15:30",
+    "18:30",
+    "21:30"
+  ],
   "schedule_uploads_ahead": true,
   "schedule_upload_days_ahead": 1,
   "upload_window_minutes": 30,
@@ -124,5 +143,13 @@
     "edit anime viral shorts france",
     "shorts humour france viral",
     "video drole virale shorts france"
-  ]
+  ],
+  "telegram_audio_track_index": 1,
+  "default_multi_audio_track_index": 1,
+  "telegram_force_tamil_audio": true,
+  "telegram_preserve_source_audio": true,
+  "telegram_generate_tamil_voiceover": false,
+  "telegram_required_audio_language": "ta",
+  "telegram_channels": "https://t.me/shinchantamil",
+  "active_pipeline": "telegram_tamil_shorts_pipeline.py"
 }
