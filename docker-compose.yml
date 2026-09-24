@@ -1,0 +1,22 @@
+services:
+  nemo-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nemo-youtube-shorts
+    restart: unless-stopped
+    ports:
+      - "${PORT:-4173}:4173"
+    env_file:
+      - .env
+    volumes:
+      - nemo_outputs:/app/outputs
+      - nemo_downloads:/app/downloads
+      - nemo_logs:/app/logs
+      - nemo_data:/app/public/data
+
+volumes:
+  nemo_outputs:
+  nemo_downloads:
+  nemo_logs:
+  nemo_data:

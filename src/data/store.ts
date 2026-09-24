@@ -41,6 +41,17 @@ export interface PipelineSettings {
   autoDelete: boolean;
   telegramChannels: string;
   activePipeline: string;
+  requiredAudioLanguage?: string;
+  skipOnAudioMismatch?: boolean;
+  audioReplacementMode?: 'source' | 'tts' | 'bgm';
+  preferredTrackIndex?: number;
+  telegramChannelName?: string;
+  telegramChannelHandle?: string;
+  telegramFooterText?: string;
+  telegramBrandColor?: string;
+  telegramRenderTemplate?: string;
+  ytDlpCookiesFromBrowser?: string;
+  ytDlpCookieFile?: string;
 }
 
 export interface PipelineStats {
@@ -75,30 +86,33 @@ interface OverviewResponse {
   config?: Record<string, unknown>;
 }
 
-const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/$/, '');
-
-function apiPath(path: string) {
-  return `${apiBaseUrl}${path}`;
-}
+import { apiFetch, apiPath } from '../lib/api';
+export { apiPath };
 
 export const videos: Video[] = [];
 export const uploadRecords: UploadRecord[] = [];
 export const pipelineLogs: LogEntry[] = [];
 export const defaultSettings: PipelineSettings = {
   mode: 'semi-live',
-  maxDailyUploads: 5,
+  maxDailyUploads: 15,
   privacy: 'Public',
-  timezone: 'America/New_York',
-  peakUploadTimes: ['07:30', '11:30', '15:30', '18:30', '21:30'],
+  timezone: 'Asia/Kolkata',
+  peakUploadTimes: [
+    '07:00', '08:00', '09:15', '10:30', '11:45',
+    '13:00', '14:15', '15:30', '16:45', '18:00',
+    '19:00', '20:00', '21:00', '22:00', '22:45'
+  ],
   uploadWindowMinutes: 30,
   uploadWindowPosition: 'before',
   autoDelete: true,
   telegramChannels: '',
   activePipeline: 'telegram_tamil_shorts_pipeline.py',
+  ytDlpCookiesFromBrowser: 'chrome',
+  ytDlpCookieFile: '',
 };
 export const pipelineStats: PipelineStats = {
   uploadsToday: 0,
-  dailyCap: 5,
+  dailyCap: 15,
   createdShorts: 0,
   pendingApproval: 0,
   avgViralityScore: 0,
@@ -111,7 +125,7 @@ export const pipelineStats: PipelineStats = {
 };
 
 export async function pipelineAction(action: 'start' | 'stop') {
-  const response = await fetch(apiPath(`/api/pipeline/${action}`), { method: 'POST' });
+  const response = await apiFetch(`/api/pipeline/${action}`, { method: 'POST' });
   if (!response.ok) {
     throw new Error(`Pipeline ${action} failed`);
   }
@@ -134,7 +148,7 @@ export function useDashboardData(refreshMs = 15000) {
 
     async function load() {
       try {
-        const response = await fetch(apiPath('/api/overview'), { cache: 'no-store' });
+        const response = await apiFetch('/api/overview', { cache: 'no-store' });
         if (!response.ok) {
           throw new Error(`API ${response.status}`);
         }
@@ -169,7 +183,7 @@ export function useDashboardData(refreshMs = 15000) {
 }
 
 export async function updateApproval(id: string, approved: boolean) {
-  const response = await fetch(apiPath(`/api/approvals/${encodeURIComponent(id)}`), {
+  const response = await apiFetch(`/api/approvals/${encodeURIComponent(id)}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ approved }),
@@ -180,14 +194,45 @@ export async function updateApproval(id: string, approved: boolean) {
   return response.json();
 }
 
+export interface ClearContentOptions {
+  scope: 'all' | 'rejected' | 'pending' | 'uploaded' | 'selected';
+  ids?: string[];
+  deleteFiles?: boolean;
+}
+
+export async function clearContentData(options: ClearContentOptions) {
+  const response = await apiFetch('/api/content/clear', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(options),
+  });
+  if (!response.ok) {
+    throw new Error(`Clear content failed: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function deleteContentVideo(id: string, deleteFiles: boolean = false) {
+  const response = await apiFetch(`/api/content/${encodeURIComponent(id)}${deleteFiles ? '?deleteFiles=true' : ''}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error(`Delete video failed: ${response.status}`);
+  }
+  return response.json();
+}
+
 export async function saveSettings(settings: PipelineSettings) {
   const peakUploadTimes = normalizePeakTimes(settings.peakUploadTimes);
-  const response = await fetch(apiPath('/api/config'), {
+  const response = await apiFetch('/api/config', {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       mode: settings.mode === 'dry-run' ? 'dry_run' : settings.mode === 'semi-live' ? 'semi_live' : 'live',
-      max_daily_uploads: settings.maxDailyUploads,
+      max_daily_uploads: settings.maxDailyUploads ?? 15,
+      telegram_max_daily_uploads: 10,
+      telegram_max_uploads_per_run: 10,
+      viral_max_daily_uploads: Math.max(1, (settings.maxDailyUploads ?? 15) - 10),
       upload_privacy: settings.privacy.toLowerCase(),
       upload_timezone: settings.timezone,
       upload_peak_times: peakUploadTimes,
@@ -196,6 +241,22 @@ export async function saveSettings(settings: PipelineSettings) {
       delete_local_files_after_upload: settings.autoDelete,
       telegram_channels: settings.telegramChannels,
       active_pipeline: settings.activePipeline,
+      required_audio_language: settings.requiredAudioLanguage ?? 'ta',
+      telegram_required_audio_language: settings.requiredAudioLanguage ?? 'ta',
+      skip_on_audio_mismatch: settings.skipOnAudioMismatch ?? true,
+      audio_replacement_mode: settings.audioReplacementMode ?? 'source',
+      telegram_force_tamil_audio: (settings.requiredAudioLanguage ?? 'ta') === 'ta',
+      telegram_audio_track_index: settings.preferredTrackIndex ?? 1,
+      default_multi_audio_track_index: settings.preferredTrackIndex ?? 1,
+      telegram_channel_name: settings.telegramChannelName ?? 'NEMO SHORTS',
+      telegram_channel_handle: settings.telegramChannelHandle ?? '@nemoshorts',
+      telegram_header_text: `${settings.telegramChannelName ?? 'NEMO SHORTS'}\n${settings.telegramChannelHandle ?? '@nemoshorts'}`,
+      telegram_footer_text: settings.telegramFooterText ?? '🔔 SUBSCRIBE FOR MORE ANIME CONTENT 🤩',
+      telegram_brand_color: settings.telegramBrandColor ?? '#00D2FF',
+      telegram_render_template: settings.telegramRenderTemplate ?? 'anime_multi_tier',
+      telegram_template: settings.telegramRenderTemplate ?? 'anime_multi_tier',
+      yt_dlp_cookies_from_browser: settings.ytDlpCookiesFromBrowser ?? 'chrome',
+      yt_dlp_cookie_file: settings.ytDlpCookieFile ?? '',
     }),
   });
   if (!response.ok) {
@@ -205,15 +266,99 @@ export async function saveSettings(settings: PipelineSettings) {
 }
 
 export async function fetchAnalytics() {
-  const response = await fetch(apiPath('/api/analytics'), { cache: 'no-store' });
+  const response = await apiFetch('/api/analytics', { cache: 'no-store' });
   if (!response.ok) throw new Error(`Analytics fetch failed: ${response.status}`);
   return response.json();
 }
 
 export async function resetPipelineQueue() {
-  const response = await fetch(apiPath('/api/pipeline/reset'), { method: 'POST' });
+  const response = await apiFetch('/api/pipeline/reset', { method: 'POST' });
   if (!response.ok) {
     throw new Error(`Pipeline reset failed: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function getCookieStatus(): Promise<{
+  ok: boolean;
+  browser: string;
+  cookieFile: string;
+  fileExists: boolean;
+  fileSize: number;
+  lastModified: string | null;
+}> {
+  const response = await apiFetch('/api/cookies/status');
+  if (!response.ok) throw new Error('Failed to get cookie status');
+  return response.json();
+}
+
+export async function uploadCookieFile(cookieText: string): Promise<{
+  ok: boolean;
+  cookieFile: string;
+  fileSize: number;
+  message: string;
+}> {
+  const response = await apiFetch('/api/cookies/upload', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cookieText }),
+  });
+  if (!response.ok) throw new Error('Failed to upload cookie file');
+  return response.json();
+}
+
+export interface StorageStats {
+  ok: boolean;
+  outputs: { bytes: number; mb: number; count: number };
+  downloads: { bytes: number; mb: number; count: number };
+  editorJobs: { bytes: number; mb: number; count: number };
+  database: { bytes: number; mb: number };
+  tempArtifacts: { bytes: number; mb: number; count: number };
+  uploadedLocal: { bytes: number; mb: number; count: number };
+  rejected: { bytes: number; mb: number; count: number };
+  totalUsed: { bytes: number; mb: number; gb: number };
+}
+
+export interface StorageCleanOptions {
+  cleanTemp?: boolean;
+  cleanUploadedLocal?: boolean;
+  cleanRejected?: boolean;
+  cleanDownloads?: boolean;
+  cleanOrphans?: boolean;
+  vacuumDb?: boolean;
+}
+
+export async function fetchStorageStats(): Promise<StorageStats> {
+  const response = await apiFetch('/api/storage/stats');
+  if (!response.ok) throw new Error('Failed to fetch storage stats');
+  return response.json();
+}
+
+export async function cleanStorage(options: StorageCleanOptions): Promise<{
+  ok: boolean;
+  freedBytes: number;
+  freedMB: number;
+  deletedFilesCount: number;
+  vacuumSuccess: boolean;
+  timestamp: string;
+}> {
+  const response = await apiFetch('/api/storage/clean', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(options),
+  });
+  if (!response.ok) throw new Error('Storage cleanup failed');
+  return response.json();
+}
+
+export async function resetLiveQuota(resetQueue: boolean = false) {
+  const response = await apiFetch('/api/quota/reset', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ resetQueue }),
+  });
+  if (!response.ok) {
+    throw new Error(`Quota reset failed: ${response.status}`);
   }
   return response.json();
 }
@@ -338,9 +483,14 @@ function mapSettings(config: Record<string, unknown>, dailyCap: number): Pipelin
   const mode = String(config.mode ?? 'semi_live');
   const peakTimes = Array.isArray(config.upload_peak_times) ? config.upload_peak_times.map(String) : [];
   const uploadWindowPosition = String(config.upload_window_position ?? 'before') === 'after' ? 'after' : 'before';
+  const isTelegram = String(config.active_pipeline ?? 'telegram_tamil_shorts_pipeline.py').includes('telegram');
+  const targetUploadLimit = isTelegram
+    ? Number(config.telegram_max_daily_uploads ?? 10)
+    : Number(config.max_daily_uploads ?? 5);
+
   return {
     mode: mode === 'dry_run' ? 'dry-run' : mode === 'semi_live' ? 'semi-live' : 'live',
-    maxDailyUploads: numberValue(config.max_daily_uploads, dailyCap),
+    maxDailyUploads: numberValue(targetUploadLimit, dailyCap || (isTelegram ? 10 : 5)),
     privacy: privacyLabel(config.upload_privacy),
     timezone: String(config.upload_timezone ?? 'America/New_York'),
     peakUploadTimes: normalizePeakTimes(peakTimes),
@@ -349,6 +499,17 @@ function mapSettings(config: Record<string, unknown>, dailyCap: number): Pipelin
     autoDelete: config.delete_local_files_after_upload !== false,
     telegramChannels: String(config.telegram_channels ?? config.telegram_channel ?? ''),
     activePipeline: String(config.active_pipeline ?? 'telegram_tamil_shorts_pipeline.py'),
+    requiredAudioLanguage: String(config.required_audio_language ?? config.telegram_required_audio_language ?? 'ta'),
+    skipOnAudioMismatch: config.skip_on_audio_mismatch !== false,
+    audioReplacementMode: (config.audio_replacement_mode as PipelineSettings['audioReplacementMode']) ?? 'source',
+    preferredTrackIndex: numberValue(config.telegram_audio_track_index ?? config.default_multi_audio_track_index, 1),
+    telegramChannelName: String(config.telegram_channel_name ?? (config.telegram_header_text ? String(config.telegram_header_text).split('\n')[0] : 'NEMO SHORTS')),
+    telegramChannelHandle: String(config.telegram_channel_handle ?? (config.telegram_header_text ? String(config.telegram_header_text).split('\n')[1] ?? '@nemoshorts' : '@nemoshorts')),
+    telegramFooterText: String(config.telegram_footer_text ?? '🔔 SUBSCRIBE FOR MORE ANIME CONTENT 🤩'),
+    telegramBrandColor: String(config.telegram_brand_color ?? '#00D2FF'),
+    telegramRenderTemplate: String(config.telegram_render_template ?? config.telegram_template ?? 'anime_multi_tier'),
+    ytDlpCookiesFromBrowser: String(config.yt_dlp_cookies_from_browser ?? 'chrome'),
+    ytDlpCookieFile: String(config.yt_dlp_cookie_file ?? ''),
   };
 }
 
@@ -356,7 +517,11 @@ function normalizePeakTimes(values: string[]) {
   const times = values
     .map((value) => value.trim())
     .filter((value) => /^\d{2}:\d{2}$/.test(value));
-  return times.length ? Array.from(new Set(times)).sort() : ['07:30', '11:30', '15:30', '18:30', '21:30'];
+  return times.length ? Array.from(new Set(times)).sort() : [
+    '07:00', '08:00', '09:15', '10:30', '11:45',
+    '13:00', '14:15', '15:30', '16:45', '18:00',
+    '19:00', '20:00', '21:00', '22:00', '22:45'
+  ];
 }
 
 function dedupeVideos(items: Video[]) {
@@ -408,7 +573,7 @@ export const pricingTiers = [
 ];
 
 export const testimonials = [
-  { quote: 'GhostPipe handles our entire Shorts operation. We went from 2 uploads a day to 40 without hiring an editor.', author: '@crypto_sarah' },
+  { quote: 'NEMO handles our entire Shorts operation. We went from 2 uploads a day to 40 without hiring an editor.', author: '@crypto_sarah' },
   { quote: 'The virality prediction is scary accurate. It flagged a clip that hit 3M views in 48 hours.', author: '@dev_marcus' },
   { quote: 'Finally, a tool that respects YouTube quotas. No more API bans.', author: '@content_labs' },
 ];

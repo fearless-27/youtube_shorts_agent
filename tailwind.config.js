@@ -6,8 +6,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["'Inter'", "system-ui", "-apple-system", "sans-serif"],
-        display: ["'Space Grotesk'", "'Inter'", "sans-serif"],
-        mono: ["'JetBrains Mono'", "'IBM Plex Mono'", "monospace"],
+        display: ["'DM Sans'", "'Inter'", "sans-serif"],
+        mono: ["'JetBrains Mono'", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -15,14 +15,18 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        cyan: {
-          DEFAULT: "#00F0FF",
-          50: "rgba(0,240,255,0.05)",
-          100: "rgba(0,240,255,0.1)",
-          200: "rgba(0,240,255,0.2)",
-          400: "#00D4FF",
-          500: "#00F0FF",
-          600: "#00C4D4",
+        dark: {
+          bg: "#0B0D1A",
+          card: "#121424",
+          surface: "#1A1D30",
+          hover: "#20243C",
+          border: "rgba(139, 92, 246, 0.14)",
+        },
+        brand: {
+          purple: "#8B5CF6",
+          indigo: "#6366F1",
+          pink: "#EC4899",
+          emerald: "#22C55E",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -54,11 +58,11 @@ module.exports = {
         },
       },
       borderRadius: {
+        '2xl': '16px',
         xl: "calc(var(--radius) + 4px)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        xs: "calc(var(--radius) - 6px)",
       },
       keyframes: {
         "accordion-down": {
@@ -71,15 +75,11 @@ module.exports = {
         },
         "float": {
           "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-12px)" },
+          "50%": { transform: "translateY(-6px)" },
         },
         "glow-pulse": {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(0,240,255,0.1)" },
-          "50%": { boxShadow: "0 0 40px rgba(0,240,255,0.25), 0 0 80px rgba(0,240,255,0.1)" },
-        },
-        "shimmer": {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(100%)" },
+          "0%, 100%": { boxShadow: "0 0 20px rgba(139, 92, 246, 0.15)" },
+          "50%": { boxShadow: "0 0 35px rgba(139, 92, 246, 0.35)" },
         },
       },
       animation: {
@@ -87,12 +87,6 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "float": "float 4s ease-in-out infinite",
         "glow-pulse": "glow-pulse 3s ease-in-out infinite",
-        "shimmer": "shimmer 3s ease-in-out infinite",
-      },
-      backdropBlur: {
-        xs: "2px",
-        "2xl": "40px",
-        "3xl": "64px",
       },
     },
   },

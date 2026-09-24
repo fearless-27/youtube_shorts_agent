@@ -1,0 +1,133 @@
+/* =========================================================
+   SECTION 3: Core Capabilities & Typography Overrides
+   ========================================================= */
+
+        /* Typography system overrides */
+        #core-capabilities .top-nav,
+        #core-capabilities .service-label,
+        #core-capabilities .service-tags,
+        .gallery-header-label,
+        .ns-menu-topline,
+        .footer-info-bar,
+        .footer-nav-links a {
+          font-family: var(--font-family-body);
+          font-size: var(--text-xs);
+          letter-spacing: var(--tracking-meta);
+          line-height: 1.4;
+          text-transform: uppercase;
+        }
+
+        .gallery-header-label {
+          font-size: var(--text-xs);
+        }
+
+        .ns-dropdown__eyebrow,
+        .ns-menu-link-sub,
+        .ns-dropdown__label,
+        .ns-showcase-row__index {
+          font-family: var(--font-family-body);
+          font-size: var(--text-2xs);
+          letter-spacing: var(--tracking-caps);
+          line-height: 1.4;
+          text-transform: uppercase;
+        }
+
+        #core-capabilities .giant-title,
+        .gallery-header-title,
+        .gh-side-letter,
+        .ns-menu-link-title,
+        .ns-dropdown__headline,
+        .footer-brand-title,
+        .footer-copyright-bridge span {
+          font-family: var(--font-family-display);
+        }
+
+        #core-capabilities .giant-title {
+          font-size: clamp(2.5rem, 1.35rem + 2.875vw, 5rem);
+          letter-spacing: var(--tracking-brand);
+          line-height: var(--leading-tight);
+        }
+
+        .gallery-header-title {
+          font-size: clamp(2.5rem, 1.35rem + 2.875vw, 5rem);
+          letter-spacing: var(--tracking-brand);
+          line-height: 1.05;
+        }
+
+        .gh-side-letter {
+          font-size: var(--text-display-sm);
+          letter-spacing: var(--tracking-display);
+          line-height: 0.9;
+        }
+
+        .ns-menu-link-title {
+          font-size: var(--text-display-xs);
+          letter-spacing: var(--tracking-brand);
+          line-height: var(--leading-tight);
+        }
+
+        .ns-dropdown__headline {
+          font-size: var(--text-md);
+          letter-spacing: var(--tracking-label);
+          line-height: 1.25;
+        }
+
+        .footer-brand-title {
+          font-size: var(--text-display-lg);
+          line-height: var(--leading-display);
+          letter-spacing: var(--tracking-brand);
+        }
+
+        .footer-copyright-bridge span {
+          font-size: clamp(6rem, 12vw, 11.25rem);
+          line-height: var(--leading-tight);
+        }
+
+        #core-capabilities .sub-title,
+        #core-capabilities .footer-desc,
+        .ns-dropdown__copy,
+        {
+        font-family: var(--font-family-body);
+        font-size: var(--text-sm);
+        letter-spacing: var(--tracking-copy);
+        line-height: var(--leading-body);
+        }
+
+        .footer-description {
+          font-family: var(--font-family-body);
+          font-size: var(--text-xs);
+          letter-spacing: var(--tracking-copy);
+          line-height: var(--leading-body);
+        }
+
+
+
+        @media (max-width: 900px) {
+          #core-capabilities .giant-title {
+            font-size: 10vw;
+          }
+        }
+
+        @media (max-width: 768px) {
+
+          #core-capabilities .top-nav,
+          .footer-brand-title,
+          .footer-info-bar {
+            display: none;
+          }
+
+          .footer-video-thumb {
+            width: auto;
+            max-width: none;
+          }
+
+          .footer-info-bar,
+          .footer-nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: opacity 0.2s;
+          }
+        }

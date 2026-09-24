@@ -1,5 +1,20 @@
 {
-  "date": "2026-08-31",
+  "date": "2026-09-24",
   "uploads": 0,
-  "history": []
+  "history": [
+    {
+      "timestamp": "2026-09-24T14:38:05.195600+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-09-24T15:30:00+05:30",
+      "upload_window_key": "2026-09-24T15:30",
+      "video_id": "c7VxkXnOT18",
+      "url": "https://youtube.com/shorts/c7VxkXnOT18"
+    }
+  ],
+  "max_daily_uploads": 10,
+  "telegram_max_daily_uploads": 10,
+  "viral_max_daily_uploads": 5,
+  "short": 0,
+  "video": 0,
+  "last_daily_reset": "2026-09-24T04:54:54.648Z"
 }

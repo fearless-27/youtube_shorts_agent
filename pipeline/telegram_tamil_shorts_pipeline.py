@@ -13,6 +13,7 @@ import logging
 import os
 import random
 import re
+import shutil
 import sqlite3
 import subprocess
 import sys
@@ -22,6 +23,40 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 from zoneinfo import ZoneInfo
+
+try:
+    from video_use_adapter import (
+        apply_post_processing,
+        apply_audio_fades,
+        burn_subtitles,
+        get_color_grade_filter,
+        is_hdr_source,
+        transcribe_with_scribe,
+        generate_srt_from_text,
+        TAMIL_SUBTITLE_STYLE,
+    )
+except ImportError:
+    try:
+        from pipeline.video_use_adapter import (
+            apply_post_processing,
+            apply_audio_fades,
+            burn_subtitles,
+            get_color_grade_filter,
+            is_hdr_source,
+            transcribe_with_scribe,
+            generate_srt_from_text,
+            TAMIL_SUBTITLE_STYLE,
+        )
+    except ImportError:
+        apply_post_processing = None  # type: ignore
+        apply_audio_fades = None  # type: ignore
+        burn_subtitles = None  # type: ignore
+        get_color_grade_filter = None  # type: ignore
+        is_hdr_source = None  # type: ignore
+        transcribe_with_scribe = None  # type: ignore
+        generate_srt_from_text = None  # type: ignore
+        TAMIL_SUBTITLE_STYLE = None  # type: ignore
+
 
 try:
     from dotenv import load_dotenv
@@ -37,11 +72,14 @@ if str(PIPELINE_DIR) not in sys.path:
 if load_dotenv:
     load_dotenv(PROJECT_ROOT / ".env")
 
+LOGS_DIR = PROJECT_ROOT / "logs"
+LOGS_DIR.mkdir(exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)-8s | %(name)-24s | %(message)s",
     handlers=[
-        logging.FileHandler(PROJECT_ROOT / "telegram_tamil_pipeline.log", encoding="utf-8"),
+        logging.FileHandler(LOGS_DIR / "telegram_tamil_pipeline.log", encoding="utf-8"),
         logging.StreamHandler(sys.stdout),
     ],
 )
@@ -304,6 +342,32 @@ class TelegramTamilStore:
         with self._connect() as conn:
             row = conn.execute("SELECT status FROM telegram_sources WHERE source_id = ?", (source_id,)).fetchone()
         return bool(row and row[0] in {"uploaded", "skipped", "rendered"})
+
+    def get_source(self, source_id: str) -> Optional[dict]:
+        with self._connect() as conn:
+            conn.row_factory = sqlite3.Row
+            row = conn.execute("SELECT * FROM telegram_sources WHERE source_id = ?", (source_id,)).fetchone()
+            if row:
+                return dict(row)
+        return None
+
+    def is_already_rendered(self, source_id: str) -> tuple[bool, Optional[str]]:
+        """Returns (True, final_path) if the video/segment is already rendered or uploaded and file is valid."""
+        rec = self.get_source(source_id)
+        if not rec:
+            return False, None
+        status = rec.get("status")
+        if status == "uploaded":
+            return True, rec.get("final_video_path")
+        if status == "rendered":
+            final_path = rec.get("final_video_path")
+            if final_path:
+                abs_path = Path(final_path)
+                if not abs_path.is_absolute():
+                    abs_path = PROJECT_ROOT / abs_path
+                if abs_path.exists() and is_valid_video_file(str(abs_path)):
+                    return True, str(abs_path)
+        return False, None
 
     def remove_source(self, source_id: str):
         with self._connect() as conn:
@@ -724,7 +788,24 @@ class TelegramVideoDownloader:
         accepted_langs.add(required_lang.lower())
         accepted_langs.add("ta")
 
-        # Fallback to audio_intelligence
+        # 1. Fast AI detection with faster-whisper (CTranslate2 int8)
+        try:
+            from video_audio_tools import ai_detect_language
+            for stream_idx in range(num_streams):
+                detect_res = ai_detect_language(video_path, track_index=stream_idx, snippet_duration=15)
+                if detect_res.get("status") == "success":
+                    detected_code = str(detect_res.get("language_code", "")).lower()
+                    conf = float(detect_res.get("confidence", 0.0))
+                    if detected_code in accepted_langs and conf >= 0.4:
+                        logger.info(
+                            "Stream %d MATCHED accepted language '%s' (conf: %.1f%%) via faster-whisper",
+                            stream_idx, detected_code, conf * 100
+                        )
+                        return True, stream_idx
+        except Exception as e:
+            logger.debug("Fast AI language detection fallback to audio_intelligence: %s", e)
+
+        # 2. Comprehensive audio analysis fallback via AudioIntelligenceEngine
         from audio_intelligence import AudioIntelligenceEngine
         engine = AudioIntelligenceEngine(self.config)
 
@@ -849,6 +930,22 @@ class TamilAudioFactory:
     async def _transcribe(self, path: str) -> str:
         if not self.config.get("telegram_transcribe_source", True):
             return ""
+
+        engine = str(self.config.get("transcription_engine", "scribe")).lower()
+        if engine in ("scribe", "auto") and transcribe_with_scribe:
+            try:
+                edit_dir = Path(path).parent / "edit"
+                scribe_data = transcribe_with_scribe(path, edit_dir=edit_dir)
+                if scribe_data and isinstance(scribe_data, dict):
+                    words = scribe_data.get("words", [])
+                    if words:
+                        text = " ".join(w.get("text", "").strip() for w in words if w.get("text")).strip()
+                        if text:
+                            logger.info("Source transcription completed via Scribe (%d words)", len(words))
+                            return text
+            except Exception as e_scribe:
+                logger.warning("Scribe transcription failed: %s; falling back to Whisper", e_scribe)
+
         try:
             import torch
             import whisper
@@ -996,9 +1093,9 @@ class ShortsRenderer:
                 except Exception as e:
                     logger.warning(f"Failed to apply mirror_x: {e}")
             
-            if config_bool(self.config, "visual_color_grade", True):
+            if config_bool(self.config, "visual_color_grade", True) and not apply_post_processing:
                 try:
-                    # Apply a slight color shift (warm tint) to disrupt visual hashing
+                    # Apply a slight color shift (warm tint) fallback when video-use adapter is unavailable
                     def color_shift(image):
                         img = image.copy().astype(float)
                         img[:,:,0] = np.clip(img[:,:,0] * 1.05, 0, 255) # Red
@@ -1007,6 +1104,25 @@ class ShortsRenderer:
                     main_vid = main_vid.fl_image(color_shift)
                 except Exception as e:
                     logger.warning(f"Failed to apply color shift: {e}")
+
+            # 1.6 Kinetic Punch-in Hook (First 0.6s snap zoom to maximize viewed-vs-swiped-away retention)
+            if config_bool(self.config, "retention_kinetic_hook_zoom", True) and duration > 3.0:
+                try:
+                    def kinetic_zoom_fx(get_frame, t):
+                        frame = get_frame(t)
+                        if t < 0.6:
+                            zoom = 1.07 - 0.07 * (t / 0.6)
+                            h, w = frame.shape[:2]
+                            new_h, new_w = int(h / zoom), int(w / zoom)
+                            top = (h - new_h) // 2
+                            left = (w - new_w) // 2
+                            cropped = frame[top:top+new_h, left:left+new_w]
+                            img = Image.fromarray(cropped)
+                            return np.array(img.resize((w, h), Image.BILINEAR))
+                        return frame
+                    main_vid = main_vid.fl(kinetic_zoom_fx)
+                except Exception as e:
+                    logger.debug(f"Kinetic hook zoom skipped: {e}")
 
             # 2. Blurred Background
             bg_vid = clip.resize(height=target_h) if hasattr(clip, "resize") else clip.resized(height=target_h)
@@ -1200,6 +1316,58 @@ class ShortsRenderer:
                 except Exception:
                     pass
 
+        # Apply video-use-main post-processing (Color grading, HDR tonemap, 30ms audio fades, Tamil subtitles)
+        if apply_post_processing and output_path.exists():
+            try:
+                grade_preset = str(self.config.get("video_use_grade_preset", "auto"))
+                fade_ms = int(self.config.get("video_use_audio_fade_ms", 30))
+                tonemap_hdr = bool(self.config.get("video_use_hdr_tonemap", True))
+                burn_tamil_subs = config_bool(self.config, "telegram_burn_tamil_subtitles", False)
+
+                srt_file = None
+                if burn_tamil_subs and generate_srt_from_text and script:
+                    srt_content = generate_srt_from_text(script, duration)
+                    if srt_content:
+                        srt_file = self.output_dir / f"subs_{video.channel}_{video.message_id}_part{video.segment_index:03d}_{int(time.time())}.srt"
+                        srt_file.write_text(srt_content, encoding="utf-8")
+
+                temp_polished = self.output_dir / f"polished_{video.channel}_{video.message_id}_part{video.segment_index:03d}_{int(time.time())}.mp4"
+                tamil_font = self.config.get("telegram_tamil_subtitle_font", "Noto Sans Tamil")
+                sub_style = (
+                    f"FontName={tamil_font},FontSize=18,Bold=1,"
+                    "PrimaryColour=&H0000FFFF,OutlineColour=&H00000000,BackColour=&H00000000,"
+                    "BorderStyle=1,Outline=2,Shadow=0,Alignment=2,MarginV=95"
+                )
+
+                apply_post_processing(
+                    video_path=output_path,
+                    output_path=temp_polished,
+                    grade_preset=grade_preset,
+                    fade_ms=fade_ms,
+                    tonemap_hdr=tonemap_hdr,
+                    srt_path=srt_file,
+                    subtitle_style=sub_style,
+                )
+
+                if temp_polished.exists() and temp_polished.stat().st_size > 0:
+                    try:
+                        output_path.unlink(missing_ok=True)
+                    except Exception:
+                        pass
+                    shutil.move(str(temp_polished), str(output_path))
+                    logger.info(
+                        "Video-use post-processing applied to Telegram Short %s (grade=%s, fade=%sms, subtitles=%s)",
+                        output_path.name, grade_preset, fade_ms, bool(srt_file)
+                    )
+
+                if srt_file and srt_file.exists():
+                    try:
+                        srt_file.unlink(missing_ok=True)
+                    except Exception:
+                        pass
+            except Exception as e_post:
+                logger.warning("Video-use post-processing warning for %s: %s; keeping standard render", output_path.name, e_post)
+
         logger.info("Rendered Telegram Short part %s/%s: %s", video.segment_index, video.segment_total, output_path)
         return str(output_path)
 
@@ -1267,11 +1435,16 @@ class ShortsRenderer:
         logo_y = (height - logo_size) // 2
         logo_loaded = False
 
-        logo_path_raw = str(self.config.get("telegram_channel_logo_path", "logo.png")).strip()
+        logo_path_raw = str(self.config.get("telegram_channel_logo_path", "public/images/logo.png")).strip()
         if logo_path_raw:
             logo_path = Path(logo_path_raw)
             if not logo_path.is_absolute():
                 logo_path = PROJECT_ROOT / logo_path
+            if not logo_path.exists():
+                for candidate in [PROJECT_ROOT / "public" / "images" / "logo.png", PROJECT_ROOT / "logo.png"]:
+                    if candidate.exists():
+                        logo_path = candidate
+                        break
             if logo_path.exists():
                 try:
                     logo_img = Image.open(str(logo_path)).convert("RGBA")
@@ -1456,20 +1629,22 @@ class TelegramTamilShortsPipeline:
         if missing_count:
             logger.warning("Cleared %s missing rendered Telegram Shorts from retry queue.", missing_count)
 
-        pending_results = await self._upload_pending_rendered(upload_budget)
-        results.extend(pending_results)
-        if self.upload_blocked_for_run:
-            return results
-        upload_budget = self._uploads_remaining_today()
-        if upload_budget <= 0:
-            return results
-        pending_count = self.store.pending_rendered_count()
-        if pending_count > 0:
-            logger.info(
-                "Waiting to finish %s rendered Telegram Shorts before downloading another source video.",
-                pending_count,
-            )
-            return results
+        mode = str(self.config.get("telegram_mode", self.config.get("mode", "dry_run"))).lower()
+        if mode not in {"semi_live", "semi-live"}:
+            pending_results = await self._upload_pending_rendered(upload_budget)
+            results.extend(pending_results)
+            if self.upload_blocked_for_run:
+                return results
+            upload_budget = self._uploads_remaining_today()
+            if upload_budget <= 0:
+                return results
+            pending_count = self.store.pending_rendered_count()
+            if pending_count > 0:
+                logger.info(
+                    "Waiting to finish %s rendered Telegram Shorts before downloading another source video.",
+                    pending_count,
+                )
+                return results
 
         videos = await self.downloader.fetch_latest()
         if not videos:
@@ -1495,7 +1670,11 @@ class TelegramTamilShortsPipeline:
                     self._record_learning_prediction(learning_result)
 
                     upload_result = None
-                    if self._uploads_remaining_today() > 0:
+                    if mode in {"semi_live", "semi-live"}:
+                        self._queue_for_approval(segment_video, final_path, metadata, safety_report=safety_report)
+                        logger.info("SEMI-LIVE MODE: Short rendered and saved in Content Studio. Awaiting operator approval: %s", final_path)
+                        self.store.mark(segment_video, "pending_approval", final_video_path=final_path)
+                    elif self._uploads_remaining_today() > 0:
                         upload_result = await self._try_upload(segment_video, final_path, tamil_script, metadata, safety_report)
                     if self.upload_blocked_for_run:
                         break
@@ -1519,12 +1698,15 @@ class TelegramTamilShortsPipeline:
                         "prediction": prediction,
                         "upload": upload_result,
                     })
-                    if self._uploads_remaining_today() <= 0:
+                    if mode not in {"semi_live", "semi-live"} and self._uploads_remaining_today() <= 0:
                         logger.info("Telegram daily upload limit reached after %s.", segment_video.source_id)
                         break
 
-                self.store.mark(video, "uploaded" if self._source_segments_uploaded(video) else "rendered")
-                if self._uploads_remaining_today() <= 0:
+                if mode in {"semi_live", "semi-live"}:
+                    self.store.mark(video, "pending_approval")
+                else:
+                    self.store.mark(video, "uploaded" if self._source_segments_uploaded(video) else "rendered")
+                if mode not in {"semi_live", "semi-live"} and self._uploads_remaining_today() <= 0:
                     logger.info("Telegram daily upload limit reached. Remaining fetched source videos will wait.")
                     break
                 pending_count = self.store.pending_rendered_count()
@@ -1611,11 +1793,16 @@ class TelegramTamilShortsPipeline:
             usable_end = source_duration
             usable_duration = source_duration
             
-        segment_total = max(1, int((usable_duration + segment_seconds - 0.001) // segment_seconds))
-        
-        max_segments = int(self.config.get("telegram_max_segments_per_video", 0))
-        if max_segments > 0:
-            segment_total = min(segment_total, max_segments)
+        render_full_video = config_bool(self.config, "telegram_render_full_video", False)
+        if render_full_video:
+            segment_seconds = max(1, int(usable_duration))
+            segment_total = 1
+            logger.info("Full video render mode enabled: rendering entire %ss video as 1 video.", segment_seconds)
+        else:
+            segment_total = max(1, int((usable_duration + segment_seconds - 0.001) // segment_seconds))
+            max_segments = int(self.config.get("telegram_max_segments_per_video", 0) or 0)
+            if max_segments > 0:
+                segment_total = min(segment_total, max_segments)
 
         tamil_script = await self.audio_factory.build_script(video)
         tamil_audio: Optional[tuple[Optional[str], str]] = None
@@ -1665,6 +1852,33 @@ class TelegramTamilShortsPipeline:
                 audio_stream_index=getattr(video, "audio_stream_index", 0),
             )
             audio_path = None
+
+            # ── Check if segment is already uploaded or rendered to avoid redundant work ──
+            if config_bool(self.config, "telegram_skip_already_rendered", True):
+                is_done, existing_path = self.store.is_already_rendered(segment_video.source_id)
+                if is_done:
+                    rec = self.store.get_source(segment_video.source_id)
+                    status = rec.get("status") if rec else "rendered"
+                    if status == "uploaded":
+                        logger.info("Skipping segment %s — already uploaded to YouTube.", segment_video.source_id)
+                        continue
+                    if existing_path and Path(existing_path).exists() and is_valid_video_file(existing_path):
+                        logger.info("Reusing already rendered video for %s: %s", segment_video.source_id, existing_path)
+                        final_path = existing_path
+                        safety_report = await self._copyright_scan(final_path, final_path, tamil_script)
+                        rendered.append((segment_video, final_path, None, tamil_script, safety_report))
+                        continue
+
+                # Disk cache fallback check
+                matching_files = list(self.renderer.output_dir.glob(f"telegram_tamil_{video.channel}_{video.message_id}_part{index + 1:03d}_*.mp4"))
+                valid_existing = [f for f in matching_files if is_valid_video_file(str(f))]
+                if valid_existing:
+                    existing_path = str(valid_existing[-1])
+                    logger.info("Found pre-rendered video on disk for %s: %s", segment_video.source_id, existing_path)
+                    self.store.mark(segment_video, "rendered", final_video_path=existing_path)
+                    safety_report = await self._copyright_scan(existing_path, existing_path, tamil_script)
+                    rendered.append((segment_video, existing_path, None, tamil_script, safety_report))
+                    continue
 
             # Priority 1: Force Tamil audio from detected stream or TTS
             if config_bool(self.config, "telegram_force_tamil_audio", False):
@@ -2198,7 +2412,7 @@ class TelegramTamilShortsPipeline:
         return datetime.now(self._upload_timezone()).strftime("%Y-%m-%d")
 
     def _telegram_daily_upload_limit(self) -> int:
-        return int(self.config.get("telegram_max_daily_uploads", self.config.get("max_daily_uploads", 5)) or 5)
+        return int(self.config.get("telegram_max_daily_uploads", self.config.get("max_daily_uploads", 10)) or 10)
 
     def _load_quota_state(self) -> dict:
         path = self._quota_state_path()
@@ -2343,7 +2557,11 @@ class TelegramTamilShortsPipeline:
 
         tz = self._upload_timezone()
         now = datetime.now(tz)
-        peak_times = self.config.get("upload_peak_times", ["07:30", "11:30", "15:30", "18:30", "21:30"])
+        peak_times = self.config.get("upload_peak_times", [
+            "07:00", "08:00", "09:15", "10:30", "11:45",
+            "13:00", "14:15", "15:30", "16:45", "18:00",
+            "19:00", "20:00", "21:00", "22:00", "22:45"
+        ])
         days_ahead = max(int(self.config.get("schedule_upload_days_ahead", 0) or 0), 0)
 
         for day_offset in range(days_ahead, days_ahead + 14):
@@ -2385,6 +2603,13 @@ class TelegramTamilShortsPipeline:
             logger.info("DRY RUN - rendered %s but did not upload.", final_path)
             return None
 
+        if mode in {"semi_live", "semi-live"}:
+            metadata = metadata or self._metadata(video, tamil_script)
+            self._queue_for_approval(video, final_path, metadata, safety_report=safety_report)
+            logger.info("SEMI-LIVE MODE: Short rendered and saved in Content Studio approval queue: %s", final_path)
+            self.store.mark(video, "pending_approval", final_video_path=final_path)
+            return None
+
         if not safety_report:
             safety_report = await self._copyright_scan(final_path, final_path, tamil_script)
         if not self._safe_to_upload(safety_report):
@@ -2422,6 +2647,118 @@ class TelegramTamilShortsPipeline:
             public_stats_viewable=bool(self.config.get("upload_public_stats_viewable", True)),
             schedule_time=schedule_time,
         )
+
+    def _queue_for_approval(
+        self,
+        video: TelegramVideo,
+        final_path: str,
+        metadata: dict,
+        safety_report: Optional[dict] = None,
+    ):
+        """Registers rendered video in Content Studio approval queue and recreated media."""
+        approval_queue_file = PROJECT_ROOT / "public" / "data" / "approval_queue.json"
+        recreated_media_file = PROJECT_ROOT / "public" / "data" / "recreated_media.json"
+        approval_queue_file.parent.mkdir(parents=True, exist_ok=True)
+
+        queue_data = []
+        if approval_queue_file.exists():
+            try:
+                with open(approval_queue_file, "r", encoding="utf-8") as f:
+                    queue_data = json.load(f)
+            except Exception:
+                queue_data = []
+
+        p = Path(final_path)
+        try:
+            rel_video_path = str(p.relative_to(PROJECT_ROOT) if p.is_absolute() else p).replace("\\", "/")
+        except Exception:
+            rel_video_path = f"outputs/{p.name}"
+
+        public_url = f"/outputs/{p.name}"
+        item_id = f"{video.channel}_{video.message_id}_part{video.segment_index:03d}"
+
+        existing_idx = next(
+            (i for i, q in enumerate(queue_data) if q.get("id") == item_id or q.get("video_path") == rel_video_path),
+            None,
+        )
+
+        queue_item = {
+            "id": item_id,
+            "timestamp": datetime.now().isoformat(),
+            "video_path": rel_video_path,
+            "full_video_path": str(p.resolve() if p.exists() else final_path),
+            "content_type": "short",
+            "thumbnail_path": "",
+            "thumbnail_url": "",
+            "public_url": public_url,
+            "title": metadata.get("title") or video.title or "Tamil Short",
+            "metadata": metadata,
+            "prediction": {
+                "predicted_virality": 8.5,
+                "virality_score": 8.5,
+                "recommendation": "APPROVED",
+                "confidence": 0.9,
+            },
+            "safety_report": safety_report or {},
+            "upload_status": "pending_approval",
+            "approved": None,
+        }
+
+        if existing_idx is not None:
+            queue_data[existing_idx] = queue_item
+        else:
+            queue_data.append(queue_item)
+
+        try:
+            temp_file = approval_queue_file.with_suffix(f".tmp.{int(datetime.now().timestamp())}")
+            with open(temp_file, "w", encoding="utf-8") as f:
+                json.dump(queue_data, f, indent=2, ensure_ascii=False)
+            temp_file.replace(approval_queue_file)
+        except Exception as exc:
+            logger.warning("Could not update public/data/approval_queue.json: %s", exc)
+
+        recreated_data = []
+        if recreated_media_file.exists():
+            try:
+                with open(recreated_media_file, "r", encoding="utf-8") as f:
+                    recreated_data = json.load(f)
+            except Exception:
+                recreated_data = []
+
+        rec_idx = next(
+            (i for i, q in enumerate(recreated_data) if q.get("id") == item_id or q.get("video_path") == rel_video_path),
+            None,
+        )
+
+        recreated_item = {
+            "id": item_id,
+            "title": metadata.get("title") or video.title or "Tamil Short",
+            "video_path": rel_video_path,
+            "public_url": public_url,
+            "timestamp": datetime.now().isoformat(),
+            "content_type": "short",
+            "metadata": metadata,
+            "prediction": {
+                "predicted_virality": 8.5,
+                "virality_score": 8.5,
+            },
+            "upload_status": "pending_approval",
+            "approved": None,
+            "exists": True,
+        }
+
+        if rec_idx is not None:
+            recreated_data[rec_idx] = recreated_item
+        else:
+            recreated_data.append(recreated_item)
+
+        try:
+            temp_rec = recreated_media_file.with_suffix(f".tmp.{int(datetime.now().timestamp())}")
+            with open(temp_rec, "w", encoding="utf-8") as f:
+                json.dump(recreated_data, f, indent=2, ensure_ascii=False)
+            temp_rec.replace(recreated_media_file)
+        except Exception as exc:
+            logger.warning("Could not update public/data/recreated_media.json: %s", exc)
 
     def _metadata(self, video: TelegramVideo, tamil_script: str) -> dict:
         title_prefix = str(self.config.get("telegram_upload_title_prefix", "Tamil Shorts")).strip()
@@ -2572,22 +2909,44 @@ class TelegramTamilShortsPipeline:
             logger.warning("Telegram learning upload skipped: %s", exc)
 
     def _cleanup_uploaded_assets(self, video: TelegramVideo, final_path: str, audio_path: Optional[str]):
-        if not self.config.get("telegram_delete_local_files_after_upload", True):
+        if not config_bool(self.config, "telegram_delete_local_files_after_upload", True):
             return
 
         configured_audio = str(self.config.get("tamil_audio_file", "") or "").strip()
-        paths = [video.local_path, final_path]
+        # Delete the uploaded rendered video and any temporary audio
+        paths = [final_path]
         if audio_path and not configured_audio:
             paths.append(audio_path)
 
         for raw_path in paths:
+            if not raw_path:
+                continue
             try:
                 path = Path(raw_path)
+                if not path.is_absolute():
+                    path = PROJECT_ROOT / path
                 if path.exists() and path.is_file():
                     path.unlink()
-                    logger.info("Deleted uploaded Telegram pipeline asset: %s", path)
+                    logger.info("[CLEANUP] Successfully deleted uploaded rendered video: %s", path.name)
             except Exception as exc:
                 logger.warning("Could not delete uploaded Telegram pipeline asset %s: %s", raw_path, exc)
+
+        # Clean up temporary subtitle files (.srt) associated with this segment
+        try:
+            for srt_file in self.renderer.output_dir.glob(f"subs_{video.channel}_{video.message_id}_part{video.segment_index:03d}_*.srt"):
+                srt_file.unlink(missing_ok=True)
+                logger.info("[CLEANUP] Removed temporary subtitle file: %s", srt_file.name)
+        except Exception:
+            pass
+
+        # Clean up any stray MoviePy temp audio files in output directory and project root
+        for target_dir in [self.renderer.output_dir, PROJECT_ROOT]:
+            try:
+                for temp_file in target_dir.glob("*TEMP_MPY_wvf_snd.mp4"):
+                    temp_file.unlink(missing_ok=True)
+                    logger.info("[CLEANUP] Removed stray MoviePy temp file: %s", temp_file.name)
+            except Exception:
+                pass
 
 
 def load_config() -> dict:

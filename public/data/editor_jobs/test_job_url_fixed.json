@@ -1,0 +1,631 @@
+{
+  "job_id": "test_job_url_fixed",
+  "status": "completed",
+  "progress": 100,
+  "source_type": "url",
+  "source_input": "https://youtu.be/fhLKS1Zcs-Q",
+  "source_video_path": "D:\\youtube Agent\\downloads\\uploads\\test_job_url_fixed_fhLKS1Zcs-Q.mp4",
+  "video_title": "Vishal\u2019s Strategic Raid on Jagapathi Babu - Kaththi Sandai | Tamanna | Vadivelu | Sun NXT",
+  "duration": 413.477732,
+  "resolution": "640x360",
+  "error_message": null,
+  "moments": [
+    {
+      "moment_id": "moment_1_34s",
+      "title": "The Untold Reality",
+      "hook_text": "WAIT FOR THE PUNCHLINE \ud83e\udd2f",
+      "start": 34.46,
+      "end": 64.46,
+      "duration": 30.0,
+      "virality_score": 73,
+      "hook_score": 6,
+      "emotional_tone": "Educational",
+      "senior_editor_reasoning": "Paced dialogue segment featuring strong dynamic cadence and clear retention hook.",
+      "suggested_caption": "Wait till the end! Follow for more daily clips. #shorts #viral #trending #reels",
+      "recommended_reframe": "blur_stack",
+      "transcript_excerpt": "DCNE \u0b8e\u0ba9\u0b95\u0bcd\u0b95\u0bc1 \u0b92\u0bb0\u0bc1 \u0b9a\u0bbf\u0ba9\u0bcd\u0ba9 \u0b95\u0bc1\u0bb3\u0bcd\u0b95\u0b9f\u0bcd\u0b9f\u0b9a\u0bcd\u0b9a\u0bbe\u0baa\u0bcd \u0baa\u0bcb\u0bb2\u0bcd \u0ba4\u0bcb\u0b9f\u0bcd\u0b9f\u0bc1\u0b95\u0bcd\u0b95\u0bc1 \u0bae\u0bc1\u0ba4\u0bbf\u0bb0\u0bbf\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0bc7\u0ba9\u0bcd. \u0ba8\u0bb2\u0bcd\u0bb2\u0bc8\u0baf\u0bcb\u0b9a\u0bcd \u0b9a\u0bc6\u0bb2\u0bcd\u0bb2\u0bbf\u0bb2\u0bcd\u0bb2\u0bc8. \u0b85\u0ba4\u0bbf\u0bb2\u0bcd \u0b92\u0bb0\u0bc1\u0bb5\u0bb0\u0bcd\u0ba4\u0ba9\u0bbe\u0bb2\u0bcd \u0b92\u0bb0\u0bc1 \u0ba4\u0bae\u0bcd\u0baa\u0bc1\u0bb0\u0bcd \u0bae\u0bc1\u0b95\u0bc1\u0ba4\u0bcd\u0ba4\u0bc8\u0baf\u0bc1\u0bae\u0bcd\u0ba4\u0bc1 \u0baa\u0bbe\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0bbf\u0baf\u0bbe? \u0baa\u0bbe\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0bc8\u0baf\u0bc1\u0bae\u0bcd \u0baa\u0bbe\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0ba9\u0bcd\u0bbf\u0bb0\u0bcd. \u0b86\u0bae\u0bcd, \u0bae\u0bb0\u0bc1\u0baa\u0bcd\u0baa\u0bbf\u0b9f\u0bbf\u0baf\u0bc1\u0bae\u0bcd \u0baa\u0bbe\u0b9a\u0bcd\u0ba4\u0bbe\u0bb2\u0bcd \u0ba4\u0bbf\u0bb2\u0bcd\u0bb2\u0bc8\u0baf\u0bbe\u0ba9\u0bcd \u0b95\u0b9f\u0bcd\u0b9f\u0bae\u0bbe\u0b95? \u0b86\u0bb2\u0bbe\u0baf\u0bbf\u0bb1\u0bcd\u0b95\u0bb1\u0bcd\u0b95\u0bc1\u0b9a\u0bcd \u0b9a\u0bb0\u0bcd \u0bb5\u0bc8\u0bb0\u0bbf\u0b95\u0bcd\u0b95\u0bc1\u0b9f\u0bcd, \u0b9f \u0ba8\u0bbf\u0b9f\u0bae\u0bcd \u0b9a\u0bca\u0bb2\u0bcd\u0bb2\u0bcd, \u0bae\u0bb0\u0bbf\u0b95\u0bcd\u0b95\u0bc1\u0baf\u0bc7...",
+      "words": [
+        {
+          "word": "DCNE",
+          "start": 35.3,
+          "end": 37.38
+        },
+        {
+          "word": "\u0b8e\u0ba9\u0b95\u0bcd\u0b95\u0bc1",
+          "start": 37.38,
+          "end": 37.52
+        },
+        {
+          "word": "\u0b92\u0bb0\u0bc1",
+          "start": 37.52,
+          "end": 38.24
+        },
+        {
+          "word": "\u0b9a\u0bbf\u0ba9\u0bcd\u0ba9",
+          "start": 38.24,
+          "end": 44.04
+        },
+        {
+          "word": "\u0b95\u0bc1\u0bb3\u0bcd\u0b95\u0b9f\u0bcd\u0b9f\u0b9a\u0bcd\u0b9a\u0bbe\u0baa\u0bcd",
+          "start": 44.04,
+          "end": 44.8
+        },
+        {
+          "word": "\u0baa\u0bcb\u0bb2\u0bcd",
+          "start": 44.8,
+          "end": 45.32
+        },
+        {
+          "word": "\u0ba4\u0bcb\u0b9f\u0bcd\u0b9f\u0bc1\u0b95\u0bcd\u0b95\u0bc1",
+          "start": 45.32,
+          "end": 45.66
+        },
+        {
+          "word": "\u0bae\u0bc1\u0ba4\u0bbf\u0bb0\u0bbf\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0bc7\u0ba9\u0bcd.",
+          "start": 45.66,
+          "end": 46.74
+        },
+        {
+          "word": "\u0ba8\u0bb2\u0bcd\u0bb2\u0bc8\u0baf\u0bcb\u0b9a\u0bcd",
+          "start": 46.74,
+          "end": 49.06
+        },
+        {
+          "word": "\u0b9a\u0bc6\u0bb2\u0bcd\u0bb2\u0bbf\u0bb2\u0bcd\u0bb2\u0bc8.",
+          "start": 49.06,
+          "end": 49.96
+        },
+        {
+          "word": "\u0b85\u0ba4\u0bbf\u0bb2\u0bcd",
+          "start": 49.96,
+          "end": 50.22
+        },
+        {
+          "word": "\u0b92\u0bb0\u0bc1\u0bb5\u0bb0\u0bcd\u0ba4\u0ba9\u0bbe\u0bb2\u0bcd",
+          "start": 50.22,
+          "end": 51.2
+        },
+        {
+          "word": "\u0b92\u0bb0\u0bc1",
+          "start": 51.2,
+          "end": 51.38
+        },
+        {
+          "word": "\u0ba4\u0bae\u0bcd\u0baa\u0bc1\u0bb0\u0bcd",
+          "start": 51.38,
+          "end": 51.58
+        },
+        {
+          "word": "\u0bae\u0bc1\u0b95\u0bc1\u0ba4\u0bcd\u0ba4\u0bc8\u0baf\u0bc1\u0bae\u0bcd\u0ba4\u0bc1",
+          "start": 51.58,
+          "end": 51.88
+        },
+        {
+          "word": "\u0baa\u0bbe\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0bbf\u0baf\u0bbe?",
+          "start": 51.88,
+          "end": 52.16
+        },
+        {
+          "word": "\u0baa\u0bbe\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0bc8\u0baf\u0bc1\u0bae\u0bcd",
+          "start": 54.94,
+          "end": 55.54
+        },
+        {
+          "word": "\u0baa\u0bbe\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0ba9\u0bcd\u0bbf\u0bb0\u0bcd.",
+          "start": 55.54,
+          "end": 55.74
+        },
+        {
+          "word": "\u0b86\u0bae\u0bcd,",
+          "start": 55.74,
+          "end": 56.16
+        },
+        {
+          "word": "\u0bae\u0bb0\u0bc1\u0baa\u0bcd\u0baa\u0bbf\u0b9f\u0bbf\u0baf\u0bc1\u0bae\u0bcd",
+          "start": 56.16,
+          "end": 57.08
+        },
+        {
+          "word": "\u0baa\u0bbe\u0b9a\u0bcd\u0ba4\u0bbe\u0bb2\u0bcd",
+          "start": 57.08,
+          "end": 57.3
+        },
+        {
+          "word": "\u0ba4\u0bbf\u0bb2\u0bcd\u0bb2\u0bc8\u0baf\u0bbe\u0ba9\u0bcd",
+          "start": 57.3,
+          "end": 57.54
+        },
+        {
+          "word": "\u0b95\u0b9f\u0bcd\u0b9f\u0bae\u0bbe\u0b95?",
+          "start": 57.54,
+          "end": 57.74
+        },
+        {
+          "word": "\u0b86\u0bb2\u0bbe\u0baf\u0bbf\u0bb1\u0bcd\u0b95\u0bb1\u0bcd\u0b95\u0bc1\u0b9a\u0bcd",
+          "start": 60.46,
+          "end": 61.06
+        },
+        {
+          "word": "\u0b9a\u0bb0\u0bcd",
+          "start": 61.06,
+          "end": 61.24
+        },
+        {
+          "word": "\u0bb5\u0bc8\u0bb0\u0bbf\u0b95\u0bcd\u0b95\u0bc1\u0b9f\u0bcd,",
+          "start": 61.24,
+          "end": 62.04
+        },
+        {
+          "word": "\u0b9f",
+          "start": 62.04,
+          "end": 62.24
+        },
+        {
+          "word": "\u0ba8\u0bbf\u0b9f\u0bae\u0bcd",
+          "start": 62.24,
+          "end": 62.52
+        },
+        {
+          "word": "\u0b9a\u0bca\u0bb2\u0bcd\u0bb2\u0bcd,",
+          "start": 62.52,
+          "end": 62.92
+        },
+        {
+          "word": "\u0bae\u0bb0\u0bbf\u0b95\u0bcd\u0b95\u0bc1\u0baf\u0bc7",
+          "start": 62.92,
+          "end": 63.1
+        },
+        {
+          "word": "\u0b9a\u0bca\u0bb2\u0bcd\u0bb2\u0bc1,",
+          "start": 63.1,
+          "end": 63.24
+        },
+        {
+          "word": "y",
+          "start": 63.24,
+          "end": 63.28
+        },
+        {
+          "word": "altered.",
+          "start": 63.28,
+          "end": 63.38
+        }
+      ]
+    },
+    {
+      "moment_id": "moment_2_103s",
+      "title": "Watch What Happens Next",
+      "hook_text": "THIS CHANGED EVERYTHING \u26a1",
+      "start": 103.37,
+      "end": 133.37,
+      "duration": 30.0,
+      "virality_score": 65,
+      "hook_score": 6,
+      "emotional_tone": "Educational",
+      "senior_editor_reasoning": "Paced dialogue segment featuring strong dynamic cadence and clear retention hook.",
+      "suggested_caption": "Wait till the end! Follow for more daily clips. #shorts #viral #trending #reels",
+      "recommended_reframe": "blur_stack",
+      "transcript_excerpt": "\u0baa\u0bc2\u0bb1\u0bc1 \u0b9a\u0bbe\u0baf\u0bbe\u0447 \u0bae\u0bc8\u0ba4\u0bcd\u0ba4\u0bc1\u0bb5\u0bbf\u0b9f\u0bcd\u0b9f\u0ba4\u0bc1. \u0b85oping Sir...",
+      "words": [
+        {
+          "word": "\u0baa\u0bc2\u0bb1\u0bc1",
+          "start": 104.18,
+          "end": 104.18
+        },
+        {
+          "word": "\u0b9a\u0bbe\u0baf\u0bbe\u0447",
+          "start": 104.18,
+          "end": 104.18
+        },
+        {
+          "word": "\u0bae\u0bc8\u0ba4\u0bcd\u0ba4\u0bc1\u0bb5\u0bbf\u0b9f\u0bcd\u0b9f\u0ba4\u0bc1.",
+          "start": 104.18,
+          "end": 104.18
+        },
+        {
+          "word": "\u0b85oping",
+          "start": 118.61999999999999,
+          "end": 120.02
+        },
+        {
+          "word": "Sir",
+          "start": 120.02,
+          "end": 121.42
+        }
+      ]
+    },
+    {
+      "moment_id": "moment_3_172s",
+      "title": "The Absolute Truth",
+      "hook_text": "DO NOT MAKE THIS MISTAKE \ud83d\uded1",
+      "start": 172.28,
+      "end": 202.28,
+      "duration": 30.0,
+      "virality_score": 65,
+      "hook_score": 6,
+      "emotional_tone": "Educational",
+      "senior_editor_reasoning": "Paced dialogue segment featuring strong dynamic cadence and clear retention hook.",
+      "suggested_caption": "Wait till the end! Follow for more daily clips. #shorts #viral #trending #reels",
+      "recommended_reframe": "blur_stack",
+      "transcript_excerpt": "\u0b93\u0bb0\u0bcd \u0b9f\u0bbe\u0b9a \u0b90 \u0b93\u0bb0\u0bcd \u0b93\u0bb0\u0bcd\u0baa\u0bcd \u0baa\u0bcb\u0bb2\u0bc1\u0bae\u0bcd \u0ba4Rem\u0bcd\u0baa\u0ba4\u0bbe\u0ba9\u0bcd. \u0b93\u0bb0\u0bcd \u0b93\u0bb0\u0bcd \u0baa\u0b9f\u0bc8\u0b95\u0bcd\u0b95\u0bc1\u0bb3\u0bcd \u0b85\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0bbe\u0baf\u0bcd. \u0baf\u0bc6\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bc1\u0b99\u0bcdya, \u0b87\u0b99\u0bcd\u0b95\u0bc7 \u0ba4lude \u0b9a\u0bc1\u0bae\u0bcd. \u0b86\u0bb9\u0b99\u0bcd \u03bc\ufffd\u0bb2\u0baf\u0bbe\u0b95\u0bcd \u0b95\u0bc2\u0bb1\u0bbf\u0bb7\u0bbe\u0ba9\u0bcd. \u0b86\u0bb9\u0b99\u0bcd Commissioner \u0baa\u0ba3\u0bcd\u0ba3\u0bc1\u0ba4\u0bcd \u0ba4\u0bb0\u0bc1\u0b95\u0bcd\u0b95 \u0bb5\u0bcb\ub2e4vre\u0ba9\u0bcd \u0b87\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0ba4 Sea of the Green....",
+      "words": [
+        {
+          "word": "\u0b93\u0bb0\u0bcd",
+          "start": 175.39999999999998,
+          "end": 176.48
+        },
+        {
+          "word": "\u0b9f\u0bbe\u0b9a",
+          "start": 176.48,
+          "end": 177.24
+        },
+        {
+          "word": "\u0b90",
+          "start": 177.24,
+          "end": 177.5
+        },
+        {
+          "word": "\u0b93\u0bb0\u0bcd",
+          "start": 177.5,
+          "end": 177.5
+        },
+        {
+          "word": "\u0b93\u0bb0\u0bcd\u0baa\u0bcd",
+          "start": 177.5,
+          "end": 177.5
+        },
+        {
+          "word": "\u0baa\u0bcb\u0bb2\u0bc1\u0bae\u0bcd",
+          "start": 177.5,
+          "end": 177.5
+        },
+        {
+          "word": "\u0ba4Rem\u0bcd\u0baa\u0ba4\u0bbe\u0ba9\u0bcd.",
+          "start": 177.5,
+          "end": 177.5
+        },
+        {
+          "word": "\u0b93\u0bb0\u0bcd",
+          "start": 177.5,
+          "end": 178.02
+        },
+        {
+          "word": "\u0b93\u0bb0\u0bcd",
+          "start": 178.02,
+          "end": 178.38
+        },
+        {
+          "word": "\u0baa\u0b9f\u0bc8\u0b95\u0bcd\u0b95\u0bc1\u0bb3\u0bcd",
+          "start": 178.38,
+          "end": 178.96
+        },
+        {
+          "word": "\u0b85\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0bbe\u0baf\u0bcd.",
+          "start": 178.96,
+          "end": 179.2
+        },
+        {
+          "word": "\u0baf\u0bc6\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bc1\u0b99\u0bcdya,",
+          "start": 179.2,
+          "end": 179.7
+        },
+        {
+          "word": "\u0b87\u0b99\u0bcd\u0b95\u0bc7",
+          "start": 180.18,
+          "end": 181.3
+        },
+        {
+          "word": "\u0ba4lude",
+          "start": 181.3,
+          "end": 181.46
+        },
+        {
+          "word": "\u0b9a\u0bc1\u0bae\u0bcd.",
+          "start": 181.46,
+          "end": 181.86
+        },
+        {
+          "word": "\u0b86\u0bb9\u0b99\u0bcd",
+          "start": 181.86,
+          "end": 182.92
+        },
+        {
+          "word": "\u03bc\ufffd\u0bb2\u0baf\u0bbe\u0b95\u0bcd",
+          "start": 182.92,
+          "end": 183.46
+        },
+        {
+          "word": "\u0b95\u0bc2\u0bb1\u0bbf\u0bb7\u0bbe\u0ba9\u0bcd.",
+          "start": 183.46,
+          "end": 184.36
+        },
+        {
+          "word": "\u0b86\u0bb9\u0b99\u0bcd",
+          "start": 184.36,
+          "end": 185.22
+        },
+        {
+          "word": "Commissioner",
+          "start": 185.22,
+          "end": 185.22
+        },
+        {
+          "word": "\u0baa\u0ba3\u0bcd\u0ba3\u0bc1\u0ba4\u0bcd",
+          "start": 185.22,
+          "end": 185.22
+        },
+        {
+          "word": "\u0ba4\u0bb0\u0bc1\u0b95\u0bcd\u0b95",
+          "start": 185.22,
+          "end": 185.22
+        },
+        {
+          "word": "\u0bb5\u0bcb\ub2e4vre\u0ba9\u0bcd",
+          "start": 185.22,
+          "end": 186.04
+        },
+        {
+          "word": "\u0b87\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0ba4",
+          "start": 186.04,
+          "end": 186.74
+        },
+        {
+          "word": "Sea",
+          "start": 186.74,
+          "end": 186.74
+        },
+        {
+          "word": "of",
+          "start": 186.74,
+          "end": 186.74
+        },
+        {
+          "word": "the",
+          "start": 186.74,
+          "end": 186.74
+        },
+        {
+          "word": "Green.",
+          "start": 186.74,
+          "end": 186.74
+        }
+      ]
+    },
+    {
+      "moment_id": "moment_4_241s",
+      "title": "Mind-Blowing Secret",
+      "hook_text": "NOBODY TELLS YOU THIS \ud83e\udd2b",
+      "start": 241.2,
+      "end": 271.2,
+      "duration": 30.0,
+      "virality_score": 73,
+      "hook_score": 6,
+      "emotional_tone": "Educational",
+      "senior_editor_reasoning": "Paced dialogue segment featuring strong dynamic cadence and clear retention hook.",
+      "suggested_caption": "Wait till the end! Follow for more daily clips. #shorts #viral #trending #reels",
+      "recommended_reframe": "blur_stack",
+      "transcript_excerpt": "\u0b90\u0baf\u0bbe \u0b95\u0bcb\u0ba4\u0ba9\u0bcd \u0b8e\u0ba3\u0bcd\u0ba3\u0bbe ? \u0b89\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0bae\u0bbf\u0bb4\u0bc8\u0b95\u0bcd\u0b95\u0bc1\u0bb5\u0ba9\u0bae\u0bcd \u0baa\u0bcb\u0ba9\u0bcd\u0bb1\u0bc1 \u0ba8\u0b95\u0bc8 \u0b8f\u0b9f\u0bcd\u0ba4\u0bc0\u0b9f\u0bcd\u0b95\u0bb3\u0bcd \u0633\u06d2 \u0ba8\u0bbf\u0bb1\u0bcd\u0bb1\u0bc1\u0ba4\u0bbf\u0bb2\u0bcd \u0b87\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0ba4\u0bc1. \u0b9a\u0bbe\u0bc8\u0baf\u0bc1\u0bae\u0bcd \u0baa\u0bb4\u0bb5\u0bbf\u0bb5\u0bbf\u0b9f\u0bcd\u0b95\u0bb3\u0bcd. \u0ba8 \u0b92\u0bb0\u0bc1 \u0bae\u0bc1\u0bae\u0bcd\u0baa\u0bbf\u0bb2\u0bcd \u0baa\u0bcb\u0ba9\u0bcd\u0bb1\u0bc1 \u0b95\u0bc7\u0b9f\u0bbf\u0ba9\u0bc8\u0baa\u0b9f\u0bc1\u0ba4\u0bc1 \u0b9a\u0bc6\u0bb2\u0bcd\u0bb1\u0bbe\u0b95 \u0b87\u0ba9\u0bcd\u0bb1\u0bc1 \u0b9a\u0bc6\u0bb2\u0bcd\u0bb5\u0bbe. \u0ba4\u0baa\u0bcd\u0baa\u0bc1 \u0baa\u0ba9\u0bcduger\u0bb5\u0ba9\u0bcd \u0b85\u0b95\u0bb5\u0bc1\u0b9f\u0bc8\u0baf \u0bae\u0ba9\u0bbf\u0ba4\u0bcd\u0ba4\u0bc1\u0bb5\u0bbf\u0b9f\u0bc1\u0bb5\u0bbf\u0b9f\u0bc1. \u0b86\u0ba9\u0bbe\u0bb2\u0bcd \u0b9a\u0bc6\u0ba9\u0bcd\u0bb1\u0bc1\u0ba4\u0bcd \u0ba4\u0baa\u0bcd\u0baa\u0bc1 \u0b95\u0b9f\u0bcd\u0ba3\u0bc1\u0bae\u0bcd...",
+      "words": [
+        {
+          "word": "\u0b90\u0baf\u0bbe",
+          "start": 248.82,
+          "end": 249.94
+        },
+        {
+          "word": "\u0b95\u0bcb\u0ba4\u0ba9\u0bcd",
+          "start": 249.94,
+          "end": 249.96
+        },
+        {
+          "word": "\u0b8e\u0ba3\u0bcd\u0ba3\u0bbe",
+          "start": 249.96,
+          "end": 249.96
+        },
+        {
+          "word": "?",
+          "start": 249.96,
+          "end": 250.8
+        },
+        {
+          "word": "\u0b89\u0b99\u0bcd\u0b95\u0bb3\u0bcd",
+          "start": 250.8,
+          "end": 252.1
+        },
+        {
+          "word": "\u0bae\u0bbf\u0bb4\u0bc8\u0b95\u0bcd\u0b95\u0bc1\u0bb5\u0ba9\u0bae\u0bcd",
+          "start": 252.1,
+          "end": 252.46
+        },
+        {
+          "word": "\u0baa\u0bcb\u0ba9\u0bcd\u0bb1\u0bc1",
+          "start": 252.46,
+          "end": 252.94
+        },
+        {
+          "word": "\u0ba8\u0b95\u0bc8",
+          "start": 252.94,
+          "end": 253.74
+        },
+        {
+          "word": "\u0b8f\u0b9f\u0bcd\u0ba4\u0bc0\u0b9f\u0bcd\u0b95\u0bb3\u0bcd",
+          "start": 253.74,
+          "end": 254.42
+        },
+        {
+          "word": "\u0633\u06d2",
+          "start": 254.42,
+          "end": 254.5
+        },
+        {
+          "word": "\u0ba8\u0bbf\u0bb1\u0bcd\u0bb1\u0bc1\u0ba4\u0bbf\u0bb2\u0bcd",
+          "start": 254.5,
+          "end": 254.62
+        },
+        {
+          "word": "\u0b87\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0ba4\u0bc1.",
+          "start": 254.62,
+          "end": 255.46
+        },
+        {
+          "word": "\u0b9a\u0bbe\u0bc8\u0baf\u0bc1\u0bae\u0bcd",
+          "start": 255.46,
+          "end": 256.02
+        },
+        {
+          "word": "\u0baa\u0bb4\u0bb5\u0bbf\u0bb5\u0bbf\u0b9f\u0bcd\u0b95\u0bb3\u0bcd.",
+          "start": 256.02,
+          "end": 256.72
+        },
+        {
+          "word": "\u0ba8",
+          "start": 256.72,
+          "end": 257.28
+        },
+        {
+          "word": "\u0b92\u0bb0\u0bc1",
+          "start": 257.28,
+          "end": 257.38
+        },
+        {
+          "word": "\u0bae\u0bc1\u0bae\u0bcd\u0baa\u0bbf\u0bb2\u0bcd",
+          "start": 257.38,
+          "end": 257.5
+        },
+        {
+          "word": "\u0baa\u0bcb\u0ba9\u0bcd\u0bb1\u0bc1",
+          "start": 257.5,
+          "end": 259.28
+        },
+        {
+          "word": "\u0b95\u0bc7\u0b9f\u0bbf\u0ba9\u0bc8\u0baa\u0b9f\u0bc1\u0ba4\u0bc1",
+          "start": 259.28,
+          "end": 259.96
+        },
+        {
+          "word": "\u0b9a\u0bc6\u0bb2\u0bcd\u0bb1\u0bbe\u0b95",
+          "start": 259.96,
+          "end": 260.36
+        },
+        {
+          "word": "\u0b87\u0ba9\u0bcd\u0bb1\u0bc1",
+          "start": 260.36,
+          "end": 260.36
+        },
+        {
+          "word": "\u0b9a\u0bc6\u0bb2\u0bcd\u0bb5\u0bbe.",
+          "start": 260.36,
+          "end": 260.54
+        },
+        {
+          "word": "\u0ba4\u0baa\u0bcd\u0baa\u0bc1",
+          "start": 260.78,
+          "end": 261.9
+        },
+        {
+          "word": "\u0baa\u0ba9\u0bcduger\u0bb5\u0ba9\u0bcd",
+          "start": 261.9,
+          "end": 262.18
+        },
+        {
+          "word": "\u0b85\u0b95\u0bb5\u0bc1\u0b9f\u0bc8\u0baf",
+          "start": 262.18,
+          "end": 262.36
+        },
+        {
+          "word": "\u0bae\u0ba9\u0bbf\u0ba4\u0bcd\u0ba4\u0bc1\u0bb5\u0bbf\u0b9f\u0bc1\u0bb5\u0bbf\u0b9f\u0bc1.",
+          "start": 262.36,
+          "end": 263.06
+        },
+        {
+          "word": "\u0b86\u0ba9\u0bbe\u0bb2\u0bcd",
+          "start": 263.06,
+          "end": 263.66
+        },
+        {
+          "word": "\u0b9a\u0bc6\u0ba9\u0bcd\u0bb1\u0bc1\u0ba4\u0bcd",
+          "start": 263.66,
+          "end": 264.04
+        },
+        {
+          "word": "\u0ba4\u0baa\u0bcd\u0baa\u0bc1",
+          "start": 264.04,
+          "end": 264.26
+        },
+        {
+          "word": "\u0b95\u0b9f\u0bcd\u0ba3\u0bc1\u0bae\u0bcd",
+          "start": 264.26,
+          "end": 264.98
+        },
+        {
+          "word": "\u0b89\u0ba9\u0bcd\u0ba9\u0bc8",
+          "start": 264.98,
+          "end": 265.12
+        },
+        {
+          "word": "\u0ba8\u0bc7\u0bb0\u0bcdQUUR\u0bb3\u0bb5\u0bc1\u0bb5\u0bc7\u0ba9\u0bcd.",
+          "start": 265.12,
+          "end": 265.84
+        }
+      ]
+    },
+    {
+      "moment_id": "moment_5_310s",
+      "title": "You Won't Believe This",
+      "hook_text": "PURE GOLD MOMENT \u2728",
+      "start": 310.11,
+      "end": 340.11,
+      "duration": 30.0,
+      "virality_score": 65,
+      "hook_score": 6,
+      "emotional_tone": "Educational",
+      "senior_editor_reasoning": "Paced dialogue segment featuring strong dynamic cadence and clear retention hook.",
+      "suggested_caption": "Wait till the end! Follow for more daily clips. #shorts #viral #trending #reels",
+      "recommended_reframe": "blur_stack",
+      "transcript_excerpt": "\u0b95\u0bbe\u0ba4\u0bcd\u0ba4\u0bbf\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0bc7\u0ba9\u0bcd. \u0b85\u0ba3\u0bcd\u0b9f\u0bbf\u0baf\u0bc8\u0ba4\u0bcd \u0ba4\u0bc7\u0b9a\u0bbf \u0bb5\u0bbf\u0b9f\u0bbf\u0b95\u0bcd\u0b95\u0bc1\u0bae\u0bcd \u0b95\u0bbe\u0baa\u0bbf\u0bb1\u0bcd\u0bb1\u0bc1....",
+      "words": [
+        {
+          "word": "\u0b95\u0bbe\u0ba4\u0bcd\u0ba4\u0bbf\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bbf\u0bb1\u0bc7\u0ba9\u0bcd.",
+          "start": 314.76,
+          "end": 315.5
+        },
+        {
+          "word": "\u0b85\u0ba3\u0bcd\u0b9f\u0bbf\u0baf\u0bc8\u0ba4\u0bcd",
+          "start": 320.5,
+          "end": 321.24
+        },
+        {
+          "word": "\u0ba4\u0bc7\u0b9a\u0bbf",
+          "start": 321.24,
+          "end": 321.28
+        },
+        {
+          "word": "\u0bb5\u0bbf\u0b9f\u0bbf\u0b95\u0bcd\u0b95\u0bc1\u0bae\u0bcd",
+          "start": 321.28,
+          "end": 321.6
+        },
+        {
+          "word": "\u0b95\u0bbe\u0baa\u0bbf\u0bb1\u0bcd\u0bb1\u0bc1.",
+          "start": 321.6,
+          "end": 322.02
+        }
+      ]
+    }
+  ],
+  "rendered_clips": [
+    {
+      "moment_id": "moment_1_34s",
+      "title": "The Untold Reality",
+      "video_path": "outputs/smart_clips/test_job_url_fixed_moment_1_34s_9x16.mp4",
+      "thumbnail_path": "outputs/smart_clips/test_job_url_fixed_moment_1_34s_thumb.jpg",
+      "public_url": "/outputs/smart_clips/test_job_url_fixed_moment_1_34s_9x16.mp4",
+      "public_thumb_url": "/outputs/smart_clips/test_job_url_fixed_moment_1_34s_thumb.jpg",
+      "duration": 30.0,
+      "virality_score": 73,
+      "hook_text": "WAIT FOR THE PUNCHLINE \ud83e\udd2f",
+      "caption": "Wait till the end! Follow for more daily clips. #shorts #viral #trending #reels",
+      "rendered_at": "2026-09-23T22:40:12.392570"
+    }
+  ],
+  "created_at": "2026-09-23T22:31:32.364963",
+  "updated_at": "2026-09-23T22:40:12.392570"
+}

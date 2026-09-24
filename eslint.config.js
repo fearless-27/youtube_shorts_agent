@@ -6,7 +6,17 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'node_modules', 'venv', '**/venv/**']),
+  globalIgnores([
+    'dist',
+    'node_modules',
+    'venv',
+    '**/venv/**',
+    '.kilo/**',
+    '.agents/**',
+    'scratch/**',
+    'video-use-main/**',
+    'landing page/**',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -22,6 +32,7 @@ export default defineConfig([
     rules: {
       'react-refresh/only-export-components': 'off',
       'react-hooks/set-state-in-effect': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
     },
   },
 ])

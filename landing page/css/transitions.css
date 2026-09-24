@@ -1,0 +1,103 @@
+/* Page Transitions CSS */
+
+    :root {
+      --pt-bg: #000;
+      --pt-top: -102%;
+      --pt-bottom: 102%
+    }
+
+    html.is-page-transitioning,
+    html.is-page-transitioning body {
+      cursor: progress
+    }
+
+    h1 {
+      margin: 0;
+      padding: 4px 0;
+      font-size: 100%;
+      font-weight: normal;
+      line-height: 1;
+      font-family: inherit;
+      vertical-align: baseline;
+      box-sizing: border-box;
+    }
+
+    h3 {
+      margin: 0;
+      padding: 0;
+      font-size: 100%;
+      font-weight: normal;
+    }
+
+    .page-transition-shell {
+      position: fixed;
+      inset: 0;
+      z-index: 300000;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden
+    }
+
+    .page-transition-shell.is-active {
+      opacity: 1;
+      visibility: visible
+    }
+
+    html.has-pending-page-transition .page-transition-shell {
+      opacity: 1;
+      visibility: visible
+    }
+
+    .page-transition-curtain {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      --pt-top: -102%;
+      --pt-bottom: 102%
+    }
+
+    .page-transition-curtain::before,
+    .page-transition-curtain::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 60vh;
+      background: var(--pt-bg);
+      will-change: transform
+    }
+
+    .page-transition-curtain::before {
+      top: 0;
+      transform: translateY(var(--pt-top))
+    }
+
+    .page-transition-curtain::after {
+      bottom: 0;
+      transform: translateY(var(--pt-bottom))
+    }
+
+    html.has-pending-page-transition .page-transition-curtain {
+      opacity: 1;
+      --pt-top: 0%;
+      --pt-bottom: 0%
+    }
+
+    .page-transition-frame,
+    html.has-pending-page-transition .page-transition-frame,
+    .page-transition-loader,
+    html.has-pending-page-transition .page-transition-loader,
+    .page-transition-counter,
+    .page-transition-counter span,
+    .page-transition-panel,
+    html.has-pending-page-transition .page-transition-panel {
+      display: none !important
+    }
+
+    @media (max-width:767px) {
+
+      .page-transition-curtain::before,
+      .page-transition-curtain::after {
+        height: 58vh
+      }
+    }

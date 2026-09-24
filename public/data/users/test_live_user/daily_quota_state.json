@@ -1,0 +1,51 @@
+{
+  "date": "2026-09-19",
+  "uploads": 6,
+  "short": 0,
+  "video": 0,
+  "max_daily_uploads": 15,
+  "history": [
+    {
+      "timestamp": "2026-09-19T15:28:55.269219+00:00",
+      "pipeline": "telegram",
+      "video_id": "whS_zKnqywA",
+      "url": "https://youtube.com/shorts/whS_zKnqywA",
+      "title": "✨ Shinchan Tamil ✨ Ep 1: Funny Breakfast Chaos | Part 1/10 🔥 #Shorts #TamilShorts"
+    },
+    {
+      "timestamp": "2026-09-19T15:29:43.901844+00:00",
+      "pipeline": "telegram",
+      "video_id": "jpINn8cHnYY",
+      "url": "https://youtube.com/shorts/jpINn8cHnYY",
+      "title": "✨ Shinchan Tamil ✨ Ep 1: Trouble With Mom | Part 2/10 🔥 #Shorts #TamilShorts"
+    },
+    {
+      "timestamp": "2026-09-19T15:30:27.682208+00:00",
+      "pipeline": "telegram",
+      "video_id": "0tGfAVARuos",
+      "url": "https://youtube.com/shorts/0tGfAVARuos",
+      "title": "✨ Shinchan Tamil ✨ Ep 1: Action Kamen Secret Pose | Part 3/10 🔥 #Shorts #TamilShorts"
+    },
+    {
+      "timestamp": "2026-09-19T15:31:16.610370+00:00",
+      "pipeline": "telegram",
+      "video_id": "PDoozw--62E",
+      "url": "https://youtube.com/shorts/PDoozw--62E",
+      "title": "✨ Shinchan Tamil ✨ Ep 1: Shiro's Daily Walking Fun | Part 4/10 🔥 #Shorts #TamilShorts"
+    },
+    {
+      "timestamp": "2026-09-19T15:32:01.394279+00:00",
+      "pipeline": "telegram",
+      "video_id": "fttTJJq04I0",
+      "url": "https://youtube.com/shorts/fttTJJq04I0",
+      "title": "✨ Shinchan Tamil ✨ Ep 1: Kindergarten Bus Ride | Part 5/10 🔥 #Shorts #TamilShorts"
+    },
+    {
+      "timestamp": "2026-09-19T15:32:40.778368+00:00",
+      "pipeline": "telegram",
+      "video_id": "hSJA66_wcR0",
+      "url": "https://youtube.com/shorts/hSJA66_wcR0",
+      "title": "✨ Shinchan Tamil ✨ Ep 2: Kazama Secret Study | Part 6/10 🔥 #Shorts #TamilShorts"
+    }
+  ]
+}

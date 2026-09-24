@@ -10,11 +10,59 @@ const pageVariants = {
   exit: { opacity: 0, y: -8, transition: { duration: 0.25 } },
 };
 
+/** Redirect root to landing page (if not logged in) or dashboard (if logged in) */
+function RootRedirect() {
+  const isLoggedIn = (() => {
+    try {
+      const raw = localStorage.getItem('nemo_user');
+      if (!raw) return false;
+      const user = JSON.parse(raw);
+      return Boolean(user && user.email);
+    } catch { return false; }
+  })();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      window.location.href = '/landing/';
+    }
+  }, [isLoggedIn]);
+
+  if (isLoggedIn) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return null;
+}
+
+/** Redirect /login directly to the login page */
+function LoginRedirect() {
+  const isLoggedIn = (() => {
+    try {
+      const raw = localStorage.getItem('nemo_user');
+      if (!raw) return false;
+      const user = JSON.parse(raw);
+      return Boolean(user && user.email);
+    } catch { return false; }
+  })();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      window.location.href = '/landing/login.html';
+    }
+  }, [isLoggedIn]);
+
+  if (isLoggedIn) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return null;
+}
+
 function App() {
   const location = useLocation();
 
   useEffect(() => {
-    document.title = 'GhostPipe — AI YouTube Shorts Automation';
+    document.title = 'NEMO — AI YouTube Shorts Automation';
     document.documentElement.lang = 'en';
 
     let metaDescription = document.querySelector<HTMLMetaElement>('meta[name="description"]');
@@ -23,14 +71,15 @@ function App() {
       metaDescription.name = 'description';
       document.head.appendChild(metaDescription);
     }
-    metaDescription.content = 'GhostPipe scans trends, generates AI-powered YouTube Shorts, predicts virality, and uploads autonomously. The complete Shorts automation pipeline.';
+    metaDescription.content = 'NEMO scans trends, generates AI-powered YouTube Shorts, predicts virality, and uploads autonomously. The complete Shorts automation pipeline.';
   }, []);
 
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<RootRedirect />} />
+        <Route path="/login" element={<LoginRedirect />} />
+        <Route path="/landing" element={<RootRedirect />} />
         <Route path="/dashboard/*" element={<PageWrapper><Dashboard /></PageWrapper>} />
       </Routes>
     </AnimatePresence>

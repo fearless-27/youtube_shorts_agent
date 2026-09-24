@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>NEMO — Autonomous Creative Intelligence System for Digital Strategists</title>
+
+  <script src="js/page-transition.js"></script>
+  <script src="js/dashboard-link.js"></script>
+
+  <!-- Google Analytics 4 (GA4) -->
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N53QVZL8TL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-N53QVZL8TL');
+  </script>
+
+  <!-- SEO -->
+  <meta name="description"
+    content="NEMO is an integrated autonomous production ecosystem engineered for digital creators. Neural signal synthesis, intelligent visual architecture, and perpetual YouTube distribution—zero manual intervention required.">
+  <meta name="keywords"
+    content="Autonomous video production, AI content creation, Neural visual synthesis, YouTube automation system, Creative intelligence platform, Viral content prediction, Autonomous publishing, Digital creative agency, AI shorts generator, YouTube automation, Content creation AI, Video editing automation, Viral video prediction, YouTube growth automation">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="NEMO Creative Systems">
+  <meta name="theme-color" content="#030303">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="canonical" href="https://nudot.com.tw/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://NEMO.lab/">
+  <meta property="og:title" content="NEMO — Autonomous Creative Intelligence System for Digital Strategists">
+  <meta property="og:description" content="NEMO is an integrated autonomous production ecosystem engineered for digital creators. Neural signal synthesis, intelligent visual architecture, and perpetual YouTube distribution.">
+  <meta property="og:image" content="https://NEMO.lab/images/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="NEMO Creative Systems">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NEMO — Autonomous Creative Intelligence System for Digital Strategists">
+  <meta name="twitter:description" content="NEMO is an integrated autonomous production ecosystem engineered for digital creators. Neural signal synthesis, intelligent visual architecture, and perpetual YouTube distribution.">
+  <meta name="twitter:image" content="https://NEMO.lab/images/og.jpg">
+
+  <!-- Preconnects (only origins actually used at first paint) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+  <link rel="preconnect" href="https://p.typekit.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <!-- LCP boosters: brand logo -->
+  <link rel="preload" as="image" href="images/pc_logo.svg" fetchpriority="high">
+
+  <!-- LCP boosters: hero slide-0 video — 趁 loader 動畫期間就把影片下載到瀏覽器快取,
+       loader 結束後 WebGLManager 創 vid.src 時直接 hit cache,不用再等網路。
+       NOTE: <link rel="preload" as="video"> 不在 WHATWG 規範白名單內(會被忽略 + 噴警告),
+       改用 hidden <video preload="auto"> 觸發跟正式 <video> 元素一樣的 Range request,
+       確保 HTTP cache 能被後面的 WebGLManager 真正命中。 -->
+  <!-- LCP boosters: hero slide-0 video prewarm -->
+  <script src="js/prewarm.js"></script>
+
+  <!-- Non-blocking: Adobe Fonts -->
+  <link rel="preload" as="style" href="https://use.typekit.net/upd0woi.css">
+  <link rel="stylesheet" href="https://use.typekit.net/upd0woi.css" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://use.typekit.net/upd0woi.css">
+  </noscript>
+
+  <!-- Non-blocking: Google Fonts (combined into one request) -->
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap"
+    media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap">
+  </noscript>
+
+  <!-- Favicons & App Icons (NEMO N Emblem) -->
+  <link rel="icon" type="image/svg+xml" href="images/pc_logo.svg?v=nemo_n_2026">
+  <link rel="shortcut icon" href="favicon.ico?v=nemo_n_2026">
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=nemo_n_2026">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png?v=nemo_n_2026">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png?v=nemo_n_2026">
+  <link rel="icon" type="image/png" href="images/fav.png?v=nemo_n_2026">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=nemo_n_2026">
+  <script>
+    // Force browser to bust tab favicon cache immediately
+    try {
+      const fi = document.createElement('link');
+      fi.rel = 'icon';
+      fi.type = 'image/png';
+      fi.href = 'images/favicon-32x32.png?t=' + Date.now();
+      document.head.appendChild(fi);
+    } catch(e){}
+  </script>
+  <!-- Critical inline: page-transitions (formerly page-transitions.css) -->
+
+  <!-- =========================================================
+       STYLESHEETS (Separated into css/ directory)
+       ========================================================= -->
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/loader.css">
+  <link rel="stylesheet" href="css/capabilities.css">
+  <link rel="stylesheet" href="css/workflow.css?v=neon3d">
+
+  <!-- Deferred JS (non-render-blocking). Critical libs first, then auxiliaries. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer fetchpriority="high"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer
+    fetchpriority="high"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer
+    fetchpriority="high"></script>
+  <!-- three.js 是 hero WebGL 必須依賴,放 high 讓它跟 GSAP 同級下載,避免 hero 等它 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer fetchpriority="high"></script>
+  <script src="js/Flip.min.js" defer fetchpriority="high"></script>
+  <script src="js/ScrambleTextPlugin.min.js" defer></script>
+  <!-- Flip + ScrambleText：僅用於 STM section（手機版 display:none）→ 桌機才載入 -->
+  <script src="js/pointer.js" defer></script>
+  <!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "NEMO Creative Systems",
+  "alternateName": "NEMO Studio",
+  "url": "https://NEMO.lab/",
+  "logo": "https://NEMO.lab/images/nemo_icon.png",
+  "image": "https://NEMO.lab/images/og.jpg",
+  "description": "NEMO is an integrated autonomous production ecosystem engineered for digital creators. Neural signal synthesis, intelligent visual architecture, and perpetual YouTube distribution.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "studio@NEMO.lab",
+    "contactType": "customer service",
+    "availableLanguage": ["English"]
+  }
+}
+</script>
+</head>
+
+<body>
+
+  <div class="page-transition-shell js-page-transition-shell" aria-hidden="true">
+    <div class="page-transition-curtain js-page-transition-curtain"></div>
+    <div class="page-transition-frame js-page-transition-frame">
+      <div class="page-transition-loader js-page-transition-loader"></div>
+      <div class="page-transition-counter js-page-transition-counter">[ <span
+          class="js-page-transition-counter-num">00</span> ]</div>
+      <div class="page-transition-panel js-page-transition-panel">
+        <div class="page-transition-meta is-top-left">NEMO</div>
+        <div class="page-transition-meta is-top-right js-page-transition-meta-to">index.html</div>
+        <div class="page-transition-copy">
+          <div class="page-transition-eyebrow js-page-transition-eyebrow">NEMO CREATIVE SYSTEMS</div>
+          <div class="page-transition-title js-page-transition-title">HOME</div>
+          <div class="page-transition-subtitle js-page-transition-subtitle">Shared page-transition layer for the home
+            page and work archive.</div>
+        </div>
+        <div class="page-transition-meta is-bottom-left">Strategy / Automation / Intelligence</div>
+        <div class="page-transition-meta is-bottom-right">2026</div>
+      </div>
+    </div>
+  </div>
+
+  <div data-barba="wrapper">
+    <div data-barba="container" data-barba-namespace="home">
+
+      <div id="scroll-progress"></div>
+      <!-- ── NAV (頂部原始三元素) ── -->
+      <div id="nav">
+        <a id="fixed-logo" href="#nav" data-cursor="HOME" aria-label="NEMO home">
+          <img src="images/pc_logo.svg" alt="NEMO Creative Systems" width="45" height="35" fetchpriority="high" decoding="async">
+        </a>
+      </div>
+
+      <!-- ── NAV_SCROLL (滾動後出現的 bar) ── -->
+      <div id="nav_scroll_container" inert>
+        <div id="nav_scroll">
+          <!-- 左側 Sign In -->
+          <a class="ns-icon ns-auth-icon" id="nav-scroll-auth-btn" href="login.html" data-cursor="SIGN IN" aria-label="Sign In">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+          <!-- 中間 Logo -->
+          <a class="ns-logo" href="#top" data-cursor="HOME" aria-label="NEMO home">
+            <img src="images/pc_logo.svg" alt="NEMO Creative Systems" width="45" height="35" loading="lazy" decoding="async">
+          </a>
+          <!-- 右側漢堡 → + -->
+          <button class="ns-icon ns-hamburger" id="nav-scroll-menu-btn" data-cursor="OPEN" aria-label="Open menu"
+            aria-expanded="false" aria-controls="nav-scroll-dropdown">
+            <svg class="ns-ham-svg" viewBox="0 0 24 24">
+              <line class="ns-ham-l1" x1="5" y1="9" x2="19" y2="9" />
+              <line class="ns-ham-l2" x1="5" y1="15" x2="19" y2="15" />
+            </svg>
+          </button>
+        </div>
+        <div class="ns-dropdown" id="nav-scroll-dropdown" aria-hidden="true">
+          <div class="ns-dropdown__inner" id="nav-scroll-dropdown-content">
+            <div class="ns-menu-stage">
+              <!-- <div class="ns-menu-topline ns-dropdown__item">
+            <span class="ns-menu-topline__brand">NUDOT CREATIVE STUDIO</span>
+            <a class="ns-menu-topline__contact" href="#site-footer">CONTACT</a>
+          </div> -->
+
+              <div class="ns-menu-rows">
+                <a class="ns-showcase-row ns-dropdown__item" href="#top" data-transition-label="Home" aria-label="Home">
+                  <span class="ns-showcase-row__index" data-text="( 01 // OVERVIEW )"></span>
+                  <span class="ns-showcase-row__title">
+                    <span class="ns-showcase-row__title-track">
+                      <span class="ns-showcase-row__title-layer is-primary" data-text="OVERVIEW"></span>
+                      <span class="ns-showcase-row__title-layer is-accent" aria-hidden="true" data-text="OVERVIEW"></span>
+                    </span>
+                  </span>
+                </a>
+
+                <a class="ns-showcase-row ns-dropdown__item" href="/dashboard" data-dashboard-link="" data-transition-label="Dashboard"
+                  aria-label="Dashboard">
+                  <span class="ns-showcase-row__index" data-text="( 02 // DASHBOARD )"></span>
+                  <span class="ns-showcase-row__title">
+                    <span class="ns-showcase-row__title-track">
+                      <span class="ns-showcase-row__title-layer is-primary" data-text="DASHBOARD"></span>
+                      <span class="ns-showcase-row__title-layer is-accent" aria-hidden="true" data-text="DASHBOARD"></span>
+                    </span>
+                  </span>
+                </a>
+
+                <a class="ns-showcase-row ns-dropdown__item" href="/dashboard/command" data-dashboard-link="command" data-transition-label="Pipeline" aria-label="Pipeline">
+                  <span class="ns-showcase-row__index" data-text="( 03 // ARCHITECTURE )"></span>
+                  <span class="ns-showcase-row__title">
+                    <span class="ns-showcase-row__title-track">
+                      <span class="ns-showcase-row__title-layer is-primary" data-text="PIPELINE"></span>
+                      <span class="ns-showcase-row__title-layer is-accent" aria-hidden="true" data-text="PIPELINE"></span>
+                    </span>
+                  </span>
+                </a>
+
+                <a class="ns-showcase-row ns-dropdown__item" href="/dashboard/content" data-dashboard-link="content" data-transition-label="Outputs" aria-label="Outputs">
+                  <span class="ns-showcase-row__index" data-text="( 04 // VIRAL ARCHIVE )"></span>
+                  <span class="ns-showcase-row__title">
+                    <span class="ns-showcase-row__title-track">
+                      <span class="ns-showcase-row__title-layer is-primary" data-text="OUTPUTS"></span>
+                      <span class="ns-showcase-row__title-layer is-accent" aria-hidden="true" data-text="OUTPUTS"></span>
+                    </span>
+                  </span>
+                </a>
+
+                <a class="ns-showcase-row ns-dropdown__item" href="login.html" data-transition-label="Login"
+                  aria-label="Operator Login">
+                  <span class="ns-showcase-row__index" data-text="( 05 // OPERATOR ACCESS )"></span>
+                  <span class="ns-showcase-row__title">
+                    <span class="ns-showcase-row__title-track">
+                      <span class="ns-showcase-row__title-layer is-primary" data-text="OPERATOR LOGIN"></span>
+                      <span class="ns-showcase-row__title-layer is-accent" aria-hidden="true"
+                        data-text="OPERATOR LOGIN"></span>
+                    </span>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="cursor-dot"></div>
+      <div id="cursor-ring" data-cursor-label="EXPLORE" data-cursor-side="right"></div>
+
+      <div id="nudot-loader">
+        <div class="nd-mask"></div>
+        <div class="nd-logo">
+          <span class="nd-letter nd-n">N</span>
+          <span class="nd-letter nd-m">M</span>
+        </div>
+      </div>
+
+      <!-- Hero Reveal & Loader Timing -->
+      <script src="js/loader.js" defer></script>
+      <!-- Lazy Video & Image Observer -->
+      <script src="js/video-observer.js" defer></script>
+      <div class="scroll-track">
+        <div class="sticky-container">
+
+          <div class="hero-section" id="top">
+            <div id="webgl-container"></div>
+            <!-- 右邊小影片 -->
+            <div class="brand-core-video-row">
+              <div class="brand-core-video">
+                <a href="https://www.youtube.com/channel/UCKx1pXVuhTF3l2JrIqnU9xg" target="_blank" rel="noopener noreferrer"
+                  aria-label="Visit YouTube Channel" data-cursor="CHANNEL"
+                  style="display:block;width:100%;height:100%;cursor:pointer;">
+                  <video autoplay muted loop playsinline preload="auto" disableRemotePlayback data-lazy-video
+                    poster="videos/my_new_video_thumb.webp" style="cursor:pointer;width:100%;height:100%;object-fit:cover;">
+                    <source src="videos/my_new_video.mp4" data-src="videos/my_new_video.mp4" type="video/mp4">
+                  </video>
+                </a>
+              </div>
+            </div>
+
+
+
+
+
+            <div class="overlay-ui">
+              <div class="overlay-top">
+                <div class="top-header">
+                  <h1 class="huge-text" style="margin: 0; padding: 0;">SMART</h1>
+                  <div class="small-tag">( YOUTUBE AUTOMATION )</div>
+                  <div class="huge-text">AGENT</div>
+                </div>
+
+                <div class="grid-4">
+                  <div>
+                    <ul class="services-list">
+                      <li>Trend Detection Intelligence</li>
+                      <li>Neural Visual Synthesis</li>
+                      <li>Virality Scoring Matrix</li>
+                      <li>Strategic Distribution</li>
+                    </ul>
+                  </div>
+                  <div class="col-right">
+                    <ul class="services-list services-list_en bordered">
+                      <li>AI Scene Architecture</li>
+                      <li>Kinetic Subtitle Design</li>
+                      <li>Performance Prediction</li>
+                      <li>24/7 Autonomous Publishing</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="overlay-bottom">
+                <div class="grid-section">
+                  <div class="grid-4 hero-quick-links-row">
+                    <div class="hero-quick-links" role="navigation" aria-label="Hero quick links">
+                      <a href="#stm-section" data-cursor="ABOUT">ABOUT</a>
+                      <a href="#core-capabilities" data-cursor="FEATURES">FEATURES</a>
+                      <a href="#workflow-pipeline" data-cursor="PIPELINE">PIPELINE</a>
+                      <a href="#s3-gallery" data-cursor="ARCHIVE">GALLERY</a>
+                      <a href="#site-footer" data-cursor="CONTACT">CONTACT</a>
+                      <a id="hero-signin-btn" href="login.html" data-cursor="SIGN IN">SIGN IN</a>
+                    </div>
+                  </div>
+                  <div class="grid-4 border-top-line">
+                    <div>( Intelligent Ideation )</div>
+                    <div>( Strategic Scaling )</div>
+                    <div>( Performance Analytics )</div>
+                    <div>( Perpetual Automation )</div>
+                  </div>
+
+                  <!-- <div class="cross-container">
+                <div class="cross c-tl">+</div>
+                <div class="cross c-tr">+</div>
+                <div class="cross c-bl">+</div>
+                <div class="cross c-br">+</div>
+              </div> -->
+                </div>
+
+                <div class="grid-4 bottom-footer">
+                  <div class="footer-col">
+                    Strategy, Design, and<br>
+                    Autonomous Execution.<br>
+                    Seamless & Intelligent.
+                  </div>
+                  <div class="footer-col">
+                    <a href="mailto:gobi56529@gmail.com">gobi56529@gmail.com</a><br>
+                    NEMO Creative Systems © 2026
+                  </div>
+                  <div class="footer-col col-right footer-links">
+                    <a href="https://www.youtube.com/channel/UCKx1pXVuhTF3l2JrIqnU9xg" target="_blank" rel="noopener noreferrer">YouTube Channel</a>
+                    <a href="https://www.linkedin.com/in/gobi27" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <!-- Sound Icon Only Below LinkedIn -->
+                    <button class="hero-audio-pill hero-audio-icon-only" id="hero-audio-toggle" type="button" aria-label="Toggle background video sound" data-state="muted" title="Toggle background video sound" data-cursor="SOUND">
+                      <div class="audio-icon-wrap" aria-hidden="true">
+                        <!-- Muted Speaker SVG -->
+                        <svg class="audio-svg is-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
+                          <line x1="23" y1="9" x2="17" y2="15"></line>
+                          <line x1="17" y1="9" x2="23" y2="15"></line>
+                        </svg>
+                        <!-- Playing / Active Speaker SVG -->
+                        <svg class="audio-svg is-active" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
+                          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        </svg>
+                      </div>
+                      <span class="audio-label" id="hero-audio-label" style="display:none;">SOUND // OFF</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bottom-ui-container">
+              <div class="slide-section">AUTONOMOUS ENGINE</div>
+              <div class="slide-counter">
+                <div class="counter-nav prev-slide">⟪</div>
+                <div class="counter-display">
+                  <span class="current-slide">01</span>
+                  <span class="counter-divider">//</span>
+                  <span class="total-slides">05</span>
+                </div>
+                <div class="counter-nav next-slide">⟫</div>
+              </div>
+              <div class="slide-title-container">
+                <div class="slide-title">METERSEVEN</div>
+              </div>
+              <div class="drag-indicator"></div>
+              <div class="thumbs-container">
+                <div class="slide-thumbs"></div>
+              </div>
+            </div>
+
+
+            <div class="slides">
+
+              <div class="slide">
+                <div class="slide__img" data-video="videos/bg1.mp4"
+                  data-thumb="videos/bg1_thumb.webp" data-title="METERSEVEN">
+                </div>
+              </div>
+
+              <div class="slide">
+                <div class="slide__img" data-video="videos/bg2.mp4"
+                  data-thumb="videos/bg2_thumb.webp" data-title="AUTONOMOUS SHORTS">
+                </div>
+              </div>
+
+              <div class="slide">
+                <div class="slide__img" data-video="videos/bg3.mp4"
+                  data-thumb="videos/bg3_thumb.webp" data-title="VIRAL PREDICTION">
+                </div>
+              </div>
+
+              <div class="slide">
+                <div class="slide__img" data-video="videos/bg4.mp4"
+                  data-thumb="videos/bg4_thumb.webp" data-title="SMART EDITING">
+                </div>
+              </div>
+
+              <div class="slide">
+                <div class="slide__img" data-video="videos/bg5.mp4"
+                  data-thumb="videos/bg5_thumb.webp" data-title="24/7 AI AGENT">
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="dark-wrapper-mask" id="dark-wrapper-mask">
+            <div class="dark-wrapper" id="dark-wrapper">
+              <div id="dw-black-overlay"
+                style="position:absolute;inset:0;background:#000;z-index:9;pointer-events:none;opacity:0;transition:opacity 0.05s;">
+              </div>
+              <!-- bg.mp4 在 dark-wrapper(首屏下方),不該跟 hero 影片搶頻寬;
+                   改用 IntersectionObserver 路徑(移除 data-lazy-priority="high") -->
+              <video autoplay muted loop playsinline preload="none" disableRemotePlayback data-lazy-video
+                data-lazy-on-scroll="true"
+                style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.45;">
+                <source data-src="images/wavebg.mp4" type="video/mp4">
+              </video>
+
+              <div class="glow-bottom-left" id="ui-glow1"></div>
+              <div class="glow-center-left" id="ui-glow2"></div>
+
+
+
+
+              <div class="scroll-indicator" id="ui-scroll">
+                <div class="si-block">
+                  <div class="si-letter"><img src="images/down.svg" alt="" aria-hidden="true"></div>
+                  <div class="si-label">DOWN</div>
+                  <!-- <div class="si-line"></div> -->
+                </div>
+              </div>
+
+              <div id="intro-panel" class="intro-panel">
+                <div class="ip-top-header" style="display: none;"></div>
+                <div class="ip-bottom-letter"></div>
+
+                <div class="dual-wave-wrapper" id="ip-wave-wrapper">
+                  <div class="wave-column wave-column-left">
+                    <div class="animated-text" data-image="images/home/company/1.webp">Find-Trends</div>
+                    <div class="animated-text" data-image="images/home/company/2.webp">Cut-Video</div>
+                    <div class="animated-text" data-image="images/home/company/3.webp">Add-Captions</div>
+                    <div class="animated-text" data-image="images/home/company/4.webp">Sync-Music</div>
+                    <div class="animated-text" data-image="images/home/company/5.webp">Score-Views</div>
+                    <div class="animated-text" data-image="images/home/company/6.webp">Check-Safety</div>
+                    <div class="animated-text" data-image="images/home/company/7.webp">Schedule-Post</div>
+                    <div class="animated-text" data-image="images/home/company/8.webp">Track-Growth</div>
+                    <div class="animated-text" data-image="images/home/company/9.webp">Auto-Pilot</div>
+                    <div class="animated-text" data-image="images/home/company/10.webp">Zero-Editing</div>
+                    <div class="animated-text" data-image="images/home/company/11.webp">Cloud-Render</div>
+                    <div class="animated-text" data-image="images/home/company/12.webp">Scale-Fast</div>
+                  </div>
+                  <div class="wave-column wave-column-right">
+                    <div class="animated-text">Simple</div>
+                    <div class="animated-text">Fast</div>
+                    <div class="animated-text">Automated</div>
+                    <div class="animated-text">Viral</div>
+                    <div class="animated-text">Shorts</div>
+                    <div class="animated-text">YouTube</div>
+                    <div class="animated-text">AI Agent</div>
+                    <div class="animated-text">Growth</div>
+                    <div class="animated-text">24/7</div>
+                    <div class="animated-text">Hands-Free</div>
+                    <div class="animated-text">Scale</div>
+                    <div class="animated-text">Success</div>
+                  </div>
+                </div>
+
+                <div class="image-thumbnail-wrapper">
+                  <!-- Simple & Creative Minimalist Kinetic Lens -->
+                  <div class="ip-creative-lens">
+                    <div class="ip-lens-outer-ring"></div>
+                    <div class="ip-lens-spirograph">
+                      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="40" r="20" stroke="rgba(255, 255, 255, 0.65)" stroke-width="1"/>
+                        <circle cx="74" cy="48" r="20" stroke="rgba(255, 255, 255, 0.65)" stroke-width="1"/>
+                        <circle cx="74" cy="72" r="20" stroke="rgba(255, 255, 255, 0.65)" stroke-width="1"/>
+                        <circle cx="60" cy="80" r="20" stroke="rgba(255, 255, 255, 0.65)" stroke-width="1"/>
+                        <circle cx="46" cy="72" r="20" stroke="rgba(255, 255, 255, 0.65)" stroke-width="1"/>
+                        <circle cx="46" cy="48" r="20" stroke="rgba(255, 255, 255, 0.65)" stroke-width="1"/>
+                      </svg>
+                    </div>
+                    <div class="ip-lens-reticle">
+                      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="60" y1="8" x2="60" y2="13" stroke="rgba(255,255,255,0.75)" stroke-width="1.2"/>
+                        <line x1="60" y1="107" x2="60" y2="112" stroke="rgba(255,255,255,0.75)" stroke-width="1.2"/>
+                        <line x1="8" y1="60" x2="13" y2="60" stroke="rgba(255,255,255,0.75)" stroke-width="1.2"/>
+                        <line x1="107" y1="60" x2="112" y2="60" stroke="rgba(255,255,255,0.75)" stroke-width="1.2"/>
+                        <circle cx="60" cy="60" r="14" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1" stroke-dasharray="2 3"/>
+                      </svg>
+                    </div>
+                    <div class="ip-lens-core-dot"></div>
+                  </div>
+
+                  <div class="ip-thumb-row">
+                    <div class="ip-thumb-line"></div>
+                    <div class="ip-center-label">( AUTOMATION ARCHITECTURE )</div>
+                    <div class="ip-thumb-line"></div>
+                  </div>
+                  <img src="images/home/company/1.webp" alt="" class="image-thumbnail" id="ip-wave-thumb" style="display:none;" width="1" height="1" loading="lazy" decoding="async">
+                </div>
+                <canvas id="ip-reveal-canvas" data-reveal-mode="css-mask"
+                  style="position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:destination-out;pointer-events:none;z-index:200;display:none;"></canvas>
+              </div>
+
+              <div id="section-2-content" class="section-2-content">
+                <div class="subtitle" id="title-subtitle"
+                  style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden;margin:0;padding:0;">
+                </div>
+                <p class="desc" id="title-desc"
+                  style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden;margin:0;padding:0;">
+                </p>
+                <!-- <div class="title-reveal-wrap">
+            <div class="subtitle" id="title-subtitle">( 核心落點，構築數位地標 )</div>
+          </div> -->
+                <div class="title-wrapper marquee-wrapper">
+                  <!-- ghost elements kept for GSAP scroll-reveal JS compatibility -->
+                  <div id="title-line1"
+                    style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden;margin:0;padding:0;">
+                  </div>
+                  <div id="title-line2"
+                    style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden;margin:0;padding:0;">
+                  </div>
+                  <div class="title-reveal-wrap">
+                    <div id="title-marquee" class="marquee-outer">
+                      <div class="marquee-inner js-scroll-marquee" id="marquee-inner" data-marquee-dir="-1">
+                        <div class="marquee-set">
+                          <span class="marquee-block">
+                            <span class="huge-title marquee-item">1. DISCOVER TRENDS</span>
+                            <span class="marquee-label">（ Live Viral Signals ）</span>
+                          </span>
+                          <span class="marquee-block">
+                            <span class="huge-title marquee-item">2. AI VIDEO EDITING</span>
+                            <span class="marquee-label">（ Auto 9:16 Cuts & Captions ）</span>
+                          </span>
+                          <span class="marquee-block">
+                            <span class="huge-title marquee-item">3. SCORE VIRALITY</span>
+                            <span class="marquee-label">（ Predict Performance ）</span>
+                          </span>
+                          <span class="marquee-block">
+                            <span class="huge-title marquee-item">4. AUTO PUBLISH</span>
+                            <span class="marquee-label">（ Upload at Peak Hours ）</span>
+                          </span>
+                        </div>
+                        <div class="marquee-set">
+                          <span class="marquee-block">
+                            <span class="huge-title marquee-item">1. DISCOVER TRENDS</span>
+                            <span class="marquee-label">（ Live Viral Signals ）</span>
+                          </span>
+                          <span class="marquee-block">
+                            <span class="huge-title marquee-item">2. AI VIDEO EDITING</span>
+                            <span class="marquee-label">（ Auto 9:16 Cuts & Captions ）</span>
+                          </span>
+                          <span class="marquee-block">
+                            <span class="huge-title marquee-item">3. SCORE VIRALITY</span>
+                            <span class="marquee-label">（ Predict Performance ）</span>
+                          </span>
+                          <span class="marquee-block">
+                            <span class="huge-title marquee-item">4. AUTO PUBLISH</span>
+                            <span class="marquee-label">（ Upload at Peak Hours ）</span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="title-reveal-wrap">
+            <p class="desc" id="title-desc">從核心策略到技術實作，核點致力於讓每一組代碼都承載美學，讓每一個像素都具備商業靈魂<br>讓您的創意，在數位世界中自由呼吸</p>
+          </div> -->
+              </div>
+
+              <div class="new-text-group" id="new-text-group">
+                <div class="title-reveal-wrap">
+                  <div class="subtitle" id="new-subtitle">( NEURAL PRODUCTION PIPELINE )</div>
+                </div>
+                <div class="title-wrapper">
+                  <div class="title-reveal-wrap">
+                    <div class="huge-title title-outline" id="new-line1">SIGNAL TO</div>
+                  </div>
+                  <div class="title-reveal-wrap">
+                    <div class="huge-title" id="new-line2">VIRAL DISTRIBUTION</div>
+                  </div>
+                </div>
+                <div class="title-reveal-wrap">
+                  <p class="desc" id="new-desc">NEMO synthesizes trending intelligence, orchestrates dynamic visual composition with precision kinetics, deploys strategic subtitles and sonic design, evaluates virality probability through neural matrices, and executes autonomous distribution across your YouTube ecosystem with zero creative intervention required.</p>
+                </div>
+              </div>
+
+              <div class="scene-wrapper" id="sceneWrapper">
+                <div class="scene" id="cubeScene">
+                  <div class="cube" id="cube">
+                    <div class="face front" style="padding: 0;">
+                      <video class="face-media" autoplay muted loop playsinline preload="auto" disableRemotePlayback
+                        poster="videos/marvel_opening_thumb.webp" style="width:100%;height:100%;object-fit:cover;">
+                        <source src="videos/marvel_opening.mp4" data-src="videos/marvel_opening.mp4" type="video/mp4">
+                      </video>
+                      <div id="img-overlay"
+                        style="position: absolute; inset: 0; background: #000; opacity: 0; transition: opacity 0.1s; pointer-events: none;">
+                      </div>
+                    </div>
+                    <div class="face right"><img src="images/cube/high-end-restaurant-web-design.webp"
+                        data-defer-src="images/cube/high-end-restaurant-web-design.webp" alt="Cube right"
+                        class="face-media" width="1200" height="1200" loading="lazy" decoding="async"></div>
+                    <div class="face back"><img src="images/cube/japanese-dining-brand-website.webp"
+                        data-defer-src="images/cube/japanese-dining-brand-website.webp" alt="Cube back"
+                        class="face-media" width="1200" height="1200" loading="lazy" decoding="async"></div>
+                    <div class="face left"><img src="images/cube/interior-design-website-mockup.webp"
+                        data-defer-src="images/cube/interior-design-website-mockup.webp" alt="Cube left"
+                        class="face-media" width="1200" height="1200" loading="lazy" decoding="async"></div>
+                    <div class="face top"><img src="images/cube/fluid-minimalism-web-design-texture.webp"
+                        data-defer-src="images/cube/fluid-minimalism-web-design-texture.webp" alt="Cube top"
+                        class="face-media" width="1200" height="1200" loading="lazy" decoding="async"></div>
+                    <div class="face bottom"><img src="images/cube/b2b-manufacturing-web-design-portfolio.webp"
+                        data-defer-src="images/cube/b2b-manufacturing-web-design-portfolio.webp" alt="Cube bottom"
+                        class="face-media" width="1200" height="1200" loading="lazy" decoding="async"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stm-logo" id="stmLogo"><img src="images/textlogo.svg" alt="NEMO" width="387" height="68"
+            loading="lazy" decoding="async"></div>
+        <section class="stm-section" id="stm-section">
+          <div class="stm-content">
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-4" data-stm-alt="stm-pos-2">Trend detection</div>
+              <div class="stm-el stm-pos-4" data-stm-alt="stm-pos-2">Signal intake</div>
+              <div class="stm-el stm-pos-4" data-stm-alt="stm-pos-2">NEMO AI</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-3">Dynamic kinetics</div>
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-3">AI scene cutting</div>
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-3">Subtitles engine</div>
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-3">Audio beat-match</div>
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-3">Shorts automation</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-el--xl stm-pos-1" data-stm-alt="stm-pos-2" data-stm-scramble="2.5">G</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-3" data-stm-scramble="0">NEURAL VIRALITY MATRIX READY</div>
+              <div class="stm-el stm-pos-1 stm-typing" data-stm-alt="stm-pos-3" data-stm-scramble="0">█</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-5">Hook recognition</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-5">Retention modeling</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-5">Multi-channel sync</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-el--xl stm-pos-3" data-stm-alt="stm-pos-9" data-stm-scramble="2.5">H</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-2">Voiceover synthesis</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-2">Aspect-ratio 9:16</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-2">Auto reframe</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-2">Engagement tuning</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-3" data-stm-scramble="0">AUTONOMOUS DISPATCH ACTIVE</div>
+              <div class="stm-el stm-pos-1 stm-typing" data-stm-alt="stm-pos-3" data-stm-scramble="0">█</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-4">CTR optimization</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-4">Fast GPU render</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-4">Title AI scoring</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-4">Thumbnail gen</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-4">Audio mastering</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-4">Viral prediction</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-el--xl stm-pos-1" data-stm-alt="stm-pos-3" data-stm-scramble="2.5">O</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-9">Smart scheduling</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-9">YouTube Data API</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-9">Quota balancing</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-9">Safety gates</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-9">Live telemetry</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-el--xl stm-pos-3" data-stm-alt="stm-pos-10" data-stm-scramble="2.5"
+                data-stm-flip-ease="expo.in">S</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-4" data-stm-alt="stm-pos-3">Telegram scraper</div>
+              <div class="stm-el stm-pos-4" data-stm-alt="stm-pos-3">Reddit trend intake</div>
+              <div class="stm-el stm-pos-4" data-stm-alt="stm-pos-3">TikTok monitors</div>
+              <div class="stm-el stm-pos-4" data-stm-alt="stm-pos-3">Autonomous pipeline</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-3" data-stm-scramble="0">CONTINUOUS PRODUCTION LOOP</div>
+              <div class="stm-el stm-pos-1 stm-typing" data-stm-alt="stm-pos-3" data-stm-scramble="0">█</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-5">Auto metadata</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-5">Tag generation</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-5">Caption styling</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-5">Sound balance</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-el--xl stm-pos-2" data-stm-alt="stm-pos-3" data-stm-scramble="2.5">T</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-6">Batch production</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-6">Channel analytics</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-6">Self-learning loop</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-6">Audience feedback</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-7">Zero manual chain</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-7">High throughput</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-7">Approval portal</div>
+              <div class="stm-el stm-pos-2" data-stm-alt="stm-pos-7">Queue governance</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Visual pacing</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Cut transitions</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Kinetic typography</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Aspect refit</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">FFmpeg engine</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Multi-threaded</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Cloud worker node</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Autonomous agent</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Real-time alerts</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Performance log</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Scale 24/7</div>
+              <div class="stm-el stm-pos-3" data-stm-alt="stm-pos-8">Production ready</div>
+            </div>
+
+            <div class="stm-group">
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-1">Signal analysis</div>
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-2">Competitor intelligence</div>
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-4">Peak dispatching</div>
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-5">Viral index</div>
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-6">Operator controls</div>
+              <div class="stm-el stm-pos-1" data-stm-alt="stm-pos-4">Continuous scale</div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+
+      <section class="mobile-cube-section" aria-label="Mobile cube showcase">
+        <div class="mobile-cube-bg" aria-hidden="true">
+          <video autoplay muted loop playsinline preload="none" disableRemotePlayback data-lazy-video
+            data-lazy-on-scroll="true">
+            <source data-src="images/wavebg.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="mcube-title">
+          <h2 class="mcube-title__eye">（ HUMAN-FREE PRODUCTION ）</h2>
+          <div class="mcube-title__line">NEMO DEFINED</div>
+        </div>
+        <div class="mobile-cube-scene">
+          <div class="mobile-cube">
+            <div class="mobile-cube-face is-front">
+              <video autoplay muted loop playsinline preload="auto" disableRemotePlayback
+                poster="videos/marvel_opening_thumb.webp" style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="videos/marvel_opening.mp4" data-src="videos/marvel_opening.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="mobile-cube-face is-right">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-defer-src="images/cube/t2.webp" alt=""
+                width="2752" height="1536" loading="lazy" decoding="async">
+            </div>
+            <div class="mobile-cube-face is-back">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-defer-src="images/cube/t3.webp" alt=""
+                width="2752" height="1536" loading="lazy" decoding="async">
+            </div>
+            <div class="mobile-cube-face is-left">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-defer-src="images/cube/t4.webp" alt=""
+                width="5504" height="3072" loading="lazy" decoding="async">
+            </div>
+            <div class="mobile-cube-face is-top">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-defer-src="images/cube/t5.webp" alt=""
+                width="7360" height="4912" loading="lazy" decoding="async">
+            </div>
+            <div class="mobile-cube-face is-bottom">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-defer-src="images/cube/t6.webp" alt=""
+                width="3000" height="2000" loading="lazy" decoding="async">
+            </div>
+          </div>
+        </div>
+        <div class="mcube-copy">
+          <p class="mcube-copy__desc">
+            NEMO is an autonomous creative intelligence system designed for contemporary digital strategists and media enterprises. It eliminates the laborious processes of manual composition, temporal synchronization, and distribution logistics—replacing them with an intelligent, self-executing neural pipeline that sustains continuous channel momentum and audience expansion throughout the entire operational cycle.
+          </p>
+        </div>
+      </section>
+
+
+
+      <!-- =========================================================
+       DRAFT.X & MUSEUM — WebGL Marquee + Stacked Cards Section
+       ========================================================= -->
+      <!-- DXM section 已移除：對應 CSS 一併清除 -->
+
+
+
+      <!-- WebGL Marquee Section -->
+
+
+      <!-- /DRAFT.X & MUSEUM -->
+
+      <section class="ccap-section" id="core-capabilities">
+        <div class="ring-gallery-sticky">
+          <div class="ccap-exit-overlay" id="ccap-exit-overlay"></div>
+          <div id="sketch"></div>
+          <div class="ccap-side-fade ccap-side-fade-left" aria-hidden="true"></div>
+          <div class="ccap-side-fade ccap-side-fade-right" aria-hidden="true"></div>
+          <div class="hero-dom">
+            <main>
+              <div class="giant-title" style="display: none;">
+                <span class="reveal-wrap"><span class="reveal-inner"></span></span>
+              </div>
+
+              <div class="sub-title">
+                <div class="reveal-wrap"><span class="reveal-inner">EVERY STAGE OF VIRAL YOUTUBE AUTOMATION—</span></div><br>
+                <div class="reveal-wrap"><span class="reveal-inner">ENGINEERED WITH MATHEMATICAL PRECISION</span></div>
+              </div>
+
+              <div class="top-nav">
+                <div class="nav-left">
+                  <span class="reveal-wrap"><span class="reveal-inner">24/7_AUTONOMOUS</span></span>
+                </div>
+                <div class="nav-center reveal-wrap"><span class="reveal-inner">100K+_SHORTS_GENERATED</span></div>
+                <div class="nav-right reveal-wrap"><span class="reveal-inner">ESTABLISHED_2026</span></div>
+              </div>
+
+              <div class="media-gallery">
+                <div class="media-track">
+                  <div class="center-divider">
+                    <div class="center-video-box">
+                      <video autoplay loop muted playsinline preload="auto" disableRemotePlayback data-lazy-video
+                        data-lazy-priority="high">
+                        <source data-src="images/home/star.mp4" type="video/mp4">
+                      </video>
+                    </div>
+                    <div class="service-label reveal-wrap text1vw">
+                      <h2 class="reveal-inner" style="margin: 0;">INTELLIGENT WORKFLOW SYNTHESIS</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="service-tags">
+                <span class="reveal-wrap">
+                  <h3 class="reveal-inner">( Neural Ideation )</h3>
+                </span>
+                <span class="reveal-wrap">
+                  <h3 class="reveal-inner">( Kinetic Visuals )</h3>
+                </span>
+                <span class="reveal-wrap">
+                  <h3 class="reveal-inner">( Sonic Engineering )</h3>
+                </span>
+                <span class="reveal-wrap">
+                  <h3 class="reveal-inner">( Autonomous Publishing )</h3>
+                </span>
+              </div>
+
+              <!-- <div class="footer-desc">
+            <div class="reveal-wrap"><span class="reveal-inner">Nudot is committed to the art of subtraction. We offer a curated</span></div><br>
+            <div class="reveal-wrap"><span class="reveal-inner">selection of essentials that balance contemporary form with everyday</span></div><br>
+            <div class="reveal-wrap"><span class="reveal-inner">functionality.</span></div>
+          </div> -->
+            </main>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           NEMO / NEMO AUTONOMOUS 4-STAGE PRODUCTION WORKFLOW
+           ========================================================= -->
+      <section class="nemo-workflow-section" id="workflow-pipeline" aria-label="NEMO Autonomous Workflow">
+        <div class="wf-ambient-glow" aria-hidden="true"></div>
+        <div class="wf-cyber-grid" aria-hidden="true"></div>
+        <div class="wf-neon-light-beam" aria-hidden="true"></div>
+
+        <div class="wf-container">
+          <!-- Section Header -->
+          <div class="wf-header">
+            <span class="wf-eyebrow"><span class="wf-eyebrow-beacon"></span>// PRODUCTION PIPELINE ARCHITECTURE //</span>
+            <h2 class="wf-title">
+              <span class="wf-title-word">HOW</span>
+              <span class="wf-title-word wf-title-accent">NEMO</span>
+              <span class="wf-title-word">WORKS</span>
+            </h2>
+            <p class="wf-subtitle">
+              A fully autonomous video production factory. Raw Internet trend signals transformed into viral, high-retention YouTube Shorts with zero manual intervention—operating 24/7.
+            </p>
+          </div>
+
+          <!-- 4-Stage Stepper Navigation -->
+          <div class="wf-stepper-wrap">
+            <div class="wf-progress-track" aria-hidden="true">
+              <div class="wf-progress-fill"></div>
+            </div>
+            <div class="wf-stepper-nav" role="tablist" aria-label="Workflow Stages">
+              <button type="button" class="wf-step-btn is-active" role="tab" aria-selected="true" aria-controls="wf-stage-1" id="wf-tab-1">
+                <div class="wf-step-top">
+                  <span class="wf-step-num">STAGE 01</span>
+                  <span class="wf-step-time">30 MIN</span>
+                </div>
+                <div class="wf-step-label">SIGNAL INTELLIGENCE</div>
+                <div class="wf-step-action">Detect Trends & Virality Potential</div>
+              </button>
+
+              <button type="button" class="wf-step-btn" role="tab" aria-selected="false" aria-controls="wf-stage-2" id="wf-tab-2">
+                <div class="wf-step-top">
+                  <span class="wf-step-num">STAGE 02</span>
+                  <span class="wf-step-time">2-3 HOURS</span>
+                </div>
+                <div class="wf-step-label">VISUAL ARCHITECTURE</div>
+                <div class="wf-step-action">Auto 9:16 Reframe & Kinetic Cut</div>
+              </button>
+
+              <button type="button" class="wf-step-btn" role="tab" aria-selected="false" aria-controls="wf-stage-3" id="wf-tab-3">
+                <div class="wf-step-top">
+                  <span class="wf-step-num">STAGE 03</span>
+                  <span class="wf-step-time">1-2 HOURS</span>
+                </div>
+                <div class="wf-step-label">PERFORMANCE MATRIX</div>
+                <div class="wf-step-action">AI Virality & Retention Scoring</div>
+              </button>
+
+              <button type="button" class="wf-step-btn" role="tab" aria-selected="false" aria-controls="wf-stage-4" id="wf-tab-4">
+                <div class="wf-step-top">
+                  <span class="wf-step-num">STAGE 04</span>
+                  <span class="wf-step-time">15-30 MIN</span>
+                </div>
+                <div class="wf-step-label">STRATEGIC DEPLOYMENT</div>
+                <div class="wf-step-action">API Auto-Publish & Live Telemetry</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE 1 PANEL -->
+          <div class="wf-stage-panel is-active" id="wf-stage-1" role="tabpanel" aria-labelledby="wf-tab-1">
+            <div class="wf-stage-grid">
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">🔍 Real-Time Ingestion</span>
+                  <span class="wf-card-badge wf-badge-green">7 Channels Live</span>
+                </div>
+                <div class="wf-source-list">
+                  <div class="wf-source-item">
+                    <span class="wf-source-name"><span class="wf-pulse-dot"></span>Reddit Communities</span>
+                    <span class="wf-source-metric">Subreddit Sentiment Scraped</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span class="wf-source-name"><span class="wf-pulse-dot"></span>TikTok Trends</span>
+                    <span class="wf-source-metric">Viral Audio & Hashtag Intake</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span class="wf-source-name"><span class="wf-pulse-dot"></span>YouTube Velocity</span>
+                    <span class="wf-source-metric">Competitor Outlier Detection</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span class="wf-source-name"><span class="wf-pulse-dot"></span>Telegram / X Signals</span>
+                    <span class="wf-source-metric">Early Adopter Breaking Feeds</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">⚡ Neural Processor</span>
+                  <span class="wf-card-badge wf-badge-blue">AI Evaluator</span>
+                </div>
+                <div class="wf-metric-row">
+                  <div class="wf-metric-labels">
+                    <span class="wf-metric-name">Growth Velocity Index</span>
+                    <span class="wf-metric-val">92%</span>
+                  </div>
+                  <div class="wf-meter-bar"><div class="wf-meter-fill" style="width: 92%;"></div></div>
+                </div>
+                <div class="wf-metric-row">
+                  <div class="wf-metric-labels">
+                    <span class="wf-metric-name">Predicted Virality Probability</span>
+                    <span class="wf-metric-val">88 / 100</span>
+                  </div>
+                  <div class="wf-meter-bar"><div class="wf-meter-fill" style="width: 88%;"></div></div>
+                </div>
+                <div class="wf-metric-row">
+                  <div class="wf-metric-labels">
+                    <span class="wf-metric-name">Engagement Ratio (Likes:Views)</span>
+                    <span class="wf-metric-val">4.8% CTR</span>
+                  </div>
+                  <div class="wf-meter-bar"><div class="wf-meter-fill" style="width: 78%;"></div></div>
+                </div>
+                <div class="wf-source-item" style="margin-top: 0.4rem;">
+                  <span class="wf-source-name">Safety Screening</span>
+                  <span class="wf-card-badge wf-badge-green">GREEN ✓ PASS</span>
+                </div>
+              </div>
+
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">📋 Priority Queue Output</span>
+                  <span class="wf-card-badge">Top 100 Ranked</span>
+                </div>
+                <div class="wf-queue-list">
+                  <div class="wf-queue-item is-top">
+                    <div class="wf-queue-head">
+                      <span>#1 AI Breakthrough News</span>
+                      <span style="color: #4ade80;">92/100</span>
+                    </div>
+                    <div class="wf-queue-meta">
+                      <span>Velocity: ⬆️ Very High</span>
+                      <span>Upload: 6:30 PM EST</span>
+                    </div>
+                  </div>
+                  <div class="wf-queue-item">
+                    <div class="wf-queue-head">
+                      <span>#2 Celebrity Viral Event</span>
+                      <span style="color: #93c5fd;">85/100</span>
+                    </div>
+                    <div class="wf-queue-meta">
+                      <span>Velocity: ⬆️ High</span>
+                      <span>Upload: 7:00 PM EST</span>
+                    </div>
+                  </div>
+                  <div class="wf-queue-item">
+                    <div class="wf-queue-head">
+                      <span>#3 Tech Frontier Meme</span>
+                      <span style="color: #93c5fd;">78/100</span>
+                    </div>
+                    <div class="wf-queue-meta">
+                      <span>Velocity: ⬆️ Medium</span>
+                      <span>Upload: 8:00 PM EST</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 2 PANEL -->
+          <div class="wf-stage-panel" id="wf-stage-2" role="tabpanel" aria-labelledby="wf-tab-2" hidden>
+            <div class="wf-stage-grid">
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">📐 Intelligent Reframing</span>
+                  <span class="wf-card-badge wf-badge-blue">1080x1920 (9:16)</span>
+                </div>
+                <div class="wf-reframe-sim">
+                  <div class="wf-sim-horiz">
+                    <span>16:9 Raw</span>
+                    <span>Landscape</span>
+                  </div>
+                  <span class="wf-sim-arrow">→</span>
+                  <div class="wf-sim-vert">
+                    <div class="wf-scanline" aria-hidden="true"></div>
+                    <span>9:16</span>
+                    <span>Centered</span>
+                  </div>
+                </div>
+                <div class="wf-source-list">
+                  <div class="wf-source-item">
+                    <span>AI Scene Detection</span>
+                    <span style="color: #4ade80;">8 Key Cut Points</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span>Subject Centering</span>
+                    <span style="color: #60a5fa;">Facial & Motion Locked</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">💬 Dynamic Kinetic Captions</span>
+                  <span class="wf-card-badge wf-badge-green">±100ms Sync</span>
+                </div>
+                <div class="wf-caption-demo">
+                  <span class="wf-caption-word-dim">THIS NEW AI IS</span>
+                  <span class="wf-caption-word-glow">CHANGING</span>
+                  <span class="wf-caption-word-dim">EVERYTHING</span>
+                </div>
+                <div class="wf-source-list">
+                  <div class="wf-source-item">
+                    <span>Word Timing Accuracy</span>
+                    <span style="color: #4ade80;">99.2% Timestamp Match</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span>Viewer Retention Lift</span>
+                    <span style="color: #60a5fa;">+8.4% Watch Time</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">🎚️ Studio Audio Mastering</span>
+                  <span class="wf-card-badge">-14 LUFS Standard</span>
+                </div>
+                <div class="wf-metric-row">
+                  <div class="wf-metric-labels">
+                    <span class="wf-metric-name">Trending Audio Track (Beat-Matched)</span>
+                    <span class="wf-metric-val">90%</span>
+                  </div>
+                  <div class="wf-meter-bar"><div class="wf-meter-fill" style="width: 90%;"></div></div>
+                </div>
+                <div class="wf-metric-row">
+                  <div class="wf-metric-labels">
+                    <span class="wf-metric-name">Dialog Presence (Denoised & Normalized)</span>
+                    <span class="wf-metric-val">10%</span>
+                  </div>
+                  <div class="wf-meter-bar"><div class="wf-meter-fill" style="width: 50%;"></div></div>
+                </div>
+                <div class="wf-source-item" style="margin-top: 0.4rem;">
+                  <span>YouTube Compression Profile</span>
+                  <span class="wf-card-badge wf-badge-green">H.264 30fps QC Passed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 3 PANEL -->
+          <div class="wf-stage-panel" id="wf-stage-3" role="tabpanel" aria-labelledby="wf-tab-3" hidden>
+            <div class="wf-stage-grid">
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">🔥 Virality Prediction</span>
+                  <span class="wf-card-badge wf-badge-green">50K+ Shorts Trained</span>
+                </div>
+                <div style="text-align: center; padding: 1rem 0;">
+                  <div style="font-size: 2.8rem; font-weight: 800; color: #4ade80; text-shadow: 0 0 15px rgba(74, 222, 128, 0.4);">
+                    84 <span style="font-size: 1.2rem; color: rgba(255,255,255,0.6);">/ 100</span>
+                  </div>
+                  <div style="font-size: 0.8rem; letter-spacing: 0.1em; color: #93c5fd; text-transform: uppercase; margin-top: 0.2rem;">
+                    Highly Viral Probability
+                  </div>
+                </div>
+                <div class="wf-source-item">
+                  <span>First 3s Hook Strength</span>
+                  <span style="color: #4ade80; font-weight: 600;">9.2 / 10 (Curiosity Gap)</span>
+                </div>
+              </div>
+
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">📈 Retention Drop-Off Curve</span>
+                  <span class="wf-card-badge wf-badge-blue">Simulation</span>
+                </div>
+                <div class="wf-graph-wrap">
+                  <svg class="wf-graph-svg" viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <!-- Grid Lines -->
+                    <line x1="0" y1="20" x2="300" y2="20" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3,3" />
+                    <line x1="0" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3,3" />
+                    <line x1="0" y1="80" x2="300" y2="80" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3,3" />
+                    <!-- Industry Baseline (Red dashed) -->
+                    <path d="M 0,20 Q 60,70 300,92" fill="none" stroke="rgba(239, 68, 68, 0.4)" stroke-dasharray="4,4" stroke-width="2" />
+                    <!-- NEMO High Retention (Green Solid) -->
+                    <path d="M 0,20 Q 80,24 160,32 T 300,42" fill="none" stroke="#22c55e" stroke-width="3" />
+                  </svg>
+                </div>
+                <div class="wf-source-item">
+                  <span>NEMO Projected Retention</span>
+                  <span style="color: #4ade80; font-weight: 700;">85% High Plateau</span>
+                </div>
+              </div>
+
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">🛡️ Automated Safety Gates</span>
+                  <span class="wf-card-badge wf-badge-green">Cleared</span>
+                </div>
+                <div class="wf-source-list">
+                  <div class="wf-source-item">
+                    <span>YouTube Content ID Fingerprint</span>
+                    <span style="color: #4ade80;">✓ 0 Strikes Risk</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span>COPPA & Child Safety Match</span>
+                    <span style="color: #4ade80;">✓ Approved</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span>NLP Moderation & Toxicity</span>
+                    <span style="color: #4ade80;">✓ Clean (Rating: PG)</span>
+                  </div>
+                </div>
+                <div class="wf-source-item" style="background: rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.3);">
+                  <span style="font-weight: 600;">System Decision</span>
+                  <span style="color: #4ade80; font-weight: 700;">✅ APPROVED FOR PUBLISH</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 4 PANEL -->
+          <div class="wf-stage-panel" id="wf-stage-4" role="tabpanel" aria-labelledby="wf-tab-4" hidden>
+            <div class="wf-stage-grid">
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">🏷️ AI Title & Metadata</span>
+                  <span class="wf-card-badge wf-badge-blue">CTR Maximizer</span>
+                </div>
+                <div style="font-size: 0.85rem; color: rgba(255,255,255,0.9); font-weight: 600; line-height: 1.4; padding: 0.5rem 0;">
+                  "OpenAI's NEW Model SHOCKED Everyone (Here's Why)"
+                </div>
+                <div class="wf-source-list">
+                  <div class="wf-source-item">
+                    <span>Formula</span>
+                    <span style="color: #93c5fd;">[Hook] + [Trend] + [Curiosity]</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span>Predicted CTR</span>
+                    <span style="color: #4ade80; font-weight: 600;">5.2% (vs 3.0% avg)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">⏰ Peak Timing Window</span>
+                  <span class="wf-card-badge wf-badge-green">Automated Dispatch</span>
+                </div>
+                <div class="wf-source-list">
+                  <div class="wf-source-item">
+                    <span>Target Publish Window</span>
+                    <span style="color: #60a5fa; font-weight: 600;">Friday 6:30 PM EST</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span>Channel Audience Surge</span>
+                    <span style="color: #4ade80;">+30% View Velocity</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span>YouTube Data API v3 Status</span>
+                    <span style="color: #4ade80;">Scheduled & Synced</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-card">
+                <div class="wf-card-header">
+                  <span class="wf-card-title">📊 24-Hour Telemetry</span>
+                  <span class="wf-card-badge wf-badge-green">Live Metrics</span>
+                </div>
+                <div class="wf-source-list">
+                  <div class="wf-source-item">
+                    <span>First 24h Views</span>
+                    <span style="color: #4ade80; font-weight: 700;">342,567 Views</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span>Estimated CPM Revenue</span>
+                    <span style="color: #93c5fd; font-weight: 700;">$1,713.00</span>
+                  </div>
+                  <div class="wf-source-item">
+                    <span>AI Prediction Accuracy</span>
+                    <span style="color: #4ade80; font-weight: 700;">95% Match</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COMPARISON MATRIX: Traditional Manual vs NEMO -->
+          <div class="wf-comparison-wrap">
+            <div class="wf-comp-header">
+              <h3 class="wf-comp-title">TRADITIONAL VS. NEMO</h3>
+              <p class="wf-comp-sub">Why manual content creation teams cannot compete with 24/7 autonomous intelligence.</p>
+            </div>
+            <div class="wf-comp-grid">
+              <!-- Manual Card -->
+              <div class="wf-comp-card wf-comp-manual">
+                <div class="wf-comp-badge-man">MANUAL PRODUCTION PIPELINE</div>
+                <ul class="wf-comp-list">
+                  <li><span class="wf-comp-icon-x">✕</span> 15–20 hours per video spread over 2 full days</li>
+                  <li><span class="wf-comp-icon-x">✕</span> Manual research, Premiere cutting, typing captions</li>
+                  <li><span class="wf-comp-icon-x">✕</span> Misses peak trend windows due to editing delays</li>
+                  <li><span class="wf-comp-icon-x">✕</span> $500–$2,000 labor cost per video with team burnout</li>
+                  <li><span class="wf-comp-icon-x">✕</span> 50/50 guessing game on whether content goes viral</li>
+                </ul>
+              </div>
+
+              <!-- Automated Card -->
+              <div class="wf-comp-card wf-comp-auto">
+                <div class="wf-comp-badge-auto">NEMO AUTONOMOUS SYSTEM</div>
+                <ul class="wf-comp-list">
+                  <li><span class="wf-comp-icon-check">✓</span> ~5 hours fully automated cycle from trend detection to live publish</li>
+                  <li><span class="wf-comp-icon-check">✓</span> Zero manual editing—intelligent 9:16 reframe, auto-captions, studio sound</li>
+                  <li><span class="wf-comp-icon-check">✓</span> Publishes exactly at the peak trend momentum window</li>
+                  <li><span class="wf-comp-icon-check">✓</span> $0 labor cost per video with infinite scaling capacity (4-6 videos/day)</li>
+                  <li><span class="wf-comp-icon-check">✓</span> 95% virality prediction accuracy with closed-loop ML self-learning</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Ribbon: Parallel & Self-Learning -->
+          <div class="wf-bottom-ribbon">
+            <div class="wf-ribbon-item">
+              <span class="wf-ribbon-icon">⚡</span>
+              <div>
+                <div class="wf-ribbon-title">PARALLEL MULTI-THREADING</div>
+                <div class="wf-ribbon-desc">Multiple videos in production simultaneously while earlier videos publish live.</div>
+              </div>
+            </div>
+            <div class="wf-ribbon-item">
+              <span class="wf-ribbon-icon">🔄</span>
+              <div>
+                <div class="wf-ribbon-title">CONTINUOUS ML FEEDBACK LOOP</div>
+                <div class="wf-ribbon-desc">Every video's 24h metrics retrain the neural model, compounding 2–5% gains.</div>
+              </div>
+            </div>
+            <div class="wf-ribbon-item">
+              <span class="wf-ribbon-icon">🌐</span>
+              <div>
+                <div class="wf-ribbon-title">24/7 PERPETUAL ENGINE</div>
+                <div class="wf-ribbon-desc">Uninterrupted YouTube growth without creative exhaustion or downtime.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="s3-gallery-section" id="s3-gallery">
+        <div class="gallery-header">
+          <div class="gallery-header-video" aria-hidden="true">
+            <video autoplay muted playsinline loop preload="none" disableRemotePlayback data-lazy-video>
+              <source data-src="images/wavebg.mp4" type="video/mp4">
+            </video>
+          </div>
+          <!-- <div class="gh-side-rails" aria-hidden="true">
+        <div class="gh-side-rail gh-side-rail-left">
+          <span class="gh-side-letter">N</span>
+          <span class="gh-side-line"></span>
+        </div>
+        <div class="gh-side-rail gh-side-rail-right">
+           <span class="gh-side-letter">D</span>
+          <span class="gh-side-line"></span>
+          
+        </div>
+      </div> -->
+          <h2 class="gallery-header-label" data-reveal="fade">( CREATIVE ARCHIVE )</h2>
+          <div class="gallery-header-title">
+            <span class="gh-line" data-reveal="word">FEATURED WORK</span>
+            <span class="gh-line" data-reveal="word">&amp; VIRAL FORMATS</span>
+          </div>
+          <p class="text1vw" data-reveal="fade" data-reveal-delay="0.3">Autonomous 9:16 video narratives engineered for high viewer retention and reach.</p>
+        </div>
+
+        <div class="pg-gallery">
+          <div class="pg-item pg-item-1">
+            <a href="/dashboard/content" data-dashboard-link="content" data-cursor="VIEW" aria-label="Dynamic Energy Design"
+              style="position:absolute;inset:0;z-index:5;"></a>
+            <div class="pg-img-wrap"><img src="images/home/list/01.webp" alt="Dynamic Energy Visual Design" loading="lazy" decoding="async">
+            </div>
+          </div>
+          <div class="pg-item pg-item-2">
+            <a href="/dashboard/content" data-dashboard-link="content" data-cursor="VIEW" aria-label="Cultural Intelligence"
+              style="position:absolute;inset:0;z-index:5;"></a>
+            <div class="pg-img-wrap"><img src="images/home/list/02.webp" alt="Cultural Intelligence Narrative" loading="lazy" decoding="async">
+            </div>
+          </div>
+          <div class="pg-item pg-item-3">
+            <a href="/dashboard/content" data-dashboard-link="content" data-cursor="VIEW" aria-label="Conceptual Storytelling"
+              style="position:absolute;inset:0;z-index:5;"></a>
+            <div class="pg-img-wrap"><img src="images/home/list/03.webp" alt="Conceptual Storytelling Format" loading="lazy" decoding="async">
+            </div>
+          </div>
+          <div class="pg-item pg-item-4">
+            <a href="/dashboard/content" data-dashboard-link="content" data-cursor="VIEW" aria-label="Technological Narrative"
+              style="position:absolute;inset:0;z-index:5;"></a>
+            <div class="pg-img-wrap"><img src="images/home/list/04.webp" alt="Technological Narrative Design" loading="lazy" decoding="async">
+            </div>
+          </div>
+          <div class="pg-item pg-item-5">
+            <a href="/dashboard/content" data-dashboard-link="content" data-cursor="VIEW" aria-label="Kinetic Motion Sequences"
+              style="position:absolute;inset:0;z-index:5;"></a>
+            <div class="pg-img-wrap"><img src="images/home/list/05.webp" alt="Kinetic Motion Sequence" loading="lazy" decoding="async">
+            </div>
+          </div>
+          <div class="pg-item pg-item-6">
+            <a href="/dashboard/content" data-dashboard-link="content" data-cursor="VIEW" aria-label="Engagement Architecture"
+              style="position:absolute;inset:0;z-index:5;"></a>
+            <div class="pg-img-wrap"><img src="images/home/list/06.webp" alt="Engagement Architecture Design" loading="lazy" decoding="async">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer" id="site-footer">
+        <!-- Ambient lighting & grid backdrop -->
+        <div class="footer-ambient-glow" aria-hidden="true"></div>
+        <div class="footer-grid-overlay" aria-hidden="true"></div>
+
+        <!-- 1. Heroic Collaboration CTA Section -->
+        <div class="footer-cta-hub">
+          <div class="footer-cta-badge">
+            <span class="footer-pulse-dot"></span>
+            <span>AUTONOMOUS PIPELINE OPEN FOR DIRECTING &amp; PARTNERSHIPS</span>
+          </div>
+
+          <h2 class="footer-hero-headline">
+            ENGINEERING THE NEXT ERA OF <span class="footer-headline-gradient">DIGITAL CINEMA</span>.
+          </h2>
+
+          <p class="footer-hero-subtext">
+            From algorithmic signal synthesis to neural video architecture, kinetic motion typography, and autonomous 24/7 YouTube distribution.
+          </p>
+
+          <div class="footer-actions-cluster">
+            <a href="mailto:gobi56529@gmail.com" class="footer-action-btn primary" id="footer-cta-email">
+              <span>INITIATE COLLABORATION</span>
+              <svg class="footer-btn-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://www.youtube.com/channel/UCKx1pXVuhTF3l2JrIqnU9xg" target="_blank" rel="noopener noreferrer" class="footer-action-btn secondary">
+              <span>WATCH ON YOUTUBE</span>
+              <svg class="footer-btn-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+
+            <!-- Quick Email Copy Capsule -->
+            <div class="footer-copy-capsule" id="footer-copy-capsule" title="Click to copy email address">
+              <span class="footer-capsule-label">DIRECT SIGNAL:</span>
+              <span class="footer-capsule-email" id="footer-raw-email">gobi56529@gmail.com</span>
+              <button type="button" class="footer-copy-btn" id="footer-copy-trigger" aria-label="Copy direct email address">
+                <svg class="footer-copy-icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                <span id="footer-copy-text">COPY</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Live Telemetry & System Status Bar -->
+        <div class="footer-telemetry-bar">
+          <div class="footer-telem-item">
+            <span class="telem-dot"></span>
+            <span>SYSTEM: NEMO v4.2 [OPTIMAL]</span>
+          </div>
+          <div class="footer-telem-item">
+            <span class="telem-label">LOCATION:</span>
+            <span>CHENNAI // ASIA (IST)</span>
+          </div>
+          <div class="footer-telem-item">
+            <span class="telem-label">LOCAL CLOCK:</span>
+            <span class="footer-live-clock" id="footer-live-clock">--:--:-- IST</span>
+          </div>
+          <div class="footer-telem-item telem-hide-mobile">
+            <span class="telem-label">RENDER PIPELINE:</span>
+            <span>4K 60FPS · HEVC/AV1 · 24/7 ACTIVE</span>
+          </div>
+        </div>
+
+        <!-- 3. The 4-Column Architectural Grid -->
+        <div class="footer-architectural-grid">
+          <!-- Col 1: Studio Identity & Description -->
+          <div class="footer-grid-col brand-col">
+            <div class="footer-brand-header">
+              <div class="footer-brand-symbol">
+                <svg width="28" height="22" viewBox="0 0 45 35" fill="none">
+                  <path d="M0 0V3.36187L31.08 34H45V30.4643L14.0256 0H0Z" fill="currentColor"/>
+                  <path d="M8.1292 15H0V34H3.49845L13 24.436V19.7433L8.1292 15Z" fill="currentColor"/>
+                  <path d="M32 0V10.1809H35.279L35.2421 17.5255L36.7628 19L45 10.9361V0H32Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="footer-brand-titles">
+                <span class="footer-brand-main">NEMO SYSTEMS</span>
+                <span class="footer-brand-sub">DIRECTED BY GOBI</span>
+              </div>
+            </div>
+            <p class="footer-description">
+              Autonomous production ecosystem engineered for digital creators. Integrating AI visual synthesis, retention architecture, kinetic typography, and multi-channel algorithmic distribution.
+            </p>
+            <div class="footer-availability-chip">
+              <span class="chip-beacon"></span>
+              <span>Accepting Select 2026 Brand &amp; Creator Directing Inquiries</span>
+            </div>
+          </div>
+
+          <!-- Col 2: Navigation & Architecture Index -->
+          <div class="footer-grid-col nav-col">
+            <h3 class="footer-col-heading">// ECOSYSTEM NAVIGATION</h3>
+            <ul class="footer-nav-list">
+              <li><a href="#hero" class="footer-link-item"><span class="link-idx">01</span><span class="link-name">Studio Overview</span><span class="link-arrow">&nearr;</span></a></li>
+              <li><a href="#workflow-pipeline" class="footer-link-item"><span class="link-idx">02</span><span class="link-name">Neural Pipeline</span><span class="link-arrow">&nearr;</span></a></li>
+              <li><a href="#core-capabilities" class="footer-link-item"><span class="link-idx">03</span><span class="link-name">Spectrum Capabilities</span><span class="link-arrow">&nearr;</span></a></li>
+              <li><a href="#s3-gallery" class="footer-link-item"><span class="link-idx">04</span><span class="link-name">Visual Archive</span><span class="link-arrow">&nearr;</span></a></li>
+              <li><a href="mailto:gobi56529@gmail.com" class="footer-link-item"><span class="link-idx">05</span><span class="link-name">Direct Transmission</span><span class="link-arrow">&nearr;</span></a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Official Social Channels -->
+          <div class="footer-grid-col social-col">
+            <h3 class="footer-col-heading">// OFFICIAL CHANNELS</h3>
+            <div class="footer-social-deck">
+              <!-- YouTube -->
+              <a href="https://www.youtube.com/channel/UCKx1pXVuhTF3l2JrIqnU9xg" target="_blank" rel="noopener noreferrer" class="footer-card is-youtube" aria-label="YouTube Channel">
+                <div class="card-icon yt">
+                  <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </div>
+                <div class="card-info">
+                  <span class="card-title">YouTube</span>
+                  <span class="card-handle">@gobi_official</span>
+                </div>
+                <span class="card-arrow">&nearr;</span>
+              </a>
+
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/in/gobi27" target="_blank" rel="noopener noreferrer" class="footer-card is-linkedin" aria-label="LinkedIn Profile">
+                <div class="card-icon in">
+                  <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76c.99 0 1.8-.81 1.8-1.8 0-.99-.81-1.8-1.8-1.8-.99 0-1.8.81-1.8 1.8 0 .99.81 1.8 1.8 1.8m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+                </div>
+                <div class="card-info">
+                  <span class="card-title">LinkedIn</span>
+                  <span class="card-handle">in/gobi27</span>
+                </div>
+                <span class="card-arrow">&nearr;</span>
+              </a>
+
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/_mephisto_27_?utm_source=qr&amp;igsh=N2lhNmRneWx0MjNo" target="_blank" rel="noopener noreferrer" class="footer-card is-instagram" aria-label="Instagram Profile">
+                <div class="card-icon ig">
+                  <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </div>
+                <div class="card-info">
+                  <span class="card-title">Instagram</span>
+                  <span class="card-handle">@_mephisto_27_</span>
+                </div>
+                <span class="card-arrow">&nearr;</span>
+              </a>
+
+              <!-- Direct Email -->
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=gobi56529@gmail.com" target="_blank" rel="noopener noreferrer" class="footer-card is-gmail" aria-label="Direct Email Contact">
+                <div class="card-icon mail">
+                  <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                </div>
+                <div class="card-info">
+                  <span class="card-title">Direct Signal</span>
+                  <span class="card-handle">gobi56529@gmail.com</span>
+                </div>
+                <span class="card-arrow">&nearr;</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Col 4: Studio Monitor / Live Telemetry Stream -->
+          <div class="footer-grid-col monitor-col">
+            <h3 class="footer-col-heading">// LIVE STREAM FEED</h3>
+            <div class="footer-monitor-frame">
+              <div class="monitor-top-bar">
+                <span class="monitor-cam">FEED // CAM-01 [ACTIVE]</span>
+                <span class="monitor-rec"><span class="rec-beacon"></span>REC</span>
+              </div>
+              <div class="footer-video-thumb">
+                <video autoplay muted loop playsinline preload="metadata" poster="videos/bg2_thumb.webp" width="340" height="190" disableRemotePlayback data-lazy-video>
+                  <source src="videos/bg2.mp4" data-src="videos/bg2.mp4" type="video/mp4">
+                </video>
+                <div class="monitor-scanlines" aria-hidden="true"></div>
+              </div>
+              <div class="monitor-bottom-bar">
+                <span>LOOP: 24/7 PRODUCTION</span>
+                <span>4K · 60FPS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Massive Typographic Watermark -->
+        <div class="footer-watermark-row">
+          <div class="footer-watermark-text" aria-hidden="true">NEMO SYSTEMS</div>
+        </div>
+
+        <!-- 5. Sub-Footer & Back-To-Top -->
+        <div class="footer-bottom-bar">
+          <div class="footer-bottom-left">
+            <span class="footer-copyright">&copy; 2026 GOBI. ALL RIGHTS RESERVED.</span>
+            <span class="footer-sep">/</span>
+            <span class="footer-subtext">POWERED BY NEMO AUTONOMOUS ECOSYSTEM</span>
+            <span class="footer-sep">/</span>
+            <a href="#cookie-settings" id="footer-cookie-settings" data-cookie-settings class="footer-subtext" style="color: #a78bfa; text-decoration: none; cursor: pointer; transition: color 0.2s ease;">COOKIE PREFERENCES</a>
+          </div>
+
+          <div class="footer-bottom-center">
+            <span>ENGINEERED FOR HIGH RETENTION &amp; NEURAL PRECISION</span>
+          </div>
+
+          <div class="footer-bottom-right">
+            <button type="button" class="footer-back-to-top" id="footer-back-to-top" aria-label="Scroll back to top of page">
+              <span>BACK TO TOP</span>
+              <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- Main Interactive App & Slideshow Engine -->
+  <script src="js/main.js" defer></script>
+
+  <!-- Core Capabilities 3D Ring Gallery -->
+  <script src="js/capabilities.js" defer></script>
+  <!-- NEMO Autonomous Workflow -->
+  <script src="js/workflow.js" defer></script>
+
+
+  <!-- DXM section 已移除：對應 JS（dxm-strip / dxm-scrollTopBtn / #dxm-marquee ScrollTrigger）一併清除 -->
+
+  <!-- =========================================================
+       SECTION TRANSITIONS: stm → ccap → s3  (rAF, same pattern as hero→dark-wrapper)
+       ========================================================= -->
+  <script src="js/section-transitions.js" defer></script>
+
+
+  <!-- =========================================================
+       FOOTER INTERACTIONS: Live IST Clock, 1-Click Copy, Smooth Top
+       ========================================================= -->
+  <script>
+    (function () {
+      // 1. Live Telemetry Clock (IST / Asia/Kolkata)
+      const clockEl = document.getElementById('footer-live-clock');
+      function updateClock() {
+        if (!clockEl) return;
+        try {
+          const now = new Date();
+          const options = {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          };
+          const timeStr = new Intl.DateTimeFormat('en-GB', options).format(now);
+          clockEl.textContent = timeStr + ' IST';
+        } catch (e) {
+          const d = new Date();
+          clockEl.textContent = String(d.getHours()).padStart(2, '0') + ':' +
+            String(d.getMinutes()).padStart(2, '0') + ':' +
+            String(d.getSeconds()).padStart(2, '0') + ' LOC';
+        }
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      // 2. Email Copy-to-Clipboard Capsule
+      const copyBtn = document.getElementById('footer-copy-trigger');
+      const copyText = document.getElementById('footer-copy-text');
+      const copyCapsule = document.getElementById('footer-copy-capsule');
+      const emailVal = 'gobi56529@gmail.com';
+
+      function copyEmail() {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(emailVal).then(showCopiedFeedback).catch(fallbackCopy);
+        } else {
+          fallbackCopy();
+        }
+      }
+
+      function fallbackCopy() {
+        const tempInput = document.createElement('input');
+        tempInput.value = emailVal;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        try {
+          document.execCommand('copy');
+          showCopiedFeedback();
+        } catch (err) {
+          console.warn('Copy failed', err);
+        }
+        document.body.removeChild(tempInput);
+      }
+
+      let copyTimer = null;
+      function showCopiedFeedback() {
+        if (!copyBtn || !copyText) return;
+        copyBtn.classList.add('copied');
+        copyText.textContent = 'COPIED!';
+        clearTimeout(copyTimer);
+        copyTimer = setTimeout(function () {
+          copyBtn.classList.remove('copied');
+          copyText.textContent = 'COPY';
+        }, 2500);
+      }
+
+      if (copyBtn) copyBtn.addEventListener('click', copyEmail);
+      if (copyCapsule) {
+        copyCapsule.style.cursor = 'pointer';
+        copyCapsule.addEventListener('click', function (e) {
+          if (e.target !== copyBtn && !copyBtn.contains(e.target)) {
+            copyEmail();
+          }
+        });
+      }
+
+      // 3. Smooth Back to Top
+      const bttBtn = document.getElementById('footer-back-to-top');
+      if (bttBtn) {
+        bttBtn.addEventListener('click', function () {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
+    })();
+  </script>
+
+  <!-- Auth State Sync for NEMO Studio -->
+  <script>
+    (function() {
+      try {
+        const raw = localStorage.getItem('nemo_user');
+        if (raw) {
+          const user = JSON.parse(raw);
+          const dashUrl = (typeof window.getDashboardUrl === 'function') ? window.getDashboardUrl() : '/dashboard';
+          const heroBtn = document.getElementById('hero-signin-btn');
+          if (heroBtn && user) {
+            const name = (user.displayName || user.email || 'USER').split(' ')[0].toUpperCase();
+            heroBtn.textContent = name;
+            heroBtn.href = dashUrl;
+            heroBtn.setAttribute('data-cursor', 'DASHBOARD');
+            heroBtn.title = `Logged in as ${user.email || name} — Open Dashboard`;
+          }
+          const scrollBtn = document.getElementById('nav-scroll-auth-btn');
+          if (scrollBtn && user) {
+            const name = (user.displayName || user.email || 'USER').split(' ')[0].toUpperCase();
+            scrollBtn.href = dashUrl;
+            scrollBtn.setAttribute('data-cursor', 'DASHBOARD');
+            scrollBtn.setAttribute('aria-label', `Dashboard: ${name}`);
+            scrollBtn.title = `Logged in as ${user.email || name} — Open Dashboard`;
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- NEMO Unified Cookie Consent & Privacy Preference Center -->
+  <script src="js/cookie-consent.js" defer></script>
+
+</body>
+
+</html>

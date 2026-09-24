@@ -1,7 +1,13 @@
 # ── Environment & Secrets ────────────────────────────────────
 .env
+.env.*
 client_secrets.json
 youtube_credentials.json
+.backend_port
+*.cookie
+*.cookies
+cookies.txt
+public/data/users/*/cookies.txt
 
 # ── Build Output ─────────────────────────────────────────────
 dist/
@@ -10,32 +16,43 @@ dist/
 node_modules/
 venv/
 
-# ── Python Cache ─────────────────────────────────────────────
+# ── Python Cache & Model Caches ──────────────────────────────
 __pycache__/
 *.pyc
+*.pyo
+.cache/
 
-# ── Pipeline Runtime Files ───────────────────────────────────
+# ── Temporary Scratch Scripts ────────────────────────────────
+scratch/
+
+# ── Pipeline Runtime & Databases ─────────────────────────────
 ghostpipe.lock
 ghostpipe.log
 telegram_tamil_pipeline.log
-pipeline/ghostpipe.lock
-pipeline/ghostpipe.log
-pipeline/upload_history.sqlite3
-pipeline/upload_history.sqlite3-*
-pipeline/learning_memory.sqlite3
-pipeline/telegram_tamil_history.sqlite3
+logs/
+*.log
+*.lock
+*.sqlite3
+*.sqlite3-*
+*.sqlite3-journal
+pipeline/*.sqlite3
+pipeline/*.sqlite3-*
 pipeline/copyright_shield.db
 pipeline/pipeline/
 copyright_shield.db
 
 # ── Telegram Sessions ───────────────────────────────────────
-ghostpipe_telegram.session
 *.session
+*.session-*
+*.session-journal
+ghostpipe_telegram.session
 
 # ── Media Working Files ─────────────────────────────────────
 downloads/
 outputs/
 *TEMP_MPY*.mp4
+*.tmp
+*.part
 
 # ── IDE & OS ─────────────────────────────────────────────────
 .vscode/

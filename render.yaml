@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: nemo-youtube-shorts
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    region: oregon
+    healthCheckPath: /api/storage/stats
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4173
+      - key: ADMIN_EMAIL
+        value: gobi56529@gmail.com

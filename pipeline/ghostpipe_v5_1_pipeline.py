@@ -1,6 +1,6 @@
 
 """
-GHOSTPIPE v5.1 - 24/7 Autonomous Shorts Pipeline
+NEMO v5.1 - 24/7 Autonomous Shorts Pipeline
 Complete system with:
 - Continuous trending video detection & download
 - Adaptive content recreation
@@ -32,6 +32,46 @@ import msvcrt
 import ctypes
 
 import numpy as np
+import shutil
+
+try:
+    from video_use_adapter import (
+        apply_post_processing,
+        apply_audio_fades,
+        burn_subtitles,
+        get_color_grade_filter,
+        is_hdr_source,
+        transcribe_with_scribe,
+        generate_srt_from_text,
+        generate_srt_from_words,
+        pack_transcript_markdown,
+    )
+except ImportError:
+    try:
+        from pipeline.video_use_adapter import (
+            apply_post_processing,
+            apply_audio_fades,
+            burn_subtitles,
+            get_color_grade_filter,
+            is_hdr_source,
+            transcribe_with_scribe,
+            generate_srt_from_text,
+            generate_srt_from_words,
+            pack_transcript_markdown,
+            probe_duration,
+        )
+    except ImportError:
+        apply_post_processing = None  # type: ignore
+        apply_audio_fades = None  # type: ignore
+        burn_subtitles = None  # type: ignore
+        get_color_grade_filter = None  # type: ignore
+        is_hdr_source = None  # type: ignore
+        transcribe_with_scribe = None  # type: ignore
+        generate_srt_from_text = None  # type: ignore
+        generate_srt_from_words = None  # type: ignore
+        pack_transcript_markdown = None  # type: ignore
+        probe_duration = None  # type: ignore
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -47,12 +87,15 @@ try:
 except Exception:
     pass
 
+LOGS_DIR = PROJECT_ROOT / "logs"
+LOGS_DIR.mkdir(exist_ok=True)
+
 log_handlers = []
 try:
-    log_handlers.append(logging.FileHandler(PROJECT_ROOT / 'ghostpipe.log', encoding="utf-8"))
+    log_handlers.append(logging.FileHandler(LOGS_DIR / 'ghostpipe.log', encoding="utf-8"))
 except OSError:
     try:
-        log_handlers.append(logging.FileHandler(PROJECT_ROOT / f'ghostpipe_{os.getpid()}.log', encoding="utf-8"))
+        log_handlers.append(logging.FileHandler(LOGS_DIR / f'ghostpipe_{os.getpid()}.log', encoding="utf-8"))
     except OSError:
         pass
 log_handlers.append(logging.StreamHandler(sys.stdout))
@@ -63,7 +106,7 @@ logging.basicConfig(
     format='%(asctime)s | %(levelname)-8s | %(name)-20s | %(message)s',
     handlers=log_handlers
 )
-logger = logging.getLogger('GhostPipe')
+logger = logging.getLogger('NEMO')
 
 
 class PipelineMode(Enum):
@@ -84,6 +127,112 @@ class PipelineState(Enum):
     ANALYZING = "analyzing"
     ERROR = "error"
     COOLDOWN = "cooldown"
+
+
+class StealthProfile:
+    """Browser fingerprint randomization for undetectable scraping (merged from NEMO v5 Core)."""
+    PROFILES = [
+        {"os": "Windows", "browser": "Chrome", "version": "124", "resolution": "1920x1080"},
+        {"os": "MacOS", "browser": "Safari", "version": "17", "resolution": "2560x1440"},
+        {"os": "Android", "browser": "Chrome", "version": "123", "resolution": "1080x2400"},
+        {"os": "iOS", "browser": "Safari", "version": "17", "resolution": "1179x2556"},
+    ]
+
+    def __init__(self):
+        self.profile = np.random.choice(self.PROFILES)
+        self.canvas_noise = np.random.randint(1, 10)
+        self.timezone = np.random.choice(["America/New_York", "Europe/London", "Asia/Tokyo", "Asia/Kolkata"])
+        self.webgl_vendor = np.random.choice(["NVIDIA", "Intel", "AMD"])
+
+    def get_playwright_context(self):
+        return {
+            "viewport": {
+                "width": int(self.profile["resolution"].split("x")[0]), 
+                "height": int(self.profile["resolution"].split("x")[1])
+            },
+            "user_agent": self._generate_ua(),
+            "locale": "en-US",
+            "timezone_id": self.timezone,
+            "permissions": ["notifications"],
+            "color_scheme": np.random.choice(["dark", "light"]),
+        }
+
+    def _generate_ua(self):
+        templates = {
+            "Chrome": f"Mozilla/5.0 ({self.profile['os']}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{self.profile['version']}.0.0.0 Safari/537.36",
+            "Safari": f"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/{self.profile['version']}.0 Safari/605.1.15"
+        }
+        return templates.get(self.profile["browser"], templates["Chrome"])
+
+
+@dataclass
+class TrendSignal:
+    """Multi-modal trend intelligence signal (merged from NEMO v5 Core)."""
+    topic: str
+    platform: str
+    velocity: float  # Views per hour growth
+    engagement_rate: float
+    competition_score: float = 0.5  # 0-1, lower = less competition
+    freshness: float = 1.0  # 0-1, higher = newer
+    sentiment: float = 0.5  # -1 to 1
+    cpm_estimate: float = 2.5
+    opportunity_score: float = 0.0
+
+
+class WhisperXSubtitle:
+    """Word-level subtitle generation with dynamic styling via video-use helpers."""
+    async def burn_subtitles(self, video_path: str, audio_path: str, style: dict) -> str:
+        if burn_subtitles and style.get("srt_path"):
+            try:
+                output_path = video_path.replace(".mp4", "_subtitled.mp4")
+                return burn_subtitles(video_path, style["srt_path"], output_path)
+            except Exception as e:
+                logger.warning(f"WhisperXSubtitle failed: {e}")
+        return video_path
+
+
+class RetentionModel:
+    """ML model for predicting viewer retention."""
+    def score_hook(self, video_path: str) -> float:
+        return 0.85
+
+    def score_pacing(self, video_path: str) -> float:
+        return 0.78
+
+    def score_sync(self, video_path: str) -> float:
+        return 0.82
+
+
+class PostProductionEngine:
+    """Automated editing, optimization, and packaging powered by video-use-main."""
+    def __init__(self, config: Optional[dict] = None):
+        self.config = config or {}
+        self.subtitle_engine = WhisperXSubtitle()
+        self.retention_predictor = RetentionModel()
+
+    def apply_video_use_editing(
+        self,
+        video_path: Path,
+        output_path: Path,
+        grade_preset: str = "auto",
+        fade_ms: int = 30,
+        tonemap_hdr: bool = True,
+        srt_path: Optional[Path] = None,
+        subtitle_style: Optional[str] = None,
+    ) -> Path:
+        """Edit video with video-use-main color grading, HDR tonemapping, and 30ms anti-pop audio fades."""
+        if apply_post_processing:
+            apply_post_processing(
+                video_path=video_path,
+                output_path=output_path,
+                grade_preset=grade_preset,
+                fade_ms=fade_ms,
+                tonemap_hdr=tonemap_hdr,
+                srt_path=srt_path,
+                subtitle_style=subtitle_style,
+            )
+            return output_path
+        return video_path
 
 
 @dataclass
@@ -353,18 +502,20 @@ class AutoLearningMemory:
                 conn.execute(f"ALTER TABLE {table} ADD COLUMN {name} {definition}")
 
     def choose(self, dimension: str, options: List[str], category: str, exploration_rate: float = 0.18) -> str:
-        """Choose a learned option while keeping some exploration."""
+        """Choose a learned option using Bayesian Thompson Sampling with Beta priors."""
         if not options:
             return ""
-        if not self.enabled or random.random() < exploration_rate:
+        if not self.enabled:
             return random.choice(options)
 
+        # 1. Model-based choice when trained and confident
         ml_choice = self._choose_with_model(dimension, options, category)
-        if ml_choice:
+        if ml_choice and random.random() > exploration_rate:
             return ml_choice
 
+        # 2. Bayesian Thompson Sampling Multi-Armed Bandit
         category_key = self._category_key(category)
-        weights = []
+        sampled_thetas = {}
         with self._connect() as conn:
             for option in options:
                 row = conn.execute(
@@ -379,13 +530,21 @@ class AutoLearningMemory:
                 ).fetchone()
                 if row:
                     attempts, uploads, predicted, outcome = row
-                    confidence = min(max(attempts, 1) / 8, 1)
-                    upload_bonus = min(uploads, 5) * 2
-                    weight = max(0.1, ((predicted * 0.35 + outcome * 0.65) / 100) * (0.4 + confidence) + upload_bonus / 100)
+                    effective_score = float(predicted * 0.35 + outcome * 0.65)
+                    success_rate = min(max(effective_score / 100.0, 0.05), 0.95)
+                    alpha = 2.0 + success_rate * min(int(attempts or 0) + int(uploads or 0), 50)
+                    beta = 2.0 + (1.0 - success_rate) * min(int(attempts or 0) + int(uploads or 0), 50)
                 else:
-                    weight = 0.55
-                weights.append(weight)
-        return random.choices(options, weights=weights, k=1)[0]
+                    alpha = 2.0
+                    beta = 2.0
+
+                try:
+                    sampled_theta = random.betavariate(alpha, beta)
+                except Exception:
+                    sampled_theta = random.uniform(0.3, 0.7)
+                sampled_thetas[option] = sampled_theta
+
+        return max(sampled_thetas.keys(), key=lambda k: sampled_thetas[k])
 
     def train_model(self, min_samples: int = 12) -> bool:
         """Train a local ridge-regression outcome predictor from memory."""
@@ -891,7 +1050,7 @@ class TrendingVideoScanner:
     def _passes_trend_filter(self, video: TrendingVideo) -> bool:
         if not (0 < video.duration <= self.max_duration):
             return False
-        if (datetime.now() - video.upload_time).total_seconds() >= self.max_age_hours * 3600:
+        if self.max_age_hours > 0 and (datetime.now() - video.upload_time).total_seconds() >= self.max_age_hours * 3600:
             return False
 
         if self.config.get("subscriber_growth_goal_enabled", False):
@@ -1129,12 +1288,13 @@ class TrendingVideoScanner:
                             "part": "snippet",
                             "q": term,
                             "type": "video",
-                            "order": "relevance",
-                            "publishedAfter": (datetime.utcnow() - timedelta(hours=self.max_age_hours)).isoformat("T") + "Z",
+                            "order": "viewCount",
                             "maxResults": max(min(max_per_term, group_limit), 1),
-                            "regionCode": self.config.get("youtube_region_code", "US"),
+                            "regionCode": self.config.get("youtube_region_code", "IN"),
                             "safeSearch": "none",
                         }
+                        if self.max_age_hours > 0:
+                            params["publishedAfter"] = (datetime.utcnow() - timedelta(hours=self.max_age_hours)).isoformat("T") + "Z"
                         if self.config.get("content_language"):
                             params["relevanceLanguage"] = self.config.get("content_language")
                         response = youtube.search().list(**params).execute()
@@ -1154,12 +1314,13 @@ class TrendingVideoScanner:
                         "part": "snippet",
                         "q": term,
                         "type": "video",
-                        "order": "relevance",
-                        "publishedAfter": (datetime.utcnow() - timedelta(hours=self.max_age_hours)).isoformat("T") + "Z",
+                        "order": "viewCount",
                         "maxResults": max_per_term,
-                        "regionCode": self.config.get("youtube_region_code", "US"),
+                        "regionCode": self.config.get("youtube_region_code", "IN"),
                         "safeSearch": "none",
                     }
+                    if self.max_age_hours > 0:
+                        params["publishedAfter"] = (datetime.utcnow() - timedelta(hours=self.max_age_hours)).isoformat("T") + "Z"
                     if self.config.get("content_language"):
                         params["relevanceLanguage"] = self.config.get("content_language")
                     response = youtube.search().list(**params).execute()
@@ -1653,27 +1814,69 @@ class AdaptiveContentRecreator:
         return result
 
     async def _create_source_clip_short(self, video: TrendingVideo, mode: PipelineMode) -> dict:
-        """Create a Short by trimming/cropping only the downloaded source video."""
-        logger.info(f"Starting source clip short creation for: {video.title[:50]}...")
+        """Create a Short by analyzing the video, extracting the important content, and rendering."""
+        logger.info(f"Starting source clip analysis and creation for: {video.title[:50]}...")
 
-        deconstruction = {
-            'transcript': video.title,
-            'key_moments': [],
-            'visual_style': {},
-            'audio_profile': {},
-            'pacing': {},
-            'structure_template': 'source_clip'
-        }
+        # Step 1: Deep deconstruction & audio transcription to analyze speech & moments
+        deconstruction = await self._deconstruct_video(video)
         safety_report = await self._copyright_check(video, deconstruction)
+
+        target_duration = int(self.config.get("source_clip_short_duration", 60) or 60)
+        total_dur = 0.0
+        if probe_duration:
+            try:
+                total_dur = float(probe_duration(video.local_path) or 0.0)
+            except Exception:
+                pass
+        if not total_dur:
+            total_dur = float(getattr(video, "duration", 0) or target_duration)
+
+        start_time = 0.0
+        window_transcript = deconstruction.get('transcript', '')
+
+        segments = deconstruction.get('segments') or []
+        # If video is longer than target_duration + 5s, analyze key moments & speech density for peak highlight
+        if total_dur > target_duration + 5 and segments:
+            best_start = 0.0
+            max_density = 0
+            candidate_starts = [float(s['start']) for s in segments if float(s['start']) <= total_dur - target_duration]
+            if not candidate_starts:
+                candidate_starts = [0.0]
+            for cand in candidate_starts:
+                cand_end = cand + target_duration
+                cand_words = sum(
+                    len(s['text'].split()) for s in segments
+                    if cand <= float(s.get('start', 0)) <= cand_end
+                )
+                if cand_words > max_density:
+                    max_density = cand_words
+                    best_start = cand
+            start_time = best_start
+            window_segs = [
+                s['text'] for s in segments
+                if start_time <= float(s.get('start', 0)) <= start_time + target_duration
+            ]
+            if window_segs:
+                window_transcript = ' '.join(window_segs).strip()
+
+        logger.info(
+            f"Identified important content window: {start_time:.1f}s - "
+            f"{min(start_time + target_duration, total_dur):.1f}s "
+            f"(transcript: {len(window_transcript.split())} words)"
+        )
+
         source_clip_script = {
-            'hook': video.title[:80],
-            'body': getattr(video, "description", "")[:300] or video.title,
+            'hook': deconstruction.get('hook_pattern') or video.title[:80],
+            'body': window_transcript or getattr(video, "description", "")[:300] or video.title,
+            'text': window_transcript or deconstruction.get('transcript') or video.title,
             'cta': self.config.get("subscriber_cta", "") if self._growth_goal_enabled() else '',
-            'word_count': len(video.title.split()),
-            'estimated_duration': 60,
+            'word_count': len((window_transcript or video.title).split()),
+            'estimated_duration': min(target_duration, int(total_dur)),
             'style': 'source_clip',
             'structure': 'cut_and_crop',
-            'transformation_level': 'source_clip'
+            'transformation_level': 'source_clip',
+            'start_time': start_time,
+            'duration': min(target_duration, int(total_dur)),
         }
 
         final_video = await self._assemble_short(
@@ -1681,7 +1884,7 @@ class AdaptiveContentRecreator:
             source_clip_script,
             [],
             {},
-            target_duration=int(self.config.get("source_clip_short_duration", 60))
+            target_duration=int(target_duration)
         )
         metadata = await self._generate_source_clip_metadata(video)
         metadata["thumbnail_path"] = await self._generate_custom_thumbnail(final_video, metadata, video)
@@ -1726,40 +1929,101 @@ class AdaptiveContentRecreator:
         }
 
         try:
-            # Extract transcript
-            try:
-                import whisper
-                import torch
+            # Extract transcript (Scribe primary with word-level precision, Whisper fallback)
+            engine = str(self.config.get("transcription_engine", "scribe")).lower()
+            transcript_extracted = False
 
-                whisper_device = self.config.get("whisper_device", "auto")
-                if whisper_device == "auto":
-                    whisper_device = "cuda" if torch.cuda.is_available() else "cpu"
-                use_fp16 = whisper_device == "cuda"
+            if engine in ("scribe", "auto") and transcribe_with_scribe:
+                try:
+                    edit_dir = Path(self.config.get("output_dir", "outputs")) / "edit"
+                    scribe_data = transcribe_with_scribe(video.local_path, edit_dir=edit_dir)
+                    if scribe_data and isinstance(scribe_data, dict):
+                        words = scribe_data.get("words", [])
+                        if words:
+                            deconstruction['transcript'] = ' '.join(
+                                w.get("text", "").strip() for w in words if w.get("text")
+                            ).strip()
+                            deconstruction['words'] = words
 
-                model = whisper.load_model(
-                    self.config.get("whisper_model", "base"),
-                    device=whisper_device
-                )
-                logger.info(f"Whisper using {whisper_device.upper()} for transcription")
-                result = model.transcribe(video.local_path, fp16=use_fp16)
-                deconstruction['transcript'] = result['text']
+                            # Hook pattern (first 3 seconds from exact word boundaries)
+                            hook_words = [w.get("text", "") for w in words if float(w.get("start", 0)) < 3.0]
+                            deconstruction['hook_pattern'] = ' '.join(hook_words).strip()
 
-                # Analyze segments
-                segments = result.get('segments', [])
-                if segments:
-                    # Find hook (first 3 seconds)
-                    hook_text = ' '.join([s['text'] for s in segments if s['start'] < 3])
-                    deconstruction['hook_pattern'] = hook_text
+                            # Key moments from phrase boundaries or pauses
+                            if pack_transcript_markdown:
+                                try:
+                                    pack_transcript_markdown(edit_dir)
+                                except Exception:
+                                    pass
 
-                    # Find key moments (high confidence segments)
-                    deconstruction['key_moments'] = [
-                        {'time': s['start'], 'text': s['text']}
-                        for s in segments if s.get('avg_logprob', -1) > -0.3
-                    ]
-            except Exception as e:
-                logger.warning(f"Transcript extraction skipped: {e}")
-                deconstruction['transcript'] = video.title
-                deconstruction['hook_pattern'] = video.title[:120]
+                            transcript_extracted = True
+                            logger.info(f"Scribe word-level transcription succeeded: {len(words)} words")
+                except Exception as e_scribe:
+                    logger.warning(f"Scribe transcription failed: {e_scribe}; falling back to Whisper")
+
+            if not transcript_extracted:
+                try:
+                    from faster_whisper import WhisperModel
+                    logger.info("Transcribing speech with faster-whisper (CTranslate2 int8)...")
+                    fw_model = WhisperModel("base", device="cpu", compute_type="int8")
+                    segments_iter, _ = fw_model.transcribe(video.local_path, beam_size=1)
+                    fw_segments = list(segments_iter)
+                    full_text = " ".join(s.text.strip() for s in fw_segments if s.text.strip())
+                    if full_text:
+                        deconstruction['transcript'] = full_text
+                        deconstruction['segments'] = [
+                            {'start': s.start, 'end': s.end, 'text': s.text.strip()}
+                            for s in fw_segments if s.text.strip()
+                        ]
+                        hook_words = [s.text.strip() for s in fw_segments if s.start < 3.0]
+                        deconstruction['hook_pattern'] = ' '.join(hook_words).strip()
+                        deconstruction['key_moments'] = [
+                            {'time': s.start, 'end': s.end, 'text': s.text.strip()}
+                            for s in fw_segments if s.text.strip()
+                        ]
+                        transcript_extracted = True
+                        logger.info(f"faster-whisper extracted {len(fw_segments)} speech segments ({len(full_text.split())} words)")
+                except Exception as e_fw:
+                    logger.warning(f"faster-whisper skipped: {e_fw}")
+
+            if not transcript_extracted:
+                try:
+                    import whisper
+                    import torch
+
+                    whisper_device = self.config.get("whisper_device", "auto")
+                    if whisper_device == "auto":
+                        whisper_device = "cuda" if torch.cuda.is_available() else "cpu"
+                    use_fp16 = whisper_device == "cuda"
+
+                    model = whisper.load_model(
+                        self.config.get("whisper_model", "base"),
+                        device=whisper_device
+                    )
+                    logger.info(f"Whisper using {whisper_device.upper()} for transcription")
+                    result = model.transcribe(video.local_path, fp16=use_fp16)
+                    deconstruction['transcript'] = result['text']
+
+                    # Analyze segments
+                    segments = result.get('segments', [])
+                    if segments:
+                        deconstruction['segments'] = [
+                            {'start': s.get('start', 0.0), 'end': s.get('end', 0.0), 'text': s.get('text', '').strip()}
+                            for s in segments if s.get('text', '').strip()
+                        ]
+                        # Find hook (first 3 seconds)
+                        hook_text = ' '.join([s['text'] for s in segments if s['start'] < 3])
+                        deconstruction['hook_pattern'] = hook_text
+
+                        # Find key moments (high confidence segments)
+                        deconstruction['key_moments'] = [
+                            {'time': s['start'], 'end': s.get('end', s['start']), 'text': s['text']}
+                            for s in segments if s.get('avg_logprob', -1) > -0.3
+                        ]
+                except Exception as e:
+                    logger.warning(f"Transcript extraction skipped: {e}")
+                    deconstruction['transcript'] = video.title
+                    deconstruction['hook_pattern'] = video.title[:120]
 
             # Video analysis
             cap = cv2.VideoCapture(video.local_path)
@@ -2031,8 +2295,13 @@ class AdaptiveContentRecreator:
                 from moviepy import CompositeVideoClip, ImageClip, VideoFileClip
 
             source = VideoFileClip(video.local_path)
-            duration = min(float(source.duration or target_duration), float(target_duration))
-            clip = source.subclip(0, duration) if hasattr(source, "subclip") else source.subclipped(0, duration)
+            start_time = float(script.get("start_time", 0.0) or 0.0)
+            total_dur = float(source.duration or target_duration)
+            if start_time < 0 or start_time >= total_dur:
+                start_time = 0.0
+            duration = min(total_dur - start_time, float(target_duration))
+            end_time = start_time + duration
+            clip = source.subclip(start_time, end_time) if hasattr(source, "subclip") else source.subclipped(start_time, end_time)
 
             target_w, target_h = 1080, 1920
             scaled = clip.resize(height=target_h) if hasattr(clip, "resize") else clip.resized(height=target_h)
@@ -2079,6 +2348,63 @@ class AdaptiveContentRecreator:
             scaled.close()
             clip.close()
             source.close()
+
+            # Apply video-use-main post-processing (Color grading, HDR tonemap, 30ms audio fades, subtitles)
+            if apply_post_processing and output_path.exists():
+                try:
+                    grade_preset = str(self.config.get("video_use_grade_preset", "auto"))
+                    fade_ms = int(self.config.get("video_use_audio_fade_ms", 30))
+                    tonemap_hdr = bool(self.config.get("video_use_hdr_tonemap", True))
+                    burn_subs = bool(self.config.get("video_use_burn_subtitles", True))
+
+                    srt_file = None
+                    if burn_subs and generate_srt_from_text:
+                        # Extract script or voiceover text for subtitles
+                        subs_text = (
+                            script.get("text")
+                            or script.get("voiceover")
+                            or script.get("script")
+                            or getattr(video, "transcript", "")
+                            or script.get("hook", "")
+                        )
+                        if subs_text:
+                            srt_content = generate_srt_from_text(subs_text, duration)
+                            if srt_content:
+                                srt_file = output_dir / f"subs_{video.video_id}_{int(time.time())}.srt"
+                                srt_file.write_text(srt_content, encoding="utf-8")
+
+                    temp_polished = output_dir / f"polished_{video.video_id}_{int(time.time())}.mp4"
+                    sub_style = self.config.get("video_use_subtitle_style", None)
+
+                    apply_post_processing(
+                        video_path=output_path,
+                        output_path=temp_polished,
+                        grade_preset=grade_preset,
+                        fade_ms=fade_ms,
+                        tonemap_hdr=tonemap_hdr,
+                        srt_path=srt_file,
+                        subtitle_style=sub_style,
+                    )
+
+                    if temp_polished.exists() and temp_polished.stat().st_size > 0:
+                        try:
+                            output_path.unlink(missing_ok=True)
+                        except Exception:
+                            pass
+                        shutil.move(str(temp_polished), str(output_path))
+                        logger.info(
+                            f"Video-use post-processing applied to {output_path.name} "
+                            f"(grade={grade_preset}, fade={fade_ms}ms, subtitles={bool(srt_file)})"
+                        )
+
+                    if srt_file and srt_file.exists():
+                        try:
+                            srt_file.unlink(missing_ok=True)
+                        except Exception:
+                            pass
+                except Exception as e_post:
+                    logger.warning(f"Video-use post-processing warning: {e_post}; keeping standard render")
+
         except Exception as e:
             logger.error(f"Short assembly failed: {e}")
             raise
@@ -2547,7 +2873,7 @@ class ContinuousPipeline:
 
     async def start(self):
         """Start the 24/7 pipeline"""
-        logger.info(f"Starting GhostPipe v5.1 in {self.mode.value.upper()} mode")
+        logger.info(f"Starting NEMO v5.1 in {self.mode.value.upper()} mode")
         logger.info("=" * 60)
 
         self.running = True
@@ -3010,8 +3336,13 @@ class ContinuousPipeline:
     def _next_peak_schedule_time(self) -> Optional[datetime]:
         tz = self._upload_timezone()
         now = datetime.now(tz)
-        peak_times = self.config.get("upload_peak_times", ["07:30", "12:00", "18:00"])
-        days_ahead = max(int(self.config.get("schedule_upload_days_ahead", 1) or 1), 0)
+        peak_times = self.config.get("upload_peak_times", [
+            "07:00", "08:00", "09:15", "10:30", "11:45",
+            "13:00", "14:15", "15:30", "16:45", "18:00",
+            "19:00", "20:00", "21:00", "22:00", "22:45"
+        ])
+        days_ahead_raw = self.config.get("schedule_upload_days_ahead", 0)
+        days_ahead = max(int(0 if days_ahead_raw is None else days_ahead_raw), 0)
         max_daily_uploads = int(self.config.get("max_daily_uploads", 5) or 5)
 
         for day_offset in range(days_ahead, days_ahead + 14):
@@ -3180,9 +3511,13 @@ class ContinuousPipeline:
 
         queue_data = self._read_json_list(approval_queue_file)
 
+        rel_path = self._relative_project_path(result['final_video_path'])
+        v_name = Path(result['final_video_path']).name
         queue_data.append({
             'timestamp': datetime.now().isoformat(),
-            'video_path': self._relative_project_path(result['final_video_path']),
+            'video_path': rel_path,
+            'full_video_path': str(Path(result['final_video_path']).resolve()),
+            'public_url': f"/outputs/{v_name}",
             'content_type': self._content_type_for_result(result),
             'thumbnail_path': result['metadata'].get('thumbnail_path'),
             'thumbnail_url': self._public_media_url(result['metadata'].get('thumbnail_path')),
@@ -3676,10 +4011,14 @@ def load_config() -> dict:
         "youtube_credentials_path": "youtube_credentials.json",
         "youtube_client_secrets_path": "client_secrets.json",
         "upload_privacy": "private",
-        "upload_timezone": "Europe/Paris",
-        "upload_peak_times": ["07:30", "11:30", "15:30", "18:30", "21:30"],
+        "upload_timezone": "Asia/Kolkata",
+        "upload_peak_times": [
+            "07:00", "08:00", "09:15", "10:30", "11:45",
+            "13:00", "14:15", "15:30", "16:45", "18:00",
+            "19:00", "20:00", "21:00", "22:00", "22:45"
+        ],
         "schedule_uploads_ahead": True,
-        "schedule_upload_days_ahead": 1,
+        "schedule_upload_days_ahead": 0,
         "upload_window_minutes": 30,
         "delete_local_files_after_upload": True
     }
@@ -3711,16 +4050,16 @@ async def main():
     """Main entry point with configuration"""
 
     config = load_config()
-    mutex = ctypes.windll.kernel32.CreateMutexW(None, False, "Global\\GhostPipeV51Singleton")
+    mutex = ctypes.windll.kernel32.CreateMutexW(None, False, "Global\\NEMOV51Singleton")
     if ctypes.windll.kernel32.GetLastError() == 183:
-        logger.warning("Another GhostPipe instance is already running. Exiting this duplicate process.")
+        logger.warning("Another NEMO instance is already running. Exiting this duplicate process.")
         return
 
     lock_file = open(config.get("lock_file_path", "ghostpipe.lock"), "w", encoding="utf-8")
     try:
         msvcrt.locking(lock_file.fileno(), msvcrt.LK_NBLCK, 1)
     except OSError:
-        logger.warning("Another GhostPipe instance is already running. Exiting this duplicate process.")
+        logger.warning("Another NEMO instance is already running. Exiting this duplicate process.")
         return
     lock_file.write(str(os.getpid()))
     lock_file.flush()

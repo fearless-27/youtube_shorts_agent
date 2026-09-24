@@ -1,0 +1,1221 @@
+/* ==========================================================================
+   NEMO / NEMO AUTONOMOUS 4-STAGE WORKFLOW STYLES
+   ========================================================================== */
+
+.nemo-workflow-section {
+  position: relative;
+  width: 100%;
+  background: #040508;
+  color: #ffffff;
+  padding: clamp(5rem, 8vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 10;
+  border-top: 1px solid rgba(59, 130, 246, 0.2);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+  font-family: var(--font-family-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.nemo-workflow-section * {
+  box-sizing: border-box;
+}
+
+/* Ambient Subtle Lighting with Dual-Zone Neon Aura Pulse */
+.wf-ambient-glow {
+  position: absolute;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85vw;
+  height: 550px;
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.14) 0%, rgba(99, 102, 241, 0.08) 35%, rgba(4, 5, 8, 0) 70%);
+  pointer-events: none;
+  z-index: 1;
+  animation: wfNeonAuraPulse 9s ease-in-out infinite alternate;
+}
+
+@keyframes wfNeonAuraPulse {
+  0% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.08);
+  }
+}
+
+/* 3D Cyber Perspective Grid Plane */
+.wf-cyber-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, black 25%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, black 25%, transparent 85%);
+  opacity: 0.75;
+  z-index: 1;
+}
+
+/* Neon Volumetric Light Beam */
+.wf-neon-light-beam {
+  position: absolute;
+  top: 10%;
+  left: -20%;
+  width: 140%;
+  height: 600px;
+  background: radial-gradient(ellipse at 50% 20%, rgba(59, 130, 246, 0.09) 0%, rgba(139, 92, 246, 0.05) 45%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 1;
+  animation: wfLightBeamDrift 14s ease-in-out infinite alternate;
+}
+
+@keyframes wfLightBeamDrift {
+  0% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(30px) rotate(1.5deg);
+  }
+}
+
+.wf-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+}
+
+/* Header */
+.wf-header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  position: relative;
+}
+
+.wf-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #93c5fd;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  padding: 0.45rem 1.1rem;
+  background: rgba(30, 58, 138, 0.2);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  border-radius: 999px;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+.wf-eyebrow-beacon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8, 0 0 16px #38bdf8;
+  animation: wfBeaconPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes wfBeaconPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+.wf-title {
+  font-family: var(--font-family-display, 'Zalando Sans SemiExpanded', 'DM Sans', sans-serif);
+  font-size: clamp(2.3rem, 1.6rem + 3vw, 4.4rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1.15;
+  margin: 0 0 1.4rem 0;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(0.5rem, 1.4vw, 1.2rem);
+  flex-wrap: wrap;
+  perspective: 1200px;
+}
+
+.wf-title-word {
+  display: inline-block;
+  position: relative;
+  color: #ffffff;
+  /* 3D Extruded Letterpress Effect (Titanium Specular & Stepped Depth) */
+  text-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.75),
+    0 -2px 2px rgba(255, 255, 255, 0.25),
+    0 1px 0 #cbd5e1,
+    0 2px 0 #94a3b8,
+    0 3px 0 #64748b,
+    0 4px 0 #475569,
+    0 5px 0 #334155,
+    0 6px 0 #1e293b,
+    0 7px 0 #0f172a,
+    0 9px 8px rgba(0, 0, 0, 0.5),
+    0 15px 20px rgba(0, 0, 0, 0.4),
+    0 24px 35px rgba(0, 0, 0, 0.3);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              text-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.35s ease;
+  cursor: default;
+  will-change: transform, text-shadow;
+}
+
+/* Accent Word "NEMO": High-Energy Electric Cybernetic Blue 3D Extrusion */
+.wf-title-word.wf-title-accent {
+  color: #ffffff;
+  text-shadow:
+    0 -1px 0 #ffffff,
+    0 -2px 2px rgba(186, 230, 253, 0.7),
+    0 1px 0 #93c5fd,
+    0 2px 0 #60a5fa,
+    0 3px 0 #3b82f6,
+    0 4px 0 #2563eb,
+    0 5px 0 #1d4ed8,
+    0 6px 0 #1e40af,
+    0 7px 0 #172554,
+    0 0 24px rgba(59, 130, 246, 0.55),
+    0 9px 12px rgba(30, 58, 138, 0.65),
+    0 16px 25px rgba(0, 0, 0, 0.75),
+    0 26px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Interactive 3D Levitation / Lift on Hover */
+.wf-title-word:hover {
+  transform: translateY(-4px) scale(1.02);
+  filter: brightness(1.1);
+  text-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 0 #cbd5e1,
+    0 2px 0 #94a3b8,
+    0 3px 0 #64748b,
+    0 4px 0 #475569,
+    0 5px 0 #334155,
+    0 6px 0 #1e293b,
+    0 8px 0 #0f172a,
+    0 10px 0 #020617,
+    0 14px 15px rgba(0, 0, 0, 0.7),
+    0 22px 30px rgba(0, 0, 0, 0.5);
+}
+
+.wf-title-word.wf-title-accent:hover {
+  transform: translateY(-5px) scale(1.03);
+  filter: brightness(1.15);
+  text-shadow:
+    0 -1px 0 #ffffff,
+    0 -2px 3px rgba(224, 242, 254, 0.9),
+    0 1px 0 #bfdbfe,
+    0 2px 0 #93c5fd,
+    0 3px 0 #60a5fa,
+    0 4px 0 #3b82f6,
+    0 5px 0 #2563eb,
+    0 6px 0 #1d4ed8,
+    0 8px 0 #1e40af,
+    0 10px 0 #172554,
+    0 0 35px rgba(96, 165, 250, 0.75),
+    0 12px 18px rgba(30, 58, 138, 0.7),
+    0 20px 30px rgba(0, 0, 0, 0.8),
+    0 30px 45px rgba(0, 0, 0, 0.6);
+}
+
+/* Mobile Responsiveness for 3D Typography */
+@media (max-width: 640px) {
+  .wf-title-word {
+    text-shadow:
+      0 -1px 0 rgba(255, 255, 255, 0.7),
+      0 1px 0 #94a3b8,
+      0 2px 0 #64748b,
+      0 3px 0 #334155,
+      0 4px 0 #0f172a,
+      0 7px 12px rgba(0, 0, 0, 0.5);
+  }
+  .wf-title-word.wf-title-accent {
+    text-shadow:
+      0 -1px 0 #ffffff,
+      0 1px 0 #60a5fa,
+      0 2px 0 #2563eb,
+      0 3px 0 #1d4ed8,
+      0 4px 0 #172554,
+      0 0 16px rgba(59, 130, 246, 0.5),
+      0 7px 12px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.wf-subtitle {
+  font-size: clamp(0.95rem, 0.85rem + 0.35vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Stepper Navigation Bar with Glowing Laser Track */
+.wf-stepper-wrap {
+  position: relative;
+  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  perspective: 1000px;
+}
+
+.wf-progress-track {
+  position: absolute;
+  top: 50%;
+  left: 4%;
+  right: 4%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  transform: translateY(-50%);
+  z-index: 1;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.wf-progress-fill {
+  height: 100%;
+  width: 25%;
+  background: linear-gradient(90deg, #2563eb, #38bdf8, #818cf8, #2563eb);
+  background-size: 200% 100%;
+  box-shadow: 0 0 14px #38bdf8, 0 0 25px rgba(56, 189, 248, 0.7);
+  border-radius: 999px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: wfLaserFlow 3s linear infinite;
+}
+
+@keyframes wfLaserFlow {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.wf-stepper-nav {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.1rem;
+  z-index: 2;
+  transform-style: preserve-3d;
+}
+
+.wf-step-btn {
+  background: linear-gradient(180deg, #0c0f17 0%, #07090f 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 1.3rem 1.1rem;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  text-align: left;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform-style: preserve-3d;
+}
+
+.wf-step-btn:hover {
+  background: linear-gradient(180deg, #131824 0%, #0c0f17 100%);
+  border-color: rgba(96, 165, 250, 0.4);
+  transform: translateY(-4px) translateZ(6px);
+  box-shadow:
+    0 12px 25px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(59, 130, 246, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.wf-step-btn.is-active {
+  background: linear-gradient(180deg, #101726 0%, #090e19 100%);
+  border-color: #38bdf8;
+  transform: translateY(-5px) translateZ(12px);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.8),
+    0 0 25px rgba(56, 189, 248, 0.45),
+    0 0 50px rgba(59, 130, 246, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 15px rgba(56, 189, 248, 0.12);
+}
+
+.wf-step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.wf-step-num {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.3s ease;
+}
+
+.wf-step-btn.is-active .wf-step-num {
+  color: #38bdf8;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+.wf-step-time {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+.wf-step-btn.is-active .wf-step-time {
+  background: rgba(14, 165, 233, 0.2);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+.wf-step-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-top: 0.25rem;
+}
+
+.wf-step-action {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Stage Panels */
+.wf-stage-panel {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.wf-stage-panel.is-active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wf-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+  perspective: 1200px;
+}
+
+/* 3D Volumetric Glassmorphic Telemetry Card */
+.wf-card {
+  background: linear-gradient(180deg, rgba(16, 23, 38, 0.5) 0%, rgba(8, 12, 20, 0.7) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  backdrop-filter: blur(16px);
+  position: relative;
+  box-shadow:
+    0 12px 30px -8px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 20px rgba(59, 130, 246, 0.03);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.wf-card:hover {
+  border-color: rgba(96, 165, 250, 0.45);
+  transform: translateY(-6px) translateZ(8px);
+  box-shadow:
+    0 20px 45px -10px rgba(0, 0, 0, 0.85),
+    0 0 30px rgba(56, 189, 248, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 25px rgba(59, 130, 246, 0.08);
+}
+
+.wf-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding-bottom: 0.9rem;
+}
+
+.wf-card-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wf-card-badge {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  padding: 0.22rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.wf-badge-green {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
+}
+
+.wf-badge-blue {
+  background: rgba(14, 165, 233, 0.15);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+}
+
+/* Source Feeds List */
+.wf-source-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.wf-source-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 0.9rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 9px;
+  font-size: 0.82rem;
+  transition: all 0.25s ease;
+}
+
+.wf-source-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(96, 165, 250, 0.3);
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.12);
+}
+
+.wf-source-name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Multi-Ring Neon Radar Pulse */
+.wf-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80, 0 0 16px rgba(74, 222, 128, 0.7);
+  position: relative;
+  display: inline-block;
+}
+
+.wf-pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid #4ade80;
+  animation: wfRadarRipple 2s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+}
+
+@keyframes wfRadarRipple {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+.wf-source-metric {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.74rem;
+}
+
+/* Metric Bars with Flowing Laser Energy Sheen */
+.wf-metric-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.wf-metric-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+
+.wf-metric-name {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.wf-metric-val {
+  font-weight: 700;
+  color: #38bdf8;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.wf-meter-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.wf-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #38bdf8, #60a5fa, #2563eb);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+  animation: wfMeterSheen 2.5s linear infinite;
+}
+
+@keyframes wfMeterSheen {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+/* Priority Queue Items */
+.wf-queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.wf-queue-item {
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid #3b82f6;
+  border-radius: 0 9px 9px 0;
+  font-size: 0.8rem;
+  transition: all 0.25s ease;
+}
+
+.wf-queue-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(3px);
+}
+
+.wf-queue-item.is-top {
+  border-left-color: #22c55e;
+  background: rgba(34, 197, 94, 0.06);
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.12);
+}
+
+.wf-queue-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.wf-queue-meta {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.74rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Reframe Simulation in Stage 2 with Glowing Viewport & Laser Scanline */
+.wf-reframe-sim {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.wf-sim-horiz {
+  width: 110px;
+  height: 62px;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.45);
+  gap: 0.2rem;
+}
+
+.wf-sim-arrow {
+  font-size: 1.1rem;
+  color: #38bdf8;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+.wf-sim-vert {
+  width: 68px;
+  height: 118px;
+  border: 1.5px solid #38bdf8;
+  background: rgba(14, 165, 233, 0.08);
+  box-shadow:
+    0 0 20px rgba(56, 189, 248, 0.35),
+    inset 0 0 15px rgba(56, 189, 248, 0.15);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  color: #bae6fd;
+  font-weight: 700;
+  gap: 0.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.wf-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
+  box-shadow: 0 0 8px #38bdf8;
+  opacity: 0.8;
+  animation: wfScanlineAnim 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes wfScanlineAnim {
+  0% {
+    top: -5%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    top: 105%;
+    opacity: 0;
+  }
+}
+
+/* Captions Demo */
+.wf-caption-demo {
+  background: #000000;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.12), inset 0 0 15px rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 1.3rem;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.wf-caption-word-dim {
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 600;
+}
+
+.wf-caption-word-glow {
+  color: #38bdf8;
+  font-weight: 800;
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.9), 0 0 25px rgba(56, 189, 248, 0.5);
+  letter-spacing: 0.04em;
+  padding: 0 0.25rem;
+}
+
+/* Retention Graph in Stage 3 with Glowing Laser Path */
+.wf-graph-wrap {
+  width: 100%;
+  height: 120px;
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.wf-graph-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wf-graph-svg path:last-child {
+  filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.85));
+}
+
+/* Comparison Section */
+.wf-comparison-wrap {
+  margin-top: 4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 3.5rem;
+}
+
+.wf-comp-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.wf-comp-title {
+  font-size: clamp(1.4rem, 1.2rem + 0.8vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 0.6rem 0;
+}
+
+.wf-comp-sub {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.wf-comp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  perspective: 1200px;
+}
+
+.wf-comp-card {
+  border-radius: 18px;
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  backdrop-filter: blur(16px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.wf-comp-manual {
+  background: linear-gradient(180deg, rgba(30, 15, 18, 0.4) 0%, rgba(15, 8, 10, 0.6) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.wf-comp-manual:hover {
+  transform: translateY(-4px) translateZ(6px);
+  border-color: rgba(239, 68, 68, 0.45);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(239, 68, 68, 0.15);
+}
+
+.wf-comp-auto {
+  position: relative;
+  background: linear-gradient(180deg, rgba(14, 25, 42, 0.6) 0%, rgba(6, 14, 24, 0.8) 100%);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.85),
+    0 0 35px rgba(56, 189, 248, 0.25),
+    0 0 70px rgba(34, 197, 94, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 30px rgba(56, 189, 248, 0.08);
+}
+
+.wf-comp-auto:hover {
+  transform: translateY(-6px) translateZ(12px);
+  border-color: #38bdf8;
+  box-shadow:
+    0 24px 50px rgba(0, 0, 0, 0.9),
+    0 0 45px rgba(56, 189, 248, 0.4),
+    0 0 25px rgba(34, 197, 94, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 40px rgba(56, 189, 248, 0.15);
+}
+
+.wf-comp-badge-man {
+  color: #f87171;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wf-comp-badge-auto {
+  color: #4ade80;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wf-comp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wf-comp-list li {
+  font-size: 0.88rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  line-height: 1.45;
+}
+
+.wf-comp-manual li {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.wf-comp-auto li {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.wf-comp-icon-x {
+  color: #ef4444;
+  font-weight: 800;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+.wf-comp-icon-check {
+  color: #4ade80;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.8);
+}
+
+/* Loop & Scaling Ribbon — 3D Cyber Neon Docking Strip */
+.wf-bottom-ribbon {
+  margin-top: 4rem;
+  background: linear-gradient(180deg, rgba(14, 21, 36, 0.55) 0%, rgba(6, 10, 18, 0.75) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  border-radius: 16px;
+  padding: 1.8rem 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.8rem;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.75),
+    0 0 30px rgba(59, 130, 246, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  transition: all 0.35s ease;
+}
+
+.wf-bottom-ribbon:hover {
+  border-color: rgba(96, 165, 250, 0.45);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.85),
+    0 0 35px rgba(59, 130, 246, 0.22);
+}
+
+.wf-ribbon-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.wf-ribbon-icon {
+  font-size: 1.3rem;
+  color: #38bdf8;
+  padding: 0.6rem;
+  border-radius: 10px;
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wf-ribbon-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+
+.wf-ribbon-desc {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .wf-stage-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .wf-stepper-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .wf-progress-track {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .wf-stepper-nav {
+    grid-template-columns: 1fr;
+  }
+  .wf-comp-grid {
+    grid-template-columns: 1fr;
+  }
+  .wf-bottom-ribbon {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* =========================================================
+   MODERN LUXURY FOOTER STYLES (Social Channels & CTA)
+   ========================================================= */
+.footer-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 999px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: #4ade80;
+  margin-bottom: 1.5rem;
+  font-family: 'DM Sans', sans-serif;
+  text-transform: uppercase;
+}
+
+.footer-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
+  animation: footerStatusPulse 2s infinite ease-in-out;
+}
+
+@keyframes footerStatusPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+
+.footer-email-cta {
+  display: block;
+  font-size: clamp(1.4rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  letter-spacing: -0.02em;
+  transition: color 0.25s ease;
+  margin-bottom: 1.2rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.footer-email-cta:hover {
+  color: #60a5fa !important;
+}
+
+.footer-social-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  max-width: 650px;
+}
+
+.footer-social-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.footer-social-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 70%);
+  pointer-events: none;
+}
+
+.footer-social-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.footer-social-card.is-youtube:hover {
+  border-color: rgba(239, 68, 68, 0.7);
+  box-shadow: 0 10px 28px rgba(239, 68, 68, 0.2);
+}
+
+.footer-social-card.is-linkedin:hover {
+  border-color: rgba(59, 130, 246, 0.7);
+  box-shadow: 0 10px 28px rgba(59, 130, 246, 0.2);
+}
+
+.footer-social-card.is-instagram:hover {
+  border-color: rgba(236, 72, 153, 0.7);
+  box-shadow: 0 10px 28px rgba(236, 72, 153, 0.2);
+}
+
+.footer-social-card.is-gmail:hover {
+  border-color: rgba(245, 158, 11, 0.7);
+  box-shadow: 0 10px 28px rgba(245, 158, 11, 0.2);
+}
+
+.footer-social-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.footer-social-card:hover .footer-social-icon {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.footer-social-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.footer-social-card.is-youtube .footer-social-icon { color: #ef4444; }
+.footer-social-card.is-linkedin .footer-social-icon { color: #60a5fa; }
+.footer-social-card.is-instagram .footer-social-icon { color: #f472b6; }
+.footer-social-card.is-gmail .footer-social-icon { color: #fbbf24; }
+
+.footer-social-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.footer-social-name {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.footer-social-handle {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.footer-btn-primary {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 36px;
+  border-radius: 999px;
+  color: #000000 !important;
+  background: #ffffff !important;
+  text-decoration: none !important;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.15);
+}
+
+.footer-btn-primary:hover {
+  background: #60a5fa !important;
+  color: #000000 !important;
+  box-shadow: 0 0 25px rgba(96, 165, 250, 0.5);
+  transform: translateY(-3px);
+}
+
+.footer-btn-secondary {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 999px;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  text-decoration: none !important;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+}
+
+.footer-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 640px) {
+  .footer-social-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

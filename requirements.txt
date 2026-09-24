@@ -1,0 +1,19 @@
+# Core Pipeline & Video Processing
+yt-dlp>=2024.08.06
+Pillow>=10.0.0
+numpy>=1.24.0
+requests>=2.31.0
+opencv-python-headless>=4.8.0
+
+# Telegram Automation
+telethon>=1.34.0
+
+# Audio Intelligence & Analysis
+soundfile>=0.12.1
+librosa>=0.10.1
+matplotlib>=3.7.0
+
+# YouTube API Integration
+google-api-python-client>=2.100.0
+google-auth-oauthlib>=1.1.0
+google-auth-httplib2>=0.1.1
