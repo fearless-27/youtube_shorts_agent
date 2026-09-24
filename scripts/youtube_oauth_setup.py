@@ -36,10 +36,19 @@ def main():
         )
 
     flow = InstalledAppFlow.from_client_secrets_file(str(client_secrets_path), SCOPES)
-    credentials = flow.run_local_server(port=0, prompt="consent")
+    # prompt='consent' + access_type='offline' ensures a permanent refresh_token is returned
+    credentials = flow.run_local_server(port=0, prompt="consent", access_type="offline")
 
-    credentials_path.write_text(credentials.to_json(), encoding="utf-8")
-    print("Saved YouTube upload credentials to youtube_credentials.json")
+    credentials_json = credentials.to_json()
+    credentials_path.write_text(credentials_json, encoding="utf-8")
+    
+    print("\n" + "=" * 60)
+    print("SUCCESS: Saved YouTube upload credentials to youtube_credentials.json")
+    if credentials.refresh_token:
+        print("✓ Refresh Token acquired: SUCCESS (Permanent lifetime refresh enabled)")
+    else:
+        print("⚠ WARNING: No refresh token returned. Re-run with prompt='consent'")
+    print("=" * 60 + "\n")
 
 
 if __name__ == "__main__":
