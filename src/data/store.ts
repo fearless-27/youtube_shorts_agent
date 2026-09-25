@@ -94,7 +94,7 @@ export const uploadRecords: UploadRecord[] = [];
 export const pipelineLogs: LogEntry[] = [];
 export const defaultSettings: PipelineSettings = {
   mode: 'semi-live',
-  maxDailyUploads: 15,
+  maxDailyUploads: 10,
   privacy: 'Public',
   timezone: 'Asia/Kolkata',
   peakUploadTimes: [
@@ -112,7 +112,7 @@ export const defaultSettings: PipelineSettings = {
 };
 export const pipelineStats: PipelineStats = {
   uploadsToday: 0,
-  dailyCap: 15,
+  dailyCap: 10,
   createdShorts: 0,
   pendingApproval: 0,
   avgViralityScore: 0,
@@ -229,10 +229,10 @@ export async function saveSettings(settings: PipelineSettings) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       mode: settings.mode === 'dry-run' ? 'dry_run' : settings.mode === 'semi-live' ? 'semi_live' : 'live',
-      max_daily_uploads: settings.maxDailyUploads ?? 15,
+      max_daily_uploads: settings.maxDailyUploads ?? 10,
       telegram_max_daily_uploads: 10,
       telegram_max_uploads_per_run: 10,
-      viral_max_daily_uploads: Math.max(1, (settings.maxDailyUploads ?? 15) - 10),
+      viral_max_daily_uploads: 0,
       upload_privacy: settings.privacy.toLowerCase(),
       upload_timezone: settings.timezone,
       upload_peak_times: peakUploadTimes,

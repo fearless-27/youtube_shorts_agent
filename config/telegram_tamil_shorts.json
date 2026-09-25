@@ -7,7 +7,7 @@
   "telegram_fetch_limit": 50,
   "telegram_max_uploads_per_run": 10,
   "telegram_max_daily_uploads": 10,
-  "max_daily_uploads": 15,
+  "max_daily_uploads": 10,
   "telegram_sequential_source_workflow": true,
   "telegram_max_source_videos_per_run": 1,
   "telegram_max_segments_per_video": 0,

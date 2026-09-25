@@ -1,9 +1,9 @@
 {
-  "date": "2026-09-24",
-  "uploads": 0,
-  "short": 0,
+  "date": "2026-09-25",
+  "uploads": 1,
+  "short": 1,
   "video": 0,
-  "max_daily_uploads": 15,
+  "max_daily_uploads": 10,
   "history": [
     {
       "timestamp": "2026-09-19T15:28:55.269219+00:00",
@@ -100,9 +100,15 @@
       "video_id": "VEMcAaEM18k",
       "url": "https://youtube.com/shorts/VEMcAaEM18k",
       "title": "⚡ If Cleaning Was an Olympic Timed Sport! 🏃‍♂️💨 | Viral Moments #Shorts #Viral"
+    },
+    {
+      "timestamp": "2026-09-25T11:21:25.518598",
+      "video_id": "0gJESGnRwz0",
+      "url": "https://youtube.com/shorts/0gJESGnRwz0",
+      "title": "✨ Sʜɪɴᴄʜᴀɴ Tᴀᴍɪʟ ✨ 🎀 𝐒𝐞𝐚𝐬𝐨𝐧 10 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ ┃╍ 𝐄𝐩𝐢𝐬𝐨𝐝𝐞 ╾ 27 ┃╍ 𝐐𝐮𝐚𝐥𝐢𝐭𝐲 ╾ HD ┃╍ 𝐒𝐢𝐳𝐞 ╾ 8 Part 8/35"
     }
   ],
-  "last_daily_reset": "2026-09-24T04:39:24.259Z",
+  "last_daily_reset": "2026-09-25T05:16:06.207Z",
   "last_reset": "2026-09-22T17:01:33.249Z",
   "telegram_max_daily_uploads": 10,
   "viral_max_daily_uploads": 5

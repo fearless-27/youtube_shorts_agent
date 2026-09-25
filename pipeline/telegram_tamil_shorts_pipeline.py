@@ -1669,10 +1669,13 @@ class TelegramTamilShortsPipeline:
                     learning_result = self._learning_result(segment_video, final_path, metadata, prediction)
                     self._record_learning_prediction(learning_result)
 
+                    # Always register rendered video in Content Studio so it is immediately visible
+                    self._queue_for_approval(segment_video, final_path, metadata, safety_report=safety_report)
+                    logger.info("Short rendered and registered in Content Studio: %s", final_path)
+
                     upload_result = None
                     if mode in {"semi_live", "semi-live"}:
-                        self._queue_for_approval(segment_video, final_path, metadata, safety_report=safety_report)
-                        logger.info("SEMI-LIVE MODE: Short rendered and saved in Content Studio. Awaiting operator approval: %s", final_path)
+                        logger.info("SEMI-LIVE MODE: Short awaiting operator approval: %s", final_path)
                         self.store.mark(segment_video, "pending_approval", final_video_path=final_path)
                     elif self._uploads_remaining_today() > 0:
                         upload_result = await self._try_upload(segment_video, final_path, tamil_script, metadata, safety_report)
@@ -1681,6 +1684,7 @@ class TelegramTamilShortsPipeline:
                     if upload_result:
                         learning_result["upload_result"] = upload_result
                         self._record_learning_upload(learning_result, upload_result)
+                        self._record_content_studio_upload(segment_video, final_path, metadata, upload_result)
                         self.store.mark(
                             segment_video,
                             "uploaded",
@@ -2759,6 +2763,85 @@ class TelegramTamilShortsPipeline:
             temp_rec.replace(recreated_media_file)
         except Exception as exc:
             logger.warning("Could not update public/data/recreated_media.json: %s", exc)
+
+        # Sync to all user stores so Content Studio shows it immediately regardless of logged-in user
+        self._sync_content_studio_item(queue_item, recreated_item)
+
+    def _sync_content_studio_item(self, queue_item: dict, recreated_item: dict):
+        users_dir = PROJECT_ROOT / "public" / "data" / "users"
+        if not users_dir.exists():
+            return
+        item_id = queue_item.get("id")
+        rel_video_path = queue_item.get("video_path")
+        for udir in users_dir.iterdir():
+            if not udir.is_dir():
+                continue
+            for filename, new_entry in [("approval_queue.json", queue_item), ("recreated_media.json", recreated_item)]:
+                target_file = udir / filename
+                items = []
+                if target_file.exists():
+                    try:
+                        with open(target_file, "r", encoding="utf-8") as handle:
+                            items = json.load(handle)
+                    except Exception:
+                        items = []
+                idx = next((i for i, q in enumerate(items) if q.get("id") == item_id or q.get("video_path") == rel_video_path), None)
+                if idx is not None:
+                    items[idx] = new_entry
+                else:
+                    items.append(new_entry)
+                try:
+                    with open(target_file, "w", encoding="utf-8") as handle:
+                        json.dump(items, handle, indent=2, ensure_ascii=False)
+                except Exception as exc:
+                    logger.warning("Could not sync %s for user %s: %s", filename, udir.name, exc)
+
+    def _record_content_studio_upload(self, video: TelegramVideo, final_path: str, metadata: dict, upload_result: dict):
+        """Marks uploaded video with YouTube URL and status in Content Studio."""
+        item_id = f"{video.channel}_{video.message_id}_part{video.segment_index:03d}"
+        p = Path(final_path)
+        rel_video_path = f"outputs/{p.name}"
+
+        destinations = [PROJECT_ROOT / "public" / "data"]
+        users_dir = PROJECT_ROOT / "public" / "data" / "users"
+        if users_dir.exists():
+            for udir in users_dir.iterdir():
+                if udir.is_dir():
+                    destinations.append(udir)
+
+        for target_dir in destinations:
+            # Update approval queue
+            q_file = target_dir / "approval_queue.json"
+            if q_file.exists():
+                try:
+                    with open(q_file, "r", encoding="utf-8") as f:
+                        q_items = json.load(f)
+                    for item in q_items:
+                        if item.get("id") == item_id or item.get("video_path") == rel_video_path:
+                            item["upload_status"] = "uploaded"
+                            item["approved"] = True
+                            item["upload_result"] = upload_result
+                            item["youtube_url"] = upload_result.get("url", "")
+                    with open(q_file, "w", encoding="utf-8") as f:
+                        json.dump(q_items, f, indent=2, ensure_ascii=False)
+                except Exception as exc:
+                    logger.warning("Could not update approval_queue.json at %s: %s", target_dir, exc)
+
+            # Update recreated media
+            m_file = target_dir / "recreated_media.json"
+            if m_file.exists():
+                try:
+                    with open(m_file, "r", encoding="utf-8") as f:
+                        m_items = json.load(f)
+                    for item in m_items:
+                        if item.get("id") == item_id or item.get("video_path") == rel_video_path:
+                            item["upload_status"] = "uploaded"
+                            item["approved"] = True
+                            item["upload_result"] = upload_result
+                    with open(m_file, "w", encoding="utf-8") as f:
+                        json.dump(m_items, f, indent=2, ensure_ascii=False)
+                except Exception as exc:
+                    logger.warning("Could not update recreated_media.json at %s: %s", target_dir, exc)
 
     def _metadata(self, video: TelegramVideo, tamil_script: str) -> dict:
         title_prefix = str(self.config.get("telegram_upload_title_prefix", "Tamil Shorts")).strip()

@@ -701,7 +701,20 @@ function withIds(items) {
 
 function readApprovals(userId = "default") {
   const config = readConfig(userId);
-  const items = withIds(readUserJson(userId, "approval_queue.json", []));
+  const userItems = withIds(readUserJson(userId, "approval_queue.json", []));
+  const rootItems = withIds(readJson(approvalQueuePath, []));
+
+  const mergedMap = new Map();
+  for (const item of rootItems) {
+    const key = item.id || item.video_path;
+    if (key) mergedMap.set(key, item);
+  }
+  for (const item of userItems) {
+    const key = item.id || item.video_path;
+    if (key) mergedMap.set(key, item);
+  }
+  const items = Array.from(mergedMap.values());
+
   if (config.auto_approve_pending === true) {
     const minimumScore = Number(config.approval_auto_min_virality_score ?? 0);
     let changed = false;
@@ -723,9 +736,7 @@ function readApprovals(userId = "default") {
 
 function writeApprovals(userId = "default", items) {
   writeUserJson(userId, "approval_queue.json", items.map(({ id, ...item }) => item));
-  if (userId === "default") {
-    writeJson(approvalQueuePath, items.map(({ id, ...item }) => item));
-  }
+  writeJson(approvalQueuePath, items.map(({ id, ...item }) => item));
 }
 
 function handleApprovalAction(userId = "default", id, approved) {
@@ -1314,7 +1325,7 @@ function readQuota(userId = "default") {
       uploads: 0,
       short: 0,
       video: 0,
-      max_daily_uploads: Number(quota.max_daily_uploads ?? config.max_daily_uploads ?? 15),
+      max_daily_uploads: Number(quota.max_daily_uploads ?? config.max_daily_uploads ?? 10),
       last_daily_reset: new Date().toISOString(),
       history: quota.history || [],
     };
@@ -1328,7 +1339,7 @@ function readQuota(userId = "default") {
     ...quota,
     short: quota.short ?? 0,
     video: quota.video ?? 0,
-    max_daily_uploads: quota.max_daily_uploads ?? config.max_daily_uploads ?? 15,
+    max_daily_uploads: quota.max_daily_uploads ?? config.max_daily_uploads ?? 10,
   };
 }
 
@@ -1676,13 +1687,26 @@ function disconnectYouTubeChannel(userId) {
 
 function readOverview(userId = "default", userEmail = "") {
   initUserDataDir(userId);
+  const userMedia = readUserJson(userId, "recreated_media.json", []);
+  const rootMedia = readJson("public/data/recreated_media.json", []);
+  const mergedMediaMap = new Map();
+  for (const item of rootMedia) {
+    const key = item.id || item.video_path || item.title;
+    if (key) mergedMediaMap.set(key, item);
+  }
+  for (const item of userMedia) {
+    const key = item.id || item.video_path || item.title;
+    if (key) mergedMediaMap.set(key, item);
+  }
+  const media = Array.from(mergedMediaMap.values());
+
   return {
     account: getUserAccountInfo(userId, userEmail),
     youtube_channel: getYouTubeConnectedChannel(userId),
     quota: readQuota(userId),
     approvals: readApprovals(userId),
     report: readUserJson(userId, "weekly_tuning_report.json", {}),
-    media: readUserJson(userId, "recreated_media.json", []),
+    media,
     status: readStatus(userId),
     config: readConfig(userId),
   };
@@ -1691,7 +1715,18 @@ function readOverview(userId = "default", userEmail = "") {
 function readAnalytics(userId = "default") {
   initUserDataDir(userId);
   const report = readUserJson(userId, "weekly_tuning_report.json", {});
-  const media = readUserJson(userId, "recreated_media.json", []);
+  const userMedia = readUserJson(userId, "recreated_media.json", []);
+  const rootMedia = readJson("public/data/recreated_media.json", []);
+  const mergedMediaMap = new Map();
+  for (const item of rootMedia) {
+    const key = item.id || item.video_path || item.title;
+    if (key) mergedMediaMap.set(key, item);
+  }
+  for (const item of userMedia) {
+    const key = item.id || item.video_path || item.title;
+    if (key) mergedMediaMap.set(key, item);
+  }
+  const media = Array.from(mergedMediaMap.values());
   const config = readConfig(userId);
 
   // Compute basic analytics from available data
@@ -2437,7 +2472,7 @@ function resetQuota(userId = "default", options = {}) {
     uploads: 0,
     short: 0,
     video: 0,
-    max_daily_uploads: Number(config.max_daily_uploads ?? 15),
+    max_daily_uploads: Number(config.max_daily_uploads ?? 10),
     last_reset: new Date().toISOString(),
     history: currentQuota.history || [],
   };

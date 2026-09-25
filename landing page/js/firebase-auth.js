@@ -4,6 +4,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import {
   getAuth,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   GithubAuthProvider,
   OAuthProvider,
@@ -88,7 +90,28 @@ export function getCachedUser() {
   }
 }
 
-// Sign in with Google Popup
+// Check if returning from a redirect sign-in
+export async function checkRedirectAuth() {
+  if (!isFirebaseConfigured() || !auth) return null;
+  try {
+    const result = await getRedirectResult(auth);
+    if (result && result.user) {
+      if (typeof window !== "undefined" && window.sessionStorage) {
+        window.sessionStorage.removeItem("auth_redirect_pending");
+      }
+      return cacheUser(result.user);
+    }
+  } catch (error) {
+    if (typeof window !== "undefined" && window.sessionStorage) {
+      window.sessionStorage.removeItem("auth_redirect_pending");
+    }
+    console.error("Redirect Sign-In Error:", error);
+    throw error;
+  }
+  return null;
+}
+
+// Sign in with Google (Popup with automatic Redirect fallback if blocked)
 export async function signInWithGoogle() {
   if (!isFirebaseConfigured()) {
     throw new Error("CONFIG_NEEDED");
@@ -99,12 +122,20 @@ export async function signInWithGoogle() {
     cacheUser(user);
     return user;
   } catch (error) {
+    if (error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
+      console.warn("Popup blocked by browser. Automatically switching to redirect sign-in...", error);
+      if (typeof window !== "undefined" && window.sessionStorage) {
+        window.sessionStorage.setItem("auth_redirect_pending", "true");
+      }
+      await signInWithRedirect(auth, googleProvider);
+      return null;
+    }
     console.error("Google Sign-In Error:", error);
     throw error;
   }
 }
 
-// Sign in with GitHub Popup
+// Sign in with GitHub (Popup with automatic Redirect fallback if blocked)
 export async function signInWithGithub() {
   if (!isFirebaseConfigured()) {
     throw new Error("CONFIG_NEEDED");
@@ -115,12 +146,20 @@ export async function signInWithGithub() {
     cacheUser(user);
     return user;
   } catch (error) {
+    if (error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
+      console.warn("Popup blocked by browser. Automatically switching to redirect sign-in...", error);
+      if (typeof window !== "undefined" && window.sessionStorage) {
+        window.sessionStorage.setItem("auth_redirect_pending", "true");
+      }
+      await signInWithRedirect(auth, githubProvider);
+      return null;
+    }
     console.error("GitHub Sign-In Error:", error);
     throw error;
   }
 }
 
-// Sign in with Apple Popup
+// Sign in with Apple (Popup with automatic Redirect fallback if blocked)
 export async function signInWithApple() {
   if (!isFirebaseConfigured()) {
     throw new Error("CONFIG_NEEDED");
@@ -131,6 +170,14 @@ export async function signInWithApple() {
     cacheUser(user);
     return user;
   } catch (error) {
+    if (error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
+      console.warn("Popup blocked by browser. Automatically switching to redirect sign-in...", error);
+      if (typeof window !== "undefined" && window.sessionStorage) {
+        window.sessionStorage.setItem("auth_redirect_pending", "true");
+      }
+      await signInWithRedirect(auth, appleProvider);
+      return null;
+    }
     console.error("Apple Sign-In Error:", error);
     throw error;
   }

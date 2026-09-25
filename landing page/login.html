@@ -602,7 +602,8 @@
       signInWithEmail,
       signUpWithEmail,
       isFirebaseConfigured,
-      getCachedUser
+      getCachedUser,
+      checkRedirectAuth
     } from "./js/firebase-auth.js";
 
     let isLoginMode = true;
@@ -643,6 +644,18 @@
         const dest = window.getDashboardUrl ? window.getDashboardUrl() : "/dashboard";
         window.location.href = dest;
       }, 600);
+    } else {
+      // Check if user is returning from a redirect sign-in
+      if (sessionStorage.getItem("auth_redirect_pending") === "true") {
+        showStatus("Completing sign-in...", "info");
+      }
+      checkRedirectAuth().then((user) => {
+        if (user) {
+          handleAuthSuccess(user);
+        }
+      }).catch((err) => {
+        handleAuthError(err, "Redirect");
+      });
     }
 
     // Toggle between Sign In and Sign Up
@@ -717,7 +730,13 @@
       }
 
       let msg = err.message || "An authentication error occurred.";
-      if (err.code === "auth/popup-closed-by-user") {
+      if (err.code === "auth/popup-blocked") {
+        msg = "Pop-up was blocked by your browser. Redirecting you directly to sign in...";
+        showStatus(msg, "info");
+        return;
+      } else if (err.code === "auth/unauthorized-domain") {
+        msg = "Domain not authorized. Please access via http://localhost:4173/login.html or add your domain in Firebase Console.";
+      } else if (err.code === "auth/popup-closed-by-user") {
         msg = "Sign-in popup closed before completion.";
       } else if (err.code === "auth/cancelled-popup-request") {
         msg = "Only one sign-in popup can be open at a time.";
@@ -773,7 +792,14 @@
 
       try {
         const user = await signInWithGoogle();
-        handleAuthSuccess(user);
+        if (user) {
+          handleAuthSuccess(user);
+        } else {
+          // Automatic redirect triggered due to blocked popup
+          showStatus("Pop-up blocked by browser. Redirecting to Google Sign-In...", "info");
+          googleBtnText.textContent = "Redirecting to Google...";
+          return;
+        }
       } catch (err) {
         handleAuthError(err, "Google");
       } finally {
@@ -791,7 +817,13 @@
 
       try {
         const user = await signInWithGithub();
-        handleAuthSuccess(user);
+        if (user) {
+          handleAuthSuccess(user);
+        } else {
+          showStatus("Pop-up blocked by browser. Redirecting to GitHub...", "info");
+          githubBtnText.textContent = "Redirecting to GitHub...";
+          return;
+        }
       } catch (err) {
         handleAuthError(err, "GitHub");
       } finally {
@@ -809,7 +841,13 @@
 
       try {
         const user = await signInWithApple();
-        handleAuthSuccess(user);
+        if (user) {
+          handleAuthSuccess(user);
+        } else {
+          showStatus("Pop-up blocked by browser. Redirecting to Apple...", "info");
+          if (appleBtnText) appleBtnText.textContent = "Redirecting to Apple...";
+          return;
+        }
       } catch (err) {
         handleAuthError(err, "Apple");
       } finally {

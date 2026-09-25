@@ -105,7 +105,7 @@
     "📌"
   ],
   "min_virality_threshold": 45,
-  "max_daily_uploads": 15,
+  "max_daily_uploads": 10,
   "upload_public_stats_viewable": false,
   "custom_thumbnails_enabled": true,
   "custom_thumbnail_frame_ratio": 0.2,

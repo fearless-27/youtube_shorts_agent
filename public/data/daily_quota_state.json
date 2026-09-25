@@ -1,6 +1,6 @@
 {
   "date": "2026-09-24",
-  "uploads": 0,
+  "uploads": 6,
   "history": [
     {
       "timestamp": "2026-09-24T14:38:05.195600+05:30",
@@ -9,6 +9,54 @@
       "upload_window_key": "2026-09-24T15:30",
       "video_id": "c7VxkXnOT18",
       "url": "https://youtube.com/shorts/c7VxkXnOT18"
+    },
+    {
+      "timestamp": "2026-09-24T21:02:13.995041+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-09-24T22:00:00+05:30",
+      "upload_window_key": "2026-09-24T22:00",
+      "video_id": "nTtiY5pOp90",
+      "url": "https://youtube.com/shorts/nTtiY5pOp90"
+    },
+    {
+      "timestamp": "2026-09-24T21:04:22.917522+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-09-24T22:45:00+05:30",
+      "upload_window_key": "2026-09-24T22:45",
+      "video_id": "XvtP5hHe-7k",
+      "url": "https://youtube.com/shorts/XvtP5hHe-7k"
+    },
+    {
+      "timestamp": "2026-09-24T21:07:21.265342+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-09-25T07:00:00+05:30",
+      "upload_window_key": "2026-09-25T07:00",
+      "video_id": "kWR6axtaqE0",
+      "url": "https://youtube.com/shorts/kWR6axtaqE0"
+    },
+    {
+      "timestamp": "2026-09-24T21:08:30.490954+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-09-25T08:00:00+05:30",
+      "upload_window_key": "2026-09-25T08:00",
+      "video_id": "4yDLWwnupek",
+      "url": "https://youtube.com/shorts/4yDLWwnupek"
+    },
+    {
+      "timestamp": "2026-09-24T21:09:37.213857+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-09-25T09:15:00+05:30",
+      "upload_window_key": "2026-09-25T09:15",
+      "video_id": "oiOf27TwsDg",
+      "url": "https://youtube.com/shorts/oiOf27TwsDg"
+    },
+    {
+      "timestamp": "2026-09-24T21:10:29.992362+05:30",
+      "pipeline": "telegram_tamil_shorts",
+      "scheduled_publish_at": "2026-09-25T10:30:00+05:30",
+      "upload_window_key": "2026-09-25T10:30",
+      "video_id": "NNEXBb_fl_E",
+      "url": "https://youtube.com/shorts/NNEXBb_fl_E"
     }
   ],
   "max_daily_uploads": 10,
